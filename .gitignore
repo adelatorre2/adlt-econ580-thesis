@@ -20,9 +20,3 @@
 .DS_Store
 .vscode/*
 !.vscode/settings.json
-
-# Your build/output folders (you have build/)
-build/
-
-# If data gets big, consider ignoring raw downloads
-data/raw/
