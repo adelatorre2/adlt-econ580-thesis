@@ -1,0 +1,110 @@
+
+
+% !TEX program = pdflatex
+\documentclass[11pt]{beamer}
+
+\usetheme{default}
+\usepackage{amsmath, amssymb}
+\usepackage{hyperref}
+
+\title{Pay-to-Play Fees and Access to High School Athletics\\\small Evidence from Washington HB 1660 Reporting System}
+\author{Alejandro De La Torre}
+\institute{ECON 580: Project Design}
+\date{February 26, 2026}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Motivation (Why care?)}
+\begin{itemize}
+  \item \textbf{User fees = prices} for a publicly provided good; prices can reduce take-up.
+  \item \textbf{Distributional concern:} low-income students face higher effective barriers.
+  \item \textbf{Policy relevance:} fee waivers act like targeted subsidies, but real effects are uncertain.
+  \item WA HB 1660 creates a rare \textbf{reporting system} linking fees, waivers, and participation.
+\end{itemize}
+\vspace{0.25em}
+{\tiny References: Barron et al. (2000); Eyler et al. (2019).}
+\end{frame}
+
+\begin{frame}{Working Research Question + Outcomes}
+\textbf{Main question:} Do fees/waivers affect low-income access to high school athletics, and the participation gap?
+
+\vspace{0.5em}
+\textbf{Core outcomes (school $\times$ year):}
+\begin{itemize}
+  \item Overall athletic participation rate
+  \item Low-income athletic participation rate
+  \item Participation gap ("opportunity gap"): \; $\text{Rate}_{\text{non-LI}} - \text{Rate}_{\text{LI}}$
+\end{itemize}
+
+\vspace{0.5em}
+\textbf{Core idea:} Fees/waivers act like prices/subsidies; test effects on take-up and gaps.
+
+\vspace{0.25em}
+\textbf{Note:} School-year panel only (no athlete-level data).
+\end{frame}
+
+\begin{frame}{Data / Feasibility (what I can build)}
+\begin{itemize}
+  \item \textbf{Unit:} High school $\times$ school year (panel).
+  \item \textbf{WA HB 1660 reporting fields:}
+    \begin{itemize}
+      \item enrollment and low-income enrollment,
+      \item athletic participation counts (total and low-income),
+      \item athletic participation fees and low-income discounted fees,
+      \item ASB card fees (control for broader cost environment).
+    \end{itemize}
+  \item \textbf{Constructed:} participation rates, non-low-income rates, participation gap, discount generosity.
+  \item \textbf{Order of magnitude:} a few hundred WA HS $\times$ \,$\sim$5--8 years $\Rightarrow$ \,$\sim$1{,}000--3{,}000 obs.
+\end{itemize}
+
+\vspace{0.5em}
+\textbf{Current progress:} proof-of-concept that reports can be downloaded and structured into a school-year table; next step is scaling + harmonizing IDs.
+\end{frame}
+
+\begin{frame}{Empirical Strategy (planned)}
+\textbf{1) Within-Washington panel (TWFE):}
+\begin{align*}
+\text{Gap}_{s t} &= \beta_1\,\text{Fee}_{s t} + \beta_2\,\text{Discount}_{s t} + \alpha_s + \gamma_t + X_{s t} + \varepsilon_{s t}
+\end{align*}
+\begin{itemize}
+  \item $\alpha_s$: school FE; $\gamma_t$: year FE.
+  \item Main goal: estimate how within-school fee/waiver changes relate to changes in the gap.
+\end{itemize}
+
+\vspace{0.5em}
+\textbf{2) Difference-in-Differences (WA vs control state):}
+\begin{align*}
+\text{ParticipationRate}_{s t} &= \delta\,(\text{WA}_s \times \text{Post}_t) + \alpha_s + \gamma_t + X_{s t} + \varepsilon_{s t}
+\end{align*}
+\begin{itemize}
+  \item Adds a counterfactual for overall participation (gap outcome may be WA-only).
+  \item Diagnostics: pre-trends / event-study if enough pre-years.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Roadmap + Discussion Prompts}
+\textbf{Roadmap (next 1--2 weeks):}
+\begin{enumerate}
+  \item Confirm which years of HB 1660 reporting are consistently available across districts.
+  \item Build a clean WA school-year panel (fees + participation counts + low-income breakdown).
+  \item Shortlist 1--3 plausible \textbf{control states} with comparable participation reporting.
+  \item Run first-pass descriptives + pre-trend plots; then TWFE / DiD skeleton regressions.
+\end{enumerate}
+
+\vspace{0.75em}
+\textbf{What I want feedback on:}
+\begin{itemize}
+  \item \textbf{Is this worth pursuing} if the data are constrained? What is the minimum viable design?
+  \item Any suggestions for \textbf{control state candidates} (and how to justify comparability / parallel trends)?
+  \item Any obvious threats to identification (endogenous fee changes, measurement differences) I should address early?
+\end{itemize}
+
+\vspace{0.5em}
+\textit{Questions \& feedback welcome.}
+\end{frame}
+
+\end{document}
