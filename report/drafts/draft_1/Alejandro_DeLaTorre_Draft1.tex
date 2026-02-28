@@ -1,68 +1,67 @@
- \documentclass[12pt]{article}
-
-% Layout and spacing
+\documentclass[11pt]{article}
 \usepackage[margin=1in]{geometry}
 \usepackage{setspace}
-\onehalfspacing
-\usepackage{microtype}
-
-% Typography and language
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
-\usepackage{csquotes}
-
-% Math
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{mathtools}
-
-% Tables
-\usepackage{booktabs}
-\usepackage{tabularx}
-\usepackage{threeparttable}
-\usepackage{longtable}
-\usepackage{pdflscape}
-\usepackage{siunitx}
-\sisetup{detect-all,group-minimum-digits=4}
-
-% Figures and floats
-\usepackage{graphicx}
-\usepackage{subcaption}
-\usepackage{float}
-
-% Lists and colors
-\usepackage{enumitem}
-\usepackage{xcolor}
-
-% Hyperlinks and references
 \usepackage{hyperref}
-\usepackage[nameinlink,capitalise,noabbrev]{cleveref}
+\usepackage{csquotes}
+\usepackage[backend=biber,style=authoryear,maxcitenames=2]{biblatex}
+\addbibresource{references.bib}
 
-% Bibliography
-\usepackage[backend=biber,style=authoryear,doi=false,isbn=false,url=true]{biblatex}
-\addbibresource{references/cited.bib}
-
-\hypersetup{
-  colorlinks=true,
-  linkcolor=blue,
-  citecolor=blue,
-  urlcolor=blue
-}
-
-% Placeholder text
-\usepackage{lipsum}
-
-\title{ECON 580 Senior Thesis}
-\author{Alejandro De La Torre}
-\date{\today}
+\title{ECON 580 Assignment 3: Research Proposal Memo}
+\author{Alejandro DeLaTorre}
+\date{February 28, 2026}
 
 \begin{document}
-
 \maketitle
+\onehalfspacing
 
+\section*{Research Question}
+I propose to study whether faster FDA review pathways are associated with faster post-approval growth in legal distribution and stronger downstream diversion signals. My primary question is:
+
+\begin{quote}
+Do drugs that receive Priority Review exhibit steeper post-approval growth in retail distribution and higher diversion indicators than otherwise comparable drugs with Standard Review?
+\end{quote}
+
+If the data allow, I will also explore a complementary question:
+
+\begin{quote}
+Do drugs with shorter FDA review times (measured using accelerated approval timelines) display larger post-approval distribution surges and higher diversion-per-supply ratios?
+\end{quote}
+
+\section*{Motivation}
+The FDA runs multiple expedited programs designed to speed access to therapies, including Priority Review, Fast Track, Breakthrough Therapy, and Accelerated Approval. These programs change review timelines and can shift the timing and composition of drug entry into the market \parencite{FDA2023ExpeditedProgramsOverview,FDA2018PriorityReview}. From an economic perspective, faster review can be interpreted as a market-entry shock that affects availability, marketing intensity, and the pool of products reaching patients. Those shifts may increase opportunities for diversion and misuse, even when the medical decision is welfare-improving. Understanding whether accelerated pathways predict downstream diversion signals matters for policy debates about balancing speed, safety, and enforcement capacity.
+
+\section*{Data and Empirical Strategy}
+\textbf{FDA review speed and approval timing.} I will use the Drugs@FDA Data Files to construct a drug-level panel with approval dates and review classification (Priority vs Standard) \parencite{FDA2026DrugsAtFDADataFiles}. The openFDA API offers a programmatic way to validate and cross-check key fields \parencite{FDA2026openFDADrugsAtFDAEndpoint}. If I need a continuous review-time measure, I will use the FDA accelerated approvals list, which reports receipt dates and total time to approval \parencite{FDA2025AcceleratedApprovalsSurrogate}.
+
+\textbf{Downstream outcomes.} For legal distribution, I will use the ARCOS Retail Drug Summary Reports to build a state-by-quarter panel of grams per 100,000 population \parencite{DEAARCOSRetailDrugSummary}. % TODO: Verify publication date for ARCOS Retail Drug Summary Reports page.
+For diversion signals, I will use the NFLIS Public Data Query System to construct state-level drug-report counts and compute diversion-per-supply ratios \parencite{DEANFLISPublicDQSOverview,DEA2022NFLISDQSQuickReference}. % TODO: Verify publication date for NFLIS Public DQS overview page.
+
+\textbf{Identification.} I will estimate stacked event-study specifications around each drug's approval date, comparing Priority versus Standard review dynamics. Because treatment timing is staggered, I will use estimators and diagnostics that address known two-way fixed effects pitfalls \parencite{GoodmanBacon2021DiDTiming}. I will also run placebo checks with ``fake'' approval dates for long-established drugs and test robustness to alternative definitions of the drug unit (active ingredient versus product).
+
+\section*{Related Work}
+FDA expedited pathways are designed to speed access for serious conditions and unmet needs, but they also create heterogeneous review processes and timelines. FDA guidance and program descriptions emphasize differences in evidence requirements and review goals across expedited pathways and Priority Review, which implies systematic differences in which drugs receive faster review and when they reach the market \parencite{FDA2014ExpeditedProgramsGuidance,FDA2023ExpeditedProgramsOverview,FDA2018PriorityReview}.
+
+The FDA publishes multiple data sources that make these program distinctions empirically tractable. The Drugs@FDA Data Files provide structured, recurring data on submissions, review priority, and approval dates, while the accelerated approvals list includes receipt dates and review-time measures that can proxy for speed \parencite{FDA2026DrugsAtFDADataFiles,FDA2025AcceleratedApprovalsSurrogate}. These data are sufficient to construct a reproducible, updateable ``speed'' variable without hand-coding.
+
+On the outcomes side, ARCOS distribution data are widely used to study geographic patterns in legal opioid supply and related policy questions; \textcite{Griffith2021CountyOpioidDistribution} show how county-level variation in distribution can be informative about downstream harms. The DEA's ARCOS and NFLIS systems explicitly support diversion monitoring and provide public-facing summaries and query tools that can be aggregated to state-by-quarter panels suitable for event-study analysis \parencite{DEAARCOS,DEAARCOSRetailDrugSummary,DEANFLISOverview}. % TODO: Verify publication dates for ARCOS and NFLIS overview pages.
+
+\section*{What I Will Deliver}
+\begin{itemize}
+  \item A cleaned drug-level panel from Drugs@FDA with review classification, approval dates, and crosswalks to ARCOS/NFLIS identifiers.
+  \item A documented data pipeline for ARCOS Retail Drug Summary Reports and NFLIS Public DQS exports.
+  \item A short preregistration-style analysis plan describing outcomes, event windows, and identification assumptions.
+  \item Baseline stacked event-study results, plus placebo and sensitivity checks.
+  \item Two core figures: event-study plots for distribution growth and diversion-per-supply.
+\end{itemize}
+
+\section*{Risks \& Mitigations}
+\begin{itemize}
+  \item \textbf{Selection into expedited review.} I will explicitly interpret results as descriptive unless credible quasi-experimental variation is available, and I will explore heterogeneity by therapeutic area and baseline disease burden.
+  \item \textbf{Measurement error in diversion proxies.} I will test robustness to alternative outcome constructions (levels, logs, per-capita, and diversion-per-supply ratios) and note interpretation limits.
+  \item \textbf{Data revisions and missingness.} ARCOS and NFLIS datasets can be updated; I will version-control inputs and document extract dates.
+  \item \textbf{Timeline constraints.} I will prioritize Priority vs Standard review classification first, and treat accelerated-approval timing as a stretch extension if time permits.
+\end{itemize}
 
 \printbibliography
-
-
 
 \end{document}

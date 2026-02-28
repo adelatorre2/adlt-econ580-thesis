@@ -1,0 +1,202 @@
+[
+  {
+    "raw_string": "https://www.nflis.deadiversion.usdoj.gov/nflisdata/docs/2k17NFLISQA.pdf",
+    "guess_title": "National Forensic Laboratory Information System Questions and Answers (Q&A)",
+    "guess_authors": "U.S. Drug Enforcement Administration",
+    "guess_year": "2017",
+    "url": "https://www.nflis.deadiversion.usdoj.gov/nflisdata/docs/2k17NFLISQA.pdf",
+    "doi": null,
+    "source_type": "government report (PDF)",
+    "confidence": "medium"
+  },
+  {
+    "raw_string": "https://www.fda.gov/patients/learn-about-drug-and-device-approvals/fast-track-breakthrough-therapy-accelerated-approval-priority-review",
+    "guess_title": "Fast Track, Breakthrough Therapy, Accelerated Approval, Priority Review",
+    "guess_authors": "U.S. Food and Drug Administration",
+    "guess_year": "2023",
+    "url": "https://www.fda.gov/patients/learn-about-drug-and-device-approvals/fast-track-breakthrough-therapy-accelerated-approval-priority-review",
+    "doi": null,
+    "source_type": "government web page",
+    "confidence": "high"
+  },
+  {
+    "raw_string": "https://www.fda.gov/patients/fast-track-breakthrough-therapy-accelerated-approval-priority-review/priority-review",
+    "guess_title": "Priority Review",
+    "guess_authors": "U.S. Food and Drug Administration",
+    "guess_year": "2018",
+    "url": "https://www.fda.gov/patients/fast-track-breakthrough-therapy-accelerated-approval-priority-review/priority-review",
+    "doi": null,
+    "source_type": "government web page",
+    "confidence": "high"
+  },
+  {
+    "raw_string": "https://www.fda.gov/drugs/nda-and-bla-approvals/fast-track-approvals",
+    "guess_title": "Fast Track Approvals",
+    "guess_authors": "U.S. Food and Drug Administration",
+    "guess_year": "2025",
+    "url": "https://www.fda.gov/drugs/nda-and-bla-approvals/fast-track-approvals",
+    "doi": null,
+    "source_type": "government web page",
+    "confidence": "high"
+  },
+  {
+    "raw_string": "https://www.fda.gov/regulatory-information/search-fda-guidance-documents/expedited-programs-serious-conditions-drugs-and-biologics",
+    "guess_title": "Expedited Programs for Serious Conditions: Drugs and Biologics",
+    "guess_authors": "U.S. Food and Drug Administration",
+    "guess_year": "2014",
+    "url": "https://www.fda.gov/regulatory-information/search-fda-guidance-documents/expedited-programs-serious-conditions-drugs-and-biologics",
+    "doi": null,
+    "source_type": "government guidance",
+    "confidence": "high"
+  },
+  {
+    "raw_string": "https://www.fda.gov/drugs/drug-approvals-and-databases/drugsfda-data-files",
+    "guess_title": "Drugs@FDA Data Files",
+    "guess_authors": "U.S. Food and Drug Administration",
+    "guess_year": "2026",
+    "url": "https://www.fda.gov/drugs/drug-approvals-and-databases/drugsfda-data-files",
+    "doi": null,
+    "source_type": "government dataset page",
+    "confidence": "high"
+  },
+  {
+    "raw_string": "https://www.fda.gov/media/151146/download?attachment=",
+    "guess_title": "CDER Drug and Biologic Accelerated Approvals Based on a Surrogate Endpoint (as of June 30, 2025)",
+    "guess_authors": "U.S. Food and Drug Administration",
+    "guess_year": "2025",
+    "url": "https://www.fda.gov/media/151146/download?attachment=",
+    "doi": null,
+    "source_type": "government report (PDF)",
+    "confidence": "medium"
+  },
+  {
+    "raw_string": "https://www.fda.gov/drugs/nda-and-bla-approvals/nda-and-bla-approval-times",
+    "guess_title": "NDA and BLA Approval Times",
+    "guess_authors": "U.S. Food and Drug Administration",
+    "guess_year": "2017",
+    "url": "https://www.fda.gov/drugs/nda-and-bla-approvals/nda-and-bla-approval-times",
+    "doi": null,
+    "source_type": "government web page",
+    "confidence": "high"
+  },
+  {
+    "raw_string": "https://deadiversion.usdoj.gov/arcos/arcos.html",
+    "guess_title": "Automation of Reports and Consolidated Orders System (ARCOS)",
+    "guess_authors": "U.S. Drug Enforcement Administration",
+    "guess_year": null,
+    "url": "https://deadiversion.usdoj.gov/arcos/arcos.html",
+    "doi": null,
+    "source_type": "government web page",
+    "confidence": "low"
+  },
+  {
+    "raw_string": "https://www.federalregister.gov/documents/2020/11/02/2020-21302/suspicious-orders-of-controlled-substances",
+    "guess_title": "Suspicious Orders of Controlled Substances",
+    "guess_authors": "Drug Enforcement Administration",
+    "guess_year": "2020",
+    "url": "https://www.federalregister.gov/documents/2020/11/02/2020-21302/suspicious-orders-of-controlled-substances",
+    "doi": null,
+    "source_type": "government register notice",
+    "confidence": "high"
+  },
+  {
+    "raw_string": "https://www.deadiversion.usdoj.gov/arcos/retail_drug_summary/arcos-drug-summary-reports.html",
+    "guess_title": "ARCOS Retail Drug Summary Reports",
+    "guess_authors": "U.S. Drug Enforcement Administration",
+    "guess_year": null,
+    "url": "https://www.deadiversion.usdoj.gov/arcos/retail_drug_summary/arcos-drug-summary-reports.html",
+    "doi": null,
+    "source_type": "government dataset page",
+    "confidence": "low"
+  },
+  {
+    "raw_string": "https://www.dea.gov/press-releases/2019/02/26/dea-announces-enhanced-tool-registered-drug-manufacturers-and",
+    "guess_title": "DEA announces enhanced tool for registered drug manufacturers and distributors to combat opioid crisis",
+    "guess_authors": "U.S. Drug Enforcement Administration",
+    "guess_year": "2019",
+    "url": "https://www.dea.gov/press-releases/2019/02/26/dea-announces-enhanced-tool-registered-drug-manufacturers-and",
+    "doi": null,
+    "source_type": "government press release",
+    "confidence": "high"
+  },
+  {
+    "raw_string": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8115932/",
+    "guess_title": "Implications of County-Level Variation in U.S. Opioid Distribution",
+    "guess_authors": "Griffith, Feyman, Auty, Crable, Levengood",
+    "guess_year": "2021",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8115932/",
+    "doi": null,
+    "source_type": "journal article (open access)",
+    "confidence": "high"
+  },
+  {
+    "raw_string": "https://www.nflis.deadiversion.usdoj.gov/drug.xhtml",
+    "guess_title": "NFLIS-Drug",
+    "guess_authors": "U.S. Drug Enforcement Administration",
+    "guess_year": null,
+    "url": "https://www.nflis.deadiversion.usdoj.gov/drug.xhtml",
+    "doi": null,
+    "source_type": "government web page",
+    "confidence": "low"
+  },
+  {
+    "raw_string": "https://www.nflis.deadiversion.usdoj.gov/publicDQSinfo.xhtml",
+    "guess_title": "The NFLIS Public Data Query System",
+    "guess_authors": "U.S. Drug Enforcement Administration",
+    "guess_year": null,
+    "url": "https://www.nflis.deadiversion.usdoj.gov/publicDQSinfo.xhtml",
+    "doi": null,
+    "source_type": "government web page",
+    "confidence": "low"
+  },
+  {
+    "raw_string": "https://www.nflis.deadiversion.usdoj.gov/nflisdata/docs/2022NFLISPublicDQSQuickReference.pdf",
+    "guess_title": "NFLIS-Drug Public Data Query System Quick Reference Guide",
+    "guess_authors": "U.S. Drug Enforcement Administration",
+    "guess_year": "2022",
+    "url": "https://www.nflis.deadiversion.usdoj.gov/nflisdata/docs/2022NFLISPublicDQSQuickReference.pdf",
+    "doi": null,
+    "source_type": "government report (PDF)",
+    "confidence": "medium"
+  },
+  {
+    "raw_string": "https://www.nflis.deadiversion.usdoj.gov/overview.xhtml",
+    "guess_title": "NFLIS Overview",
+    "guess_authors": "U.S. Drug Enforcement Administration",
+    "guess_year": null,
+    "url": "https://www.nflis.deadiversion.usdoj.gov/overview.xhtml",
+    "doi": null,
+    "source_type": "government web page",
+    "confidence": "low"
+  },
+  {
+    "raw_string": "https://api.fda.gov/drug/drugsfda.json?limit=1",
+    "guess_title": "openFDA Drugs@FDA API endpoint",
+    "guess_authors": "U.S. Food and Drug Administration",
+    "guess_year": "2026",
+    "url": "https://api.fda.gov/drug/drugsfda.json?limit=1",
+    "doi": null,
+    "source_type": "government API endpoint",
+    "confidence": "medium"
+  },
+  {
+    "raw_string": "https://www.sciencedirect.com/science/article/abs/pii/S0304407621001445",
+    "guess_title": "Difference-in-Differences with Variation in Treatment Timing",
+    "guess_authors": "Goodman-Bacon",
+    "guess_year": "2021",
+    "url": "https://www.sciencedirect.com/science/article/abs/pii/S0304407621001445",
+    "doi": null,
+    "source_type": "journal article",
+    "confidence": "high"
+  },
+  {
+    "raw_string": "https://www.fda.gov/media/159901/download?attachment=",
+    "guess_title": "CY 2024 CDER Fast Track Calendar Year Approvals",
+    "guess_authors": "U.S. Food and Drug Administration",
+    "guess_year": "2024",
+    "url": "https://www.fda.gov/media/159901/download?attachment=",
+    "doi": null,
+    "source_type": "government report (PDF)",
+    "confidence": "medium"
+  }
+]
