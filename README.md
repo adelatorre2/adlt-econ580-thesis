@@ -1,5 +1,3 @@
-# ECON 580 Thesis (Sandbox Copy)
+# ECON 580 Thesis 
 
-This repository is a sandbox copy of my undergraduate thesis project,
-used for ECON 580 Assignment 1 to practice version control with Git
-following the Software Carpentry Git tutorial.
+This is the repo for everything related to my thesis. Very much a work in progress at the moment, but welcome to browse as I am working on this.
