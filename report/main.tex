@@ -1,4 +1,4 @@
-\documentclass[12pt]{article}
+\documentclass{scrartcl} % for better typography/titles; switch to article if need to
 
 % Layout and spacing
 \usepackage[margin=1in]{geometry}
@@ -10,6 +10,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{csquotes}
+\usepackage[english]{babel} % for better hyhenation
 
 % Math
 \usepackage{amsmath}
@@ -40,7 +41,7 @@
 
 % Bibliography
 \usepackage[backend=biber,style=authoryear,doi=false,isbn=false,url=true]{biblatex}
-\addbibresource{references/cited.bib}
+\addbibresource{references/cited.bib} % EDIT WITH REFERENCES
 
 \hypersetup{
   colorlinks=true,
@@ -52,19 +53,36 @@
 % Placeholder text
 \usepackage{lipsum}
 
-\title{ECON 580 Senior Thesis}
-\author{Your Name}
-\date{\today}
+% TITLE CONFIGURATION
+\title{
+  \Huge Regulatory Speed \& Diversion Risk in U.S. Drug Markets
+}
+
+\subtitle{
+  \Large ECON 580 Senior Thesis
+}
+\author{
+  \Large Alejandro De La Torre \\[0.5em]
+  \normalsize University of Wisconsin–Madison \\ 
+  Advised by Professor [Advisor Name] % EDIT WITH ADVISOR NAME IF APPLICABLE
+}
+\date{\Large February 2026}
 
 \begin{document}
 
+% COVER PAGE
 \maketitle
-
 \input{sections/abstract}
+\thispagestyle{empty} % to not count the cover page
+\newpage
+\setcounter{page}{1}
 
+% TABLE OF CONTENTS
+\newpage
 \tableofcontents
 \newpage
 
+% MAIN CONTENT
 \input{sections/intro}
 \input{sections/model}
 \input{sections/data}
