@@ -1,0 +1,5 @@
+controlled_substance_screen,count,share
+unlikely_controlled_substance,23712,0.865
+likely_controlled_substance,1791,0.0653
+unclear,1620,0.0591
+possible_controlled_substance,290,0.0106

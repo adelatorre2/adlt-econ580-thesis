@@ -1,0 +1,25 @@
+variable,description,source
+appl_no,FDA application number (string; preserves leading zeros).,Applications.txt
+appl_type,"Application type (NDA, ANDA, BLA, etc.).",Applications.txt
+submission_type,Submission type; ORIG indicates original submission.,Submissions.txt
+submission_no,Submission number within application.,Submissions.txt
+submission_class_code,"Submission class code (e.g., type codes).",SubmissionClass_Lookup.txt
+submission_class_desc,Submission class description.,SubmissionClass_Lookup.txt
+submission_status,"Submission status (AP=approved, TA=tentative approval).",Submissions.txt
+approval_date,FDA approval (or tentative approval) date.,Submissions.txt
+approval_year,Calendar year of approval_date.,Derived
+submission_date,Not available in Drugs@FDA data files; placeholder for future merge.,Not available
+review_duration_days,Not available without submission date; placeholder for future merge.,Derived (requires submission_date)
+review_duration_months,Not available without submission date; placeholder for future merge.,Derived (requires submission_date)
+review_priority_clean,Raw FDA review priority field.,Submissions.txt
+review_priority_group,"Priority grouping: PRIORITY, STANDARD, OTHER/UNKNOWN, MISSING.",Derived
+priority_review,Binary flag for PRIORITY review.,Derived from review_priority
+orphan_designation,Orphan designation flag (only if present).,SubmissionPropertyType.txt
+is_tentative_approval,True if submission_status == TA.,Derived
+sponsor_name,Sponsor/manufacturer name.,Applications.txt
+drug_name,Aggregated drug name(s) by application.,Products.txt
+active_ingredient,Aggregated active ingredient(s) by application.,Products.txt
+dosage_form,Aggregated dosage form(s) by application.,Products.txt
+strength,Aggregated strength(s) by application.,Products.txt
+drug_name_norm,Normalized drug name for merge scaffolding.,Derived
+active_ingredient_norm,Normalized active ingredient for merge scaffolding.,Derived

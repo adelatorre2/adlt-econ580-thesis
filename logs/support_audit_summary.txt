@@ -1,0 +1,37 @@
+Support audit summary (2026-03-08)
+
+Files created
+- src/support_audit.py
+- data/intermediate/controlled_substance_screened_candidates.csv
+- output/tables/controlled_substance_support_summary.csv
+- output/tables/controlled_substance_by_year.csv
+- output/tables/controlled_substance_priority_summary.csv
+- output/tables/controlled_substance_orphan_summary.csv
+- output/tables/controlled_substance_appl_type_summary.csv
+- output/tables/top_controlled_substance_candidates.csv
+- output/figures/controlled_substance_screen_breakdown.png
+- output/figures/controlled_substance_candidates_by_year.png
+- output/figures/controlled_substance_priority_by_year.png
+- notebooks/fda_support_audit.ipynb
+
+Screening approach used
+- Conservative token-based heuristic matching on active ingredient names.
+- High-confidence controlled-substance tokens (opioids, stimulants, benzodiazepines, barbiturates, etc.) tagged as likely.
+- Lower-confidence scheduled drugs tagged as possible.
+- Cannabinoid-related or ambiguous terms tagged as unclear.
+- No DEA schedule file or external authoritative source linked in this audit.
+
+Key findings (exploratory)
+- Likely + possible overlap: 2,081 of 27,413 FDA ORIG approvals (~7.6%).
+- Overlap spans 1942–2026 with nonzero counts in 76 distinct years.
+- Review priority within overlap: PRIORITY=40, STANDARD=666, MISSING=1,370 (substantial missingness).
+- Orphan designation within overlap: 19 of 2,081 (~0.9%).
+- Ingredient concentration: top 10 ingredients account for ~48% of ingredient mentions.
+
+Biggest limitations
+- Screening is heuristic; no verified DEA scheduling or ARCOS reference data used.
+- Missing review-priority data limits priority vs standard comparisons.
+- Active-ingredient text includes combination products, which complicates interpretation.
+
+Recommendation
+- Narrow. Proceed with a focused, likely-controlled subset (opioids/stimulants/benzodiazepines) and add DEA schedule/ARCOS reference data before any downstream-outcome design.

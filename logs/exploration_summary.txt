@@ -1,0 +1,33 @@
+Exploration summary (2026-03-08)
+
+Files created
+- notebooks/fda_arcos_exploratory_pipeline.ipynb
+- src/fda_pipeline.py
+- data/processed/fda_backbone.csv
+- data/processed/fda_backbone_data_dictionary.csv
+- output/tables/approvals_by_year.csv
+- output/tables/priority_by_year.csv
+- output/tables/orphan_by_year.csv
+- output/tables/missingness_summary.csv
+- output/tables/top_active_ingredients.csv
+- output/figures/approvals_by_year.png
+- output/figures/review_priority_by_year.png
+- output/figures/orphan_approvals_by_year.png
+- data/intermediate/controlled_substance_mapping_stub.csv
+- data/intermediate/arcos_merge_candidates.csv
+
+Major sources used
+- FDA Drugs@FDA Data Files (official FDA download): https://www.fda.gov/drugs/drug-approvals-and-databases/drugsfda-data-files
+- FDA Drugs@FDA zip (direct download): https://www.fda.gov/media/89850/download?attachment
+- NBER mirror listed as a fallback: https://www.nber.org/research/data/fda-drugsfda-data-files
+
+Key findings (exploratory)
+- Built a backbone of ORIG submissions with approval dates, review priority, sponsor, drug name, and active ingredient.
+- Review priority (PRIORITY vs STANDARD) is available and can serve as a proxy for review speed.
+- Orphan designation is available; other expedited program flags are not in the Drugs@FDA data files.
+- Approval date is available, but submission date is not, so review duration cannot be computed from this source alone.
+
+Unresolved issues / limitations
+- Submission dates missing in FDA data files; review duration is not directly observable.
+- ARCOS data not present locally; linkage requires external controlled-substance schedule data or ARCOS reference tables.
+- Expedited pathway flags (fast track, breakthrough therapy, accelerated approval) require additional data sources.
