@@ -1,26 +1,5 @@
 # ECON 580 Thesis
 
-This is the repo for everything related to my thesis. Very much a work in progress at the moment, but welcome to browse as I am working on this.
-
-
-
-So right now I am exploring whether
-
-Are expedited review programs disproportionately used for controlled substances?
-
-Potentially also whether PDUFA increase the approval of controlled substances?
-
-
-
-PDUFA and controlled-substance drug entry:
-policy shock
-→ FDA approvals
-→ controlled-substance supply
-
-otherwise: Priority review and drug safety outcome or Controlled-substance approvals and opioid mortality
-
-# ECON 580 Thesis
-
 This repository contains all code, notes, literature, and data work related to my undergraduate economics thesis (ECON 580). The project is currently in development and this document serves as a high‑level description of the research direction, core questions, and relevant literature.
 
 ---
