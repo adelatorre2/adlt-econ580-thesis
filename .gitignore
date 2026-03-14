@@ -20,3 +20,25 @@
 .DS_Store
 .vscode/*
 !.vscode/settings.json
+
+# Python virtual environment
+.venv/
+venv/
+
+# Python cache / build artifacts
+__pycache__/
+*.py[cod]
+*.so
+*.dylib
+*.egg-info/
+.eggs/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment files
+.env
+.env.*
+
+# Data / notebook runtime clutter (optional to keep generated outputs out of git)
+*.sqlite

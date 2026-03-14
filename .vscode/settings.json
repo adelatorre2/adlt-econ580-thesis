@@ -91,5 +91,7 @@
   // --- Quality-of-life ---
   "files.trimTrailingWhitespace": true,
   "files.insertFinalNewline": true
+  // --- Python environment (lock project to local .venv) ---
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+  "python.terminal.activateEnvironment": true
 }
-
