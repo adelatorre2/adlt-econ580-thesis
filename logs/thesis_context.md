@@ -164,6 +164,34 @@ Role in thesis:
 
 This is the current processed master dataset for exploratory descriptive analysis and for downstream derivation of approval-only or original-submission subsets.
 
+### Dataset: DEA Controlled-Substance Raw Reference Materials (`data/raw/dea_controlled_substances_20260315/`)
+
+Source: official DEA materials downloaded from DEA / Diversion Control webpages and PDFs in March 2026.
+
+Content:
+
+- current DEA schedule-reference web content
+- DEA conversion-factor table with controlled-substance names, schedules, and drug codes
+- DEA Orange Book PDFs and exempted-product materials used for edge-case audit and scope checking
+
+Role in thesis:
+
+Provides the raw controlled-substance reference material used to construct a first-pass DEA linkage layer without replacing the FDA backbone.
+
+### Dataset: FDA+DEA Intermediate Linkage (`data/intermediate/fda_dea_controlled_substance_linkage.csv`)
+
+Source: built locally in `code/notebooks/03_dea_controlled_substance_linkage.ipynb` from the processed FDA backbone plus official DEA reference material.
+
+Content:
+
+- one row per FDA submission event from the master backbone
+- DEA linkage status fields distinguishing confident scheduled matches, `List I` matches, uncertain candidate-only cases, and rows lacking FDA-side ingredient information
+- matched DEA substance names, schedules, drug codes, match methods, uncertainty flags, and audit notes
+
+Role in thesis:
+
+This is the current intermediate enrichment layer for studying controlled-substance involvement in FDA regulatory activity.
+
 ---
 
 # 5. Unit of Observation
@@ -210,6 +238,7 @@ Current empirical direction:
 - primary near-term focus is **descriptive analysis**
 - the core processed dataset is an unfiltered FDA submission-event panel
 - approval-only, original-submission, NDA-only, and other analytic subsets should be derived from the master panel rather than stored as the primary processed file
+- a first-pass DEA linkage layer now exists and should be used as an intermediate enrichment rather than treated as final truth about product-level schedule status
 - the broader thesis question remains whether PDUFA changed the composition of FDA-approved drugs, especially controlled substances
 - early descriptive work now explicitly compares the full submission-event panel to narrower views such as `AP` and `ORIG + AP` rather than assuming one unit or subset is always appropriate
 
@@ -229,35 +258,28 @@ Thesis stage:
 - empirical modeling
 - writing
 
-Primary datasets currently constructed:
-
-- [dataset]
-
-Current analytical tasks:
-
-- [task]
-
-Current bottlenecks:
-
-- [problem]
-
 Thesis stage:
 
 - dataset construction completed for a first-pass FDA master panel
 - descriptive analysis notebook built and executed from the processed backbone
+- first-pass DEA controlled-substance linkage notebook built and executed
 
 Primary datasets currently constructed:
 
 - `data/processed/fda_backbone.csv`
+- `data/intermediate/fda_dea_controlled_substance_linkage.csv`
 
 Current analytical tasks:
 
 - interpret the descriptive results from `code/notebooks/02_fda_descriptive_analysis.ipynb`
-- compare full-panel patterns against `AP` and `ORIG + AP` subsets where unit-of-observation matters
-- prepare for DEA schedule / controlled-substance linkage and post-1992 composition analysis
+- use the DEA-linked intermediate file for controlled-substance descriptives and post-1992 composition analysis
+- audit uncertain DEA candidate matches and ingredient-level edge cases before treating them as substantive results
 
 Current bottlenecks:
 
+- DEA reference materials are useful but not fully comprehensive for salts, isomers, derivatives, and preparation-specific schedule distinctions
+- the current linkage operates through ingredient aggregates rather than exact product-level identities
+- some FDA submission-event rows have no ingredient information, which limits controlled-substance classification coverage
 - Drugs@FDA is not a full universe of failed applications
 - exact submission-to-product mapping remains limited because product fields are attached conservatively at the application level
 - some supporting fields remain only partially interpretable without additional lookup support
@@ -324,6 +346,8 @@ Examples:
 - placeholder dates such as `1900-01-01` must be treated as missing rather than real event dates
 - one-to-many child tables from Drugs@FDA should be aggregated before merge to avoid inflating the submission-event panel
 - descriptive patterns can change materially when the unit shifts from submission-event rows to application-level aggregates, so unit changes must always be made explicitly and justified
+- DEA linkage should remain auditable and ingredient-based unless a defensible product-level bridge is built later
+- current DEA schedule matches should not be interpreted automatically as historical schedule-at-approval classifications
 
 ---
 
@@ -347,6 +371,10 @@ Examples:
 - `ReviewPriority` is informative descriptively but unstable enough over time that raw and cleaned versions should be distinguished carefully
 - the orphan-property indicator is only partially observed because many rows have no submission-property data
 - Linking FDA drug approvals to DEA scheduling classifications may require external data sources and careful product‑level matching, which introduces potential measurement error if scheduling status cannot be consistently mapped to the submission‑event dataset.
+- DEA reference lists used for linkage are explicitly not fully comprehensive and do not exhaustively resolve salts, isomers, esters, ethers, derivatives, or all preparation-specific cases
+- the current DEA linkage is strongest for ingredient-level controlled-substance involvement, not for exact product-level schedule assignment
+- the parsed DEA reference includes both CSA scheduled substances and `List I` chemicals, so those categories must remain separate in analysis
+- some FDA rows in the backbone have no `ActiveIngredient_list`, so they cannot be classified through the current ingredient-based DEA bridge
 - Many central FDA-regulation papers are descriptive or reduced-form and do not by themselves identify downstream causal effects on misuse or diversion.
 - Welfare analyses in the PDUFA literature often rely on strong assumptions about consumer surplus, producer surplus, and how safety harms should be monetized, so those papers should be used as conceptual anchors rather than taken as definitive estimates for this thesis.
 - Several FDA safety papers use withdrawals, black-box warnings, or related regulatory events as downstream outcomes; these are informative but do not directly measure diversion, misuse, or illicit-market spillovers.
@@ -369,6 +397,7 @@ Important unresolved questions that guide ongoing work.
 - Should the thesis ultimately frame its contribution as an extension of the classic FDA “speed vs safety” tradeoff into a broader “speed vs downstream externalities” framework?
 - What is the most appropriate observational lens for early descriptive analysis: drug-level summaries, submission-event counts, or application-level approval series derived from the master FDA backbone?
 - Which subset should anchor the core thesis descriptives once DEA linkage is added: the full submission-event panel, `AP`, `ORIG`, or `ORIG + AP`?
+- Should the thesis’s core controlled-substance results rely only on confident DEA matches, or should uncertain parent/isomer candidates appear in sensitivity analysis?
 - Should the thesis treat *staffing/resources* rather than *user-fee funding source* as the more credible mechanism linking PDUFA-era institutional change to approval speed?
 - Is accelerated approval plus mandated public-payer coverage a more tractable downstream-externalities angle than diversion risk, or should it remain background rather than the main empirical contribution?
 - If the thesis stays focused on controlled substances, what is the cleanest way to connect FDA-side regulatory acceleration to a downstream outcome that is closer to economic behavior than to clinical uncertainty alone?
@@ -387,9 +416,9 @@ Example:
 
 Keep this section **very short and frequently updated**.
 
-1. use the descriptive notebook to choose the most defensible FDA analytic subset for thesis figures
-2. build DEA schedule / controlled-substance linkage against the FDA backbone
-3. decide whether a lightweight application-level panel is needed alongside the submission-event master
+1. use the DEA-linked intermediate dataset to produce controlled-substance descriptives with clear confidence tiers
+2. audit uncertain DEA matches and important ingredient edge cases before promoting them into core thesis figures
+3. decide whether the main thesis descriptives should be anchored on the full panel, `AP`, `ORIG + AP`, or a companion application-level panel
 
 ---
 
