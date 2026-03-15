@@ -86,8 +86,9 @@ Clarify:
 
 The most relevant literature now falls into three groups.
 
-- **Institutional / background FDA papers**: Darrow, Avorn, and Kesselheim (2020) maps the evolution of FDA regulation, expedited pathways, user fees, and approval standards and is most useful for institutional background rather than causal inference.
-- **Core speed / PDUFA / review-timing papers**: Dranove and Meltzer (1994) studies whether more important drugs reach the market sooner; Olson (1997) studies how firm characteristics affect FDA approval speed; Olson (2009) studies whether PDUFA and faster FDA review increased the likelihood of initial U.S. drug launches; Carpenter, Zucker, and Avorn (2008) studies whether PDUFA deadlines are associated with later safety problems; Philipson et al. (2008) provides a welfare framework for the FDA speed–safety tradeoff under PDUFA.
+- **Institutional / background FDA papers**: Darrow, Avorn, and Kesselheim (2017, 2020) map the evolution of FDA regulation, user fees, shrinking review times, growing industry-funding dependence, and approval standards; these papers are most useful for institutional background and for framing the speed–safety–industry-funding debate rather than for clean causal inference.
+- **Core speed / PDUFA / review-timing papers**: Dranove and Meltzer (1994) studies whether more important drugs reach the market sooner; Olson (1997) studies how firm characteristics affect FDA approval speed; Olson (2009) studies whether PDUFA and faster FDA review increased the likelihood of initial U.S. drug launches; Carpenter, Chernew, Smith, and Fendrick (2003) finds that additional FDA staffing substantially reduced NDA review times and argues that the amount of review resources mattered more than the source of funding; Carpenter, Zucker, and Avorn (2008) studies whether PDUFA deadlines are associated with later safety problems; Philipson et al. (2008) provides a welfare framework for the FDA speed–safety tradeoff under PDUFA.
+- **Accelerated approval / coverage / uncertain-benefit papers**: Gellad and Kesselheim (2017) is useful for understanding accelerated approval as a pathway that can bring expensive drugs to market before confirmatory evidence is complete, while still triggering strong Medicare and Medicaid coverage obligations for many products; this is especially useful for thinking about downstream public-spending and regulatory-externality channels even if it is not itself a controlled-substance paper.
 - **Still-needed downstream literature**: the project still needs the prescription supply / opioid / diversion / illicit-market literature that can connect faster approval and earlier or greater legal drug availability to downstream misuse or diversion outcomes.
 
 Major debates:
@@ -96,10 +97,12 @@ Major debates:
 - whether faster approval or deadline pressure increases safety risk
 - whether PDUFA primarily changed review speed, firm launch behavior, or both
 - whether the main downstream consequence of regulatory acceleration should be studied through safety only, or also through broader market externalities
+- whether the key mechanism behind shrinking review times is user-fee dependence itself or simply greater staffing and review resources
+- whether accelerated approval and other expedited pathways create downstream public costs when products with uncertain clinical benefit still trigger broad public-payer coverage
 
 Current fit of the thesis:
 
-The thesis is increasingly positioned as an extension of the FDA speed–safety literature into a downstream market-outcomes question. Existing core papers mainly study review time, launch timing, and safety; the project may contribute by asking whether regulatory acceleration also changed the composition or supply conditions of approved drugs in ways that matter for controlled-substance exposure and diversion risk.
+The thesis is increasingly positioned as an extension of the FDA speed–safety literature into a downstream market-outcomes question. Existing core papers mainly study review time, launch timing, and safety; the project may contribute by asking whether regulatory acceleration also changed the composition or supply conditions of approved drugs in ways that matter for controlled-substance exposure and diversion risk. New reading also suggests two useful refinements for the project: first, the thesis should distinguish sharply between the effect of *more FDA review resources* and the effect of *industry-funded user fees as such*; second, accelerated approval and coverage mandates may be a parallel downstream-externalities channel worth tracking even if the main empirical focus remains controlled substances.
 
 ---
 
@@ -347,6 +350,8 @@ Examples:
 - Many central FDA-regulation papers are descriptive or reduced-form and do not by themselves identify downstream causal effects on misuse or diversion.
 - Welfare analyses in the PDUFA literature often rely on strong assumptions about consumer surplus, producer surplus, and how safety harms should be monetized, so those papers should be used as conceptual anchors rather than taken as definitive estimates for this thesis.
 - Several FDA safety papers use withdrawals, black-box warnings, or related regulatory events as downstream outcomes; these are informative but do not directly measure diversion, misuse, or illicit-market spillovers.
+- The literature now suggests that shrinking review times may reflect increased FDA staffing and review resources more than the funding source itself, which complicates any attempt to interpret PDUFA as a simple “industry influence” shock.
+- Accelerated-approval and public-payer-coverage papers are highly relevant for policy framing, but many of those examples come from oncology or rare-disease markets rather than controlled substances, so external validity to this thesis question may be limited.
 
 ---
 
@@ -364,6 +369,9 @@ Important unresolved questions that guide ongoing work.
 - Should the thesis ultimately frame its contribution as an extension of the classic FDA “speed vs safety” tradeoff into a broader “speed vs downstream externalities” framework?
 - What is the most appropriate observational lens for early descriptive analysis: drug-level summaries, submission-event counts, or application-level approval series derived from the master FDA backbone?
 - Which subset should anchor the core thesis descriptives once DEA linkage is added: the full submission-event panel, `AP`, `ORIG`, or `ORIG + AP`?
+- Should the thesis treat *staffing/resources* rather than *user-fee funding source* as the more credible mechanism linking PDUFA-era institutional change to approval speed?
+- Is accelerated approval plus mandated public-payer coverage a more tractable downstream-externalities angle than diversion risk, or should it remain background rather than the main empirical contribution?
+- If the thesis stays focused on controlled substances, what is the cleanest way to connect FDA-side regulatory acceleration to a downstream outcome that is closer to economic behavior than to clinical uncertainty alone?
 
 ---
 
