@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+		<!-- Basic -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title>404 - Page Not Found</title>	
+
+		<meta name="keywords" content="WebSite Template" />
+		<meta name="description" content="DIVERSION CONTROL DIVISION - Page Not Found">
+		<meta name="author" content="okler.net">
+
+		<!-- Favicon -->
+		<link rel="shortcut icon" href="https://www.deadiversion.usdoj.gov/img/favicon.ico" type="image/x-icon" />
+		<link rel="apple-touch-icon" href="https://www.deadiversion.usdoj.gov/img/apple-touch-icon.png">
+
+		<!-- Mobile Metas -->
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
+
+		<!-- Web Fonts  -->
+		<link id="googleFonts" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800%7CShadows+Into+Light&display=swap" rel="stylesheet" type="text/css">
+
+		<!-- Vendor CSS -->
+		<link rel="stylesheet" href="https://www.deadiversion.usdoj.gov/vendor/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://www.deadiversion.usdoj.gov/vendor/fontawesome-free/css/all.min.css">
+		<link rel="stylesheet" href="https://www.deadiversion.usdoj.gov/vendor/animate/animate.compat.css">
+		<link rel="stylesheet" href="https://www.deadiversion.usdoj.gov/vendor/simple-line-icons/css/simple-line-icons.min.css">
+		<link rel="stylesheet" href="https://www.deadiversion.usdoj.gov/vendor/owl.carousel/assets/owl.carousel.min.css">
+		<link rel="stylesheet" href="https://www.deadiversion.usdoj.gov/vendor/owl.carousel/assets/owl.theme.default.min.css">
+		<link rel="stylesheet" href="https://www.deadiversion.usdoj.gov/vendor/magnific-popup/magnific-popup.min.css">
+
+		<!-- Theme CSS -->
+		<link rel="stylesheet" href="https://www.deadiversion.usdoj.gov/css/theme.css">
+		<link rel="stylesheet" href="https://www.deadiversion.usdoj.gov/css/theme-elements.css">
+		<link rel="stylesheet" href="https://www.deadiversion.usdoj.gov/css/theme-blog.css">
+		<link rel="stylesheet" href="https://www.deadiversion.usdoj.gov/css/theme-shop.css">
+
+		<!-- Demo CSS -->
+		<link rel="stylesheet" href="https://www.deadiversion.usdoj.gov/css/demos/demo-medical.css">
+
+		<!-- Skin CSS -->
+		<link id="skinCSS" rel="stylesheet" href="https://www.deadiversion.usdoj.gov/css/skins/skin-medical.css">
+
+		<!-- Theme Custom CSS -->
+		<link rel="stylesheet" href="https://www.deadiversion.usdoj.gov/css/custom.css">
+
+		<!-- Head Libs -->
+		<script src="https://www.deadiversion.usdoj.gov/vendor/modernizr/modernizr.min.js"></script>
+
+	</head>
+	<body data-plugin-page-transition>
+
+		<div class="body">
+			<header id="header" class="header-effect-shrink" data-plugin-options="{'stickyEnabled': true, 'stickyEffect': 'shrink', 'stickyEnableOnBoxed': false, 'stickyEnableOnMobile': false, 'stickyStartAt': 70, 'stickyChangeLogo': false, 'stickyHeaderContainerHeight': 70}">
+				<div class="header-body border-top-0 box-shadow-none">
+					<div class="header-container header-container-md container">
+						<div class="header-row">
+							<div class="header-column">
+								<div class="header-row">
+									<div class="header-logo">
+										<a href="https://www.deadiversion.usdoj.gov/">
+											<img alt="" width="200" height="110" data-sticky-width="150" data-sticky-height="80" data-sticky-top="35" src="https://www.deadiversion.usdoj.gov/img/dcd-logo.png">
+										</a>
+									</div>
+								</div>
+							</div>
+							<div class="header-column justify-content-end">
+								<div class="header-row pt-3">
+									<nav class="header-nav-top">
+										<ul class="nav nav-pills">
+											<!---<li class="nav-item nav-item-anim-icon d-none d-md-block">
+												<a class="nav-link ps-0" href="about-us.html"><i class="fas fa-angle-right"></i> About Us</a>
+											</li>--->
+											<li class="nav-item nav-item-anim-icon d-none d-md-block">
+												<a class="nav-link" href="mailto:DEA.Registration.Help@dea.gov"><i class="fas fa-envelope"></i> DEA.Registration.Help@dea.gov</a>
+											</li>
+											<li class="nav-item nav-item-left-border nav-item-left-border-remove nav-item-left-border-md-show">
+												<span class="ws-nowrap"><i class="fas fa-phone"></i> 1.800.882.9539</span>
+											</li>
+										</ul>
+									</nav>
+									<div class="header-nav-features">
+										<div class="header-nav-feature header-nav-features-search d-inline-flex">
+											<a href="#" class="header-nav-features-toggle text-decoration-none" data-focus="headerSearch"><i class="fas fa-search header-nav-top-icon"></i></a>
+											<div class="header-nav-features-dropdown" id="headerTopSearchDropdown">
+											<form method="get" action="https://search.deadiversion.usdoj.gov/texis/search?pr=Prod-static-walk" style="margin:0;">
+<input type="hidden" name="dropXSL" value="" />
+<input type="hidden" name="pr" value="Prod-static-walk" />
+<input type="hidden" name="prox" value="page" />
+<input type="hidden" name="rorder" value="500" />
+<input type="hidden" name="rprox" value="500" />
+<input type="hidden" name="rdfreq" value="500" />
+<input type="hidden" name="rwfreq" value="500" />
+<input type="hidden" name="rlead" value="500" />
+<input type="hidden" name="sufs" value="2" />
+<input type="hidden" name="order" value="r" />
+<input type="hidden" name="rdepth" value="0" />
+<input type="text" title="Type Search Term Here" size="20" id="query" name="query" value="" />
+<input type="submit" name="submit" value="Search" />
+</form>
+
+											</div>
+										</div>
+										
+										
+									</div>
+								</div>
+								
+								
+								
+								<div class="header-row">
+									<div class="header-nav pt-1">
+										<div class="header-nav-main header-nav-main-effect-1 header-nav-main-sub-effect-1">
+											<nav class="collapse">
+												<ul class="nav nav-pills" id="mainNav">
+													<li class="dropdown-full-color dropdown-secondary">
+														<a class="nav-link" href="https://www.deadiversion.usdoj.gov/" title="Home">
+															Home
+														</a>
+													</li>
+													
+													
+													<li class="dropdown dropdown-secondary">
+														<a class="nav-link dropdown-toggle" class="dropdown-toggle" href="#" title="About Us">
+															About Us
+														</a>
+														<ul class="dropdown-menu">
+															<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/about-us.html" title="Program Description">Program Description</a></li>
+															<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/pubs/docs/cs_plan.html" title="Customer Service Plan">Customer Service Plan</a></li>
+															<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/online_forms_apps.html" title="DEA Forms &amp; Applications">DEA Forms &amp; Applications</a></li>
+															<li><a class="dropdown-item" href="https://www.ecfr.gov/current/title-21/chapter-II/part-1321/section-1321.01" target="_blank" title="Mailing Addresses">Mailing Addresses <i class="fas fa-external-link-alt" style="font-size: small;"></i></a></li>
+										<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/mtgs/meetings.html" title="Meeting &amp; Events">Meeting &amp; Events</a></li>
+															<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/security.html" title="Privacy Notice">Privacy Notice</a></li>
+															<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/new.html" title="What’s New">What’s New</a></li>
+														</ul>
+													</li>
+													
+													
+													<li class="dropdown dropdown-secondary">
+														<a class="nav-link dropdown-toggle" class="dropdown-toggle" href="#" title="Registration">
+															Registration
+														</a>
+														<ul class="dropdown-menu">
+														<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/drugreg/registration.html" title="Registration">Registration</a></li>
+															
+															<li><a class="dropdown-item" href="faq/MATE_Act_faq.html" title="Opioid Use Disorder - MATE Act training requirements">Opioid Use Disorder - MATE Act training requirements</a></li>
+															<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/meth/combat-methamphetamine-epidemic-act.html#tabsNavigationVertSimple3" title="CMEA Required Training &amp; Self-Certification">CMEA Required Training &amp; Self-Certification</a></li>
+															<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/quotas/quota-apps.html" title="Quota Applications">Quota Applications</a></li>
+															<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/drugreg/csos/csos.html" title="Controlled Substance Ordering System (CSOS)">Controlled Substance Ordering System (CSOS)</a></li>
+															<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/drugreg/marihuana.html" title="Marihuana Growers Information">Marihuana Growers Information</a></li>
+															<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/drugreg/schedule-1.html" title="Schedule I Controlled Substances Research Information">Schedule I Controlled Substances Research Information</a></li>
+															<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/drugreg/nor/nor.html" title="Notice of Registration">Notice of Registration</a></li>
+														</ul>
+													</li>
+													
+																										
+													
+													<li class="dropdown dropdown-mega">
+														<a class="dropdown-item dropdown-toggle" href="#" title="Reporting">
+															Reporting
+														</a>
+														<ul class="dropdown-menu">
+															<li>
+																<div class="dropdown-mega-content">
+																	<div class="row">
+																		<div class="col-lg-3">
+																			
+																			<ul class="dropdown-mega-sub-nav">
+																				<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/arcos/arcos.html" title="ARCOS">ARCOS</a></li>
+																				<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/chem_prog/bulk-chem-manufacturer.html" title="BCM Online">BCM Online</a></li>
+																				<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/21cfr_reports/chemicals/chemical-declaration.html" title="Chemical Import/Export Declarations">Chemical Import/Export<br> Declarations</a></li>
+																					<li><a class="dropdown-item" href="https://apps.deadiversion.usdoj.gov/CORT/login.xhtml?jfwid=vqM_J_lm6UvztP87MNxRSaDsruV1anlJTcz2IM-4:0#no-back-button" target="_blank" title="Chemical Suspicious Order Reporting (CORT)">Chemical Suspicious<br> Order Reporting (CORT) <i class="fas fa-external-link-alt" style="font-size: small;"></i></a></li>
+																				
+																				
+																																							
+																			</ul>
+																		</div>
+																		<div class="col-lg-3">
+																			
+																			<ul class="dropdown-mega-sub-nav">
+																				<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/21cfr_reports/theft/theft-loss.html" title="Theft/Loss Reporting">Theft/Loss Reporting</a></li>
+																				<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/imp_exp/imp-exp.html" title="Import/Export">Import/Export</a></li>
+																			<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/imp_exp/med-missions.html" title="Medical Missions">Medical Missions</a></li>
+																				<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/quotas/quotas.html" title="Quotas">Quotas</a></li>
+																				<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/21cfr_reports/surrend/surrend.html" title="Registrant Record of Controlled Substances Destroyed">Registrant Record of<br> Controlled Substances Destroyed</a></li>
+																				
+																																							
+																			</ul>
+																		</div>
+																		<div class="col-lg-3">
+																			
+																			<ul class="dropdown-mega-sub-nav">
+																				<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/21cfr_reports/reg_machines/reg-machines.html" title="Regulated Machines (Tableting and Encapsulating)">Regulated Machines<br>(Tableting and Encapsulating)</a></li>
+																				<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/21cfr_reports/21cfr-reports.html" title="Reports Required by 21 CFR">Reports Required by 21 CFR</a></li>
+																				<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/sors/sors.html" title="SORS">SORS</a></li>
+																				<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/tips-online.html" title="Submit a Tip to DEA">Submit a Tip to DEA</a></li>
+																				<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/quotas/year_end/year-end.html" title="Year-end Reports">Year-end Reports</a></li>																															</ul>
+																		</div>
+																		<div class="col-lg-3">
+																			
+																			<ul class="dropdown-mega-sub-nav">
+																				<li class="dropdown-item"><img src="https://www.deadiversion.usdoj.gov/img/menu-img1.jpg"></li>																												
+																			</ul>
+																		</div>
+																	</div>
+																</div>
+															</li>
+														</ul>
+													</li>
+													
+													
+																										
+													
+													<li class="dropdown dropdown-mega">
+														<a class="dropdown-item dropdown-toggle" href="#" title="Resources">
+															Resources
+														</a>
+														<ul class="dropdown-menu">
+															<li>
+																<div class="dropdown-mega-content">
+																	<div class="row">
+																		<div class="col-lg-3">
+																			
+																			<ul class="dropdown-mega-sub-nav">
+																				<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/administrative_actions.html" title="Administrative Actions">Administrative Actions</a></li>
+																				<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/chem_prog/chem-control-program.html" title="Chemical Control Program">Chemical Control Program</a></li>
+																				<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/chem_prog/advisories/advisories-to-the-public.html" title="Chemical Warning Notices">Chemical Warning Notices</a></li>
+																				<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/meth/combat-methamphetamine-epidemic-act.html" title="CMEA (Combat Meth Epidemic Act)">CMEA (Combat Meth<br> Epidemic Act)</a></li>
+																				<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/schedules/schedules.html" title="Controlled Substances Schedules">Controlled Substances Schedules</a></li>
+																			
+																				<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/cyber-security.html" title="Cyber Security">Cyber Security</a></li>
+																				<li><a class="dropdown-item" href="https://www.reginfo.gov/public/do/eAgendaMain?operation=OPERATION_GET_AGENCY_RULE_LIST&currentPub=true&agencyCode=&showStage=active&agencyCd=1100&csrf_token=1DBD358B5946FE33AEF096BDF4B4332A02162492C2B3540BD9A1B6817CE5F2B78098ED2E9A723B1531B8ED6D2E39FAD09221" title="DEA Regulatory Priorities" target="_blank">DEA Regulatory Priorities <i class="fas fa-external-link-alt" style="font-size: small;"></i></a></li>
+																				<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/dea_tox/dea-tox.html" title="DEA TOX Toxicology Testing Program">DEA TOX</a></li>
+																				
+																				
+																				
+																			</ul>
+																		</div>
+																		<div class="col-lg-3">
+																			
+																			<ul class="dropdown-mega-sub-nav">
+																				<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/drug_disposal/drug-disposal.html" title="Drug Disposal Information">Drug Disposal Information</a></li>
+																				<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/drug_chem_info/drug-chem-info.html" title="Drug &nbsp; Chemical Information">Drug &amp; Chemical Information</a></li>
+																				
+																				<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/ecomm/ecomm.html" title="EPCS (Electronic Prescriptions for Controlled Substances)">EPCS (Electronic Prescriptions for<br> Controlled Substances)</a></li>
+																				<li><a class="dropdown-item" href="https://www.federalregister.gov/documents/search?conditions%5Bagencies%5D%5B%5D=drug-enforcement-administration&order=newest" target="_blank" title="Federal Register Notices">Federal Register Notices <i class="fas fa-external-link-alt" style="font-size: small;"></i></a></li>
+																				<li><a class="dropdown-item" href="https://apps.deadiversion.usdoj.gov/guidance" target="_blank" title="Guidance Document Portal">Guidance Document Portal</a></li>
+																				<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/pubs/docs/MATE_training.html" title="Medications for Opioid Use Disorder">Medications for Opioid Use Disorder</a></li>
+																				<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/drug_disposal/takeback/takeback.html" title="National Prescription Drug Take Back Day">National Prescription Drug<br> Take Back Day</a></li>
+																				
+																			</ul>
+																		</div>
+																		<div class="col-lg-3">
+																			
+																			<ul class="dropdown-mega-sub-nav">															<li><a class="dropdown-item" href="https://deadiversion.usdoj.gov/narcotic-treatment-programs.html" title="Narcotic Treatment Programs">Narcotic Treatment Programs</a></li>					
+																				<li><a class="dropdown-item" href="https://www.nflis.deadiversion.usdoj.gov/Default.aspx" target="_blank" title="NFLIS">NFLIS <i class="fas fa-external-link-alt" style="font-size: small;"></i></a></li>
+																				<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/opioid_phe.html" title="OPIOID (PHE) Information">OPIOID (PHE) Information</a></li>
+																				<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/pharmacy.html" title="Pharmacy">Pharmacy</a></li>
+																				<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/pubs/pubs.html" title="Publications and Manual">Publications &amp; Manuals</a></li>
+																				<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/faq/faq.html" title="Questions &amp; Answers">Questions &amp; Answers</a></li>
+																				<li><a class="dropdown-item" href="https://www.deadiversion.usdoj.gov/Telemedicine.html" title="Telemedicine">Telemedicine</a></li>
+																				
+																				<li><a class="dropdown-item" href="https://www.ecfr.gov/current/title-21/chapter-II" target="_blank" title="Title 21 Code of Federal Regulations - External Link">Title 21 Code of Federal Regulations <i class="fas fa-external-link-alt" style="font-size: small;"></i></a></li>
+																				<li><a class="dropdown-item" href="https://uscode.house.gov/browse/prelim@title21/chapter13/subchapter1/partC&edition=prelim" target="_blank" title="Title 21 USC Codified CSA - External Link">Title 21 USC Codified CSA <i class="fas fa-external-link-alt" style="font-size: small;"></i></a></li>
+																			</ul>
+																		</div>
+																		<div class="col-lg-3">
+																			
+																			<ul class="dropdown-mega-sub-nav">
+																				
+																				<li class="dropdown-item"><img src="https://www.deadiversion.usdoj.gov/img/menu-img2.jpg"></li>
+																				
+																			</ul>
+																		</div>
+																	</div>
+																</div>
+															</li>
+														</ul>
+													</li>
+													
+													
+													<li class="dropdown-full-color dropdown-secondary">
+														<a class="nav-link" href="https://www.deadiversion.usdoj.gov/contact-us.html" title="Contact Us">
+															Contact Us
+														</a>
+													</li>
+												</ul>
+											</nav>
+										</div>
+										
+										
+										
+										
+										
+										
+										<ul class="header-social-icons social-icons d-none d-sm-block">
+										<li class="social-icons-facebook"><a href="https://www.facebook.com/DEAHQ/" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+											<li class="social-icons-twitter"><a href="https://twitter.com/DEAHQ" target="_blank" title="Twitter"><i class="fa-x"></i></a></li>
+											<li class="social-icons-instagram"><a href="https://www.instagram.com/deahq/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a></li>
+											<li class="social-icons-linkedin"><a href="https://www.linkedin.com/school/drug-enforcement-administration/" target="_blank" title="Linkedin"><i class="fab fa-linkedin-in"></i></a></li>
+										</ul>
+										<button class="btn header-btn-collapse-nav" data-bs-toggle="collapse" data-bs-target=".header-nav-main nav">
+											<i class="fas fa-bars"></i>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</header>
+
+			<div role="main" class="main">
+
+				<section class="page-header page-header-modern bg-color-primary page-header-md">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+								<h1>404</h1>
+								<h4>Page Not Found</h4>
+							</div>
+							<div class="col-md-4 order-1 order-md-2 align-self-center">
+								<ul class="breadcrumb d-block text-md-end breadcrumb-light">
+									<li><a href="https://deadiversion.usdoj.gov/">Home</a></li>
+									<li class="active">Page Not Found</li>
+								</ul>
+							</div>
+							
+						</div>
+					</div>
+				</section>
+				
+				
+
+				<div class="container">
+					
+					
+					
+						<div class="container-fluid">
+					<div class="row">
+						<div class="col-lg-6 p-0">
+							<section>
+								<div class="container">
+									<div class="row">
+										<div class="col">
+											<p>&nbsp;</p>
+											<p class="text-4">You can use our Search Engine to help you find what you are looking for:</p>
+											
+															<div class="search">
+    <form method="get" action="https://search.deadiversion.usdoj.gov/texis/search?pr=Prod-static-walk" style="margin:0;">
+    <input type="hidden" name="dropXSL" value="" />
+    <input type="hidden" name="pr" value="Prod-static-walk" />
+    <input type="hidden" name="prox" value="page" />
+    <input type="hidden" name="rorder" value="500" />
+    <input type="hidden" name="rprox" value="500" />
+    <input type="hidden" name="rdfreq" value="500" />
+    <input type="hidden" name="rwfreq" value="500" />
+    <input type="hidden" name="rlead" value="500" />
+    <input type="hidden" name="sufs" value="2" />
+    <input type="hidden" name="order" value="r" />
+    <input type="hidden" name="rdepth" value="0" />
+    <input type="text" title="Type Search Term Here" size="50" id="query" name="query" value="" />
+    <input type="submit" name="submit" value="Search" />
+    </form>
+	<p>&nbsp;</p>
+    </div>
+
+										</div>
+									</div>
+								</div>
+							</section>
+						</div>
+						
+						
+						<div class="col-lg-6 p-0">
+							<section class="section section-default ps-4 pe-4 border-top-0 m-0 d-flex flex-column justify-content-center">
+								<div class="row">
+									<div class="col">
+										<h2 class="mb-3">Our Apologies...</h2>
+										
+										<p class="text-4"><b>You have visited a page that has moved, or no longer exists.</b></p>
+    <p class="text-4">Please make sure that you have typed the address correctly. If you clicked on a link, it may be outdated.  You can  use our <a href="https://search.deadiversion.usdoj.gov/texis/search/?pr=Prod-static-walk">Search Engine</a> to help you find what you are looking for.</p>
+										
+    <p class="text-4">You may also report the page you were trying to access when you got this error, or any other technical website issues to the Diversion Website Assistance Help Desk at: <a href="mailto:deadiversionwebmaster@dea.gov">DEADiversionWebmaster@dea.gov</a></p>
+										
+										<p class="text-4"><b>To better serve your needs, please include the following information:</b></p>
+										
+    <p class="text-4"><strong>Subject Line:</strong> Brief Description Title (i.e., website issues, comments, DTL, etc.)</p>
+										
+    <p class="text-4"><strong>Body:</strong> Describe the reason for your email. Include your contact information.</p>
+										
+										<a href="https://www.deadiversion.usdoj.gov/" class="btn btn-outline btn-rounded btn-primary  btn-with-arrow mb-2" title="Return to Home Page" target="_blank">Return to Home Page<span><i class="fas fa-chevron-right"></i></span></a>
+									</div>
+								</div>
+							</section>
+						</div>
+					</div>
+				</div>
+															
+					
+						<div class="row">
+							<div class="col">
+								<p>&nbsp;</p>
+							</div>
+							
+						</div>
+					
+
+				</div>
+
+			</div>
+<section class="section bg-color-dark-scale-2 border-0 m-0 py-4">
+					<div class="container">
+						<div class="row">
+							<div class="col">
+								<ul class="list list-unstyled list-inline d-flex align-items-center justify-content-center flex-column flex-lg-row mb-0">
+									<li class="list-inline-item mb-lg-0"><a href="https://www.deadiversion.usdoj.gov/drugreg/registration.html" class="btn btn-dark btn-modern btn-rounded btn-px-4 py-4 border-0" title="REGISTRATION">REGISTRATION</a></li>
+									
+									<li class="list-inline-item mb-lg-0"><a href="https://www.deadiversion.usdoj.gov/reporting.html" class="btn btn-dark btn-modern btn-rounded btn-px-4 py-4 border-0" title="REPORTING">REPORTING</a></li>
+									
+									<li class="list-inline-item mb-lg-0"><a href="https://www.deadiversion.usdoj.gov/resources.html" class="btn btn-dark btn-modern btn-rounded btn-px-4 py-4 border-0" title="RESOURCES">RESOURCES</a></li>
+									
+									<li class="list-inline-item mb-lg-0"><a href="https://www.deadiversion.usdoj.gov/contact-us.html" class="btn btn-dark btn-modern btn-rounded btn-px-4 py-4 border-0" title="CONTACT US">CONTACT US</a></li>
+									
+									<!---<li class="list-inline-item mb-lg-0"><a href="#" class="btn btn-dark btn-modern btn-rounded btn-px-4 py-4 border-0" title="SITE MAP">SITE MAP</a></li>--->
+									
+									<li class="list-inline-item mb-lg-0"><a href="https://www.deadiversion.usdoj.gov/security.html" class="btn btn-dark btn-modern btn-rounded btn-px-4 py-4 border-0" title="PRIVACY NOTICE">PRIVACY NOTICE</a></li>
+									
+									<li class="list-inline-item mb-lg-0"><a href="#" data-bs-toggle="modal" data-bs-target="#largeModal" class="btn btn-dark btn-modern btn-rounded btn-px-4 py-4 border-0" title="GET EMAIL UPDATES">GET EMAIL UPDATES</a></li>
+									<div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-lg">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title" id="largeModalLabel">Get Email Updates</h4>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+												</div>
+												<div class="modal-body">
+													 <h1 class="aligncenter"><img src="https://www.deadiversion.usdoj.gov/images/doj-seal-popup.jpg" alt="Official U.S. Department of Justice Seal" /></h1>
+    <h4>The United States Department of Justice</h4>
+    <p>You are now leaving a Department of Justice Web site.</p>
+    <p>You are about to access:</p>
+    <p><a href="https://public.govdelivery.com/accounts/USDOJDEADCD/subscriber/new" target="_blank" title="Email Updates">Email Updates</a></p>
+    <p>The Department of Justice does not endorse the organizations or views represented by this site and takes no responsibility for, and exercises no control over, the accuracy, accessibility, copyright or trademark compliance or legality of the material contained on this site.</p>
+    <p>Thank you for visiting our site.</p>
+												</div>
+												<!---<div class="modal-footer">
+													<button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+												</div>--->
+											</div>
+										</div>
+								</div>
+								</ul>
+							</div>
+							
+							
+							
+							
+							
+							<div class="col">
+								<ul class="list list-unstyled list-inline d-flex align-items-center justify-content-center flex-column flex-lg-row mb-0">
+									<li class="list-inline-item custom-text-color-1 color-inherit mb-lg-0 text-3 pe-3"><a href="https://www.dea.gov/" target="_blank" title="DEA.GOV - External Link" rel="nofollow">DEA.GOV</a></li>
+									
+									<li class="list-inline-item custom-text-color-1 color-inherit mb-lg-0 text-3 pe-3"><a href="https://www.justice.gov/" target="_blank" title="JUSTICE.GOV - External Link" rel="nofollow">JUSTICE.GOV</a></li>
+									
+									<li class="list-inline-item custom-text-color-1 color-inherit mb-lg-0 text-3 pe-3"><a href="https://www.usa.gov/" target="_blank" title="USA.GOV - External Link" rel="nofollow">USA.GOV</a></li>
+									
+									<li class="list-inline-item custom-text-color-1 color-inherit mb-lg-0 text-3 pe-3"><a href="https://www.regulations.gov/" target="_blank" title="REGULATIONS.GOV - External Link" rel="nofollow">REGULATIONS.GOV</a></li></ul></div>
+									
+								
+							
+							
+						</div>
+							
+									<div class="col">
+								<ul class="list list-unstyled list-inline d-flex align-items-center justify-content-center flex-column flex-lg-row mb-0">
+									
+									<li class="list-inline-item custom-text-color-1 color-inherit mb-lg-0 text-3 pe-3"><a href="https://www.justice.gov/doj/privacy-policy" target="_blank" title="DOJ Privacy Policy - External Link" rel="nofollow">DOJ Privacy Policy</a></li>
+									
+										<li class="list-inline-item custom-text-color-1 color-inherit mb-lg-0 text-3 pe-3"><a href="https://www.deadiversion.usdoj.gov/accessibility.html" title="Section 508 Accesibility" rel="nofollow">Section 508 Accessibility</a></li>
+									
+									<li class="list-inline-item custom-text-color-1 color-inherit mb-lg-0 text-3 pe-3"><a href="https://www.justice.gov/legalpolicies" target="_blank" title="DOJ Legal Policies &amp; Disclaimers - External Link" rel="nofollow">DOJ Legal Policies &amp; Disclaimers</a></li>
+									
+									<li class="list-inline-item custom-text-color-1 color-inherit mb-lg-0 text-3 pe-3"><a href="https://www.dea.gov/foia/about-foia" target="_blank" title="FOIA - External Link" rel="nofollow">FOIA</a></li>
+								</ul>
+							</div>
+						
+					</div>
+				</section>
+			</div>
+
+			<footer id="footer" class="bg-color-dark-scale-2 border border-end-0 border-start-0 border-bottom-0 border-color-light-3 mt-0">
+				<div class="container text-center my-3 py-5">
+					<a href="https://www.deadiversion.usdoj.gov/">
+						<img src="https://www.deadiversion.usdoj.gov/img/lazy.png" data-src="https://www.deadiversion.usdoj.gov/img/deadiv_web_logo_footer.png" class="mb-4 appear-animation lazyload" alt="DIVERSION CONTROL DIVISION" data-appear-animation="fadeIn" data-appear-animation-delay="300">
+					</a>
+					<p class="text-color-light">U.S. Department of Justice<br>
+						Drug Enforcement Administration<br>
+						DIVERSION CONTROL DIVISION<br>
+							8701 Morrissette Drive<br>
+							Springfield, VA 22152<br>
+							1.800.882.9539</p>
+					<ul class="social-icons social-icons-big social-icons-dark-2">
+						<li class="social-icons-instagram"><a href="https://www.instagram.com/deahq/" target="_blank" title="Instagram - External Link"><i class="fab fa-instagram"></i></a></li>
+						
+						<li class="social-icons-linkedin"><a href="https://www.linkedin.com/school/drug-enforcement-administration/" target="_blank" title="Linkedin - External Link"><i class="fab fa-linkedin-in"></i></a></li>
+						
+						<li class="social-icons-twitter"><a href="https://twitter.com/DEAHQ" target="_blank" title="Twitter - External Link"><i class="fa-x"></i></a></li>						
+						
+						<li class="social-icons-facebook"><a href="https://www.facebook.com/DEAHQ/" target="_blank" title="Facebook - External Link"><i class="fab fa-facebook-f"></i></a></li>
+					</ul>
+				</div>
+				
+			</footer>
+		</div>
+
+		<!-- Vendor -->
+		<script src="https://www.deadiversion.usdoj.gov/vendor/plugins/js/plugins.min.js"></script>
+
+		<!-- Theme Base, Components and Settings -->
+		<script src="https://www.deadiversion.usdoj.gov/js/theme.js"></script>
+
+		<!-- Theme Custom -->
+		<script src="https://www.deadiversion.usdoj.gov/js/custom.js"></script>
+
+		<!-- Theme Initialization Files -->
+		<script src="https://www.deadiversion.usdoj.gov/js/theme.init.js"></script>
+	
+	<!-- The following script is from Siteimprove (https://support.siteimprove.com/hc/en-gb) -->
+<script type="text/javascript">
+/*<![CDATA[*/
+(function() {
+var sz = document.createElement('script'); sz.type = 'text/javascript'; sz.async = true;
+sz.src = '//siteimproveanalytics.com/js/siteanalyze_6018796.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(sz, s);
+})();
+/*]]>*/
+</script>
+
+	</body>
+</html>
