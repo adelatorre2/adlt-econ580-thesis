@@ -208,6 +208,7 @@ Current empirical direction:
 - the core processed dataset is an unfiltered FDA submission-event panel
 - approval-only, original-submission, NDA-only, and other analytic subsets should be derived from the master panel rather than stored as the primary processed file
 - the broader thesis question remains whether PDUFA changed the composition of FDA-approved drugs, especially controlled substances
+- early descriptive work now explicitly compares the full submission-event panel to narrower views such as `AP` and `ORIG + AP` rather than assuming one unit or subset is always appropriate
 
 ---
 
@@ -240,7 +241,7 @@ Current bottlenecks:
 Thesis stage:
 
 - dataset construction completed for a first-pass FDA master panel
-- descriptive analysis is the next active stage
+- descriptive analysis notebook built and executed from the processed backbone
 
 Primary datasets currently constructed:
 
@@ -248,15 +249,16 @@ Primary datasets currently constructed:
 
 Current analytical tasks:
 
-- generate descriptive time-series summaries of FDA submissions and approvals
-- derive approval-only and original-submission subsets from the master panel for focused analysis
-- prepare for future controlled-substance linkage and post-1992 composition analysis
+- interpret the descriptive results from `code/notebooks/02_fda_descriptive_analysis.ipynb`
+- compare full-panel patterns against `AP` and `ORIG + AP` subsets where unit-of-observation matters
+- prepare for DEA schedule / controlled-substance linkage and post-1992 composition analysis
 
 Current bottlenecks:
 
 - Drugs@FDA is not a full universe of failed applications
 - exact submission-to-product mapping remains limited because product fields are attached conservatively at the application level
 - some supporting fields remain only partially interpretable without additional lookup support
+- review-priority coding quality varies over time and may be too noisy to serve as a central variable without caution
 
 ---
 
@@ -318,6 +320,7 @@ Examples:
 - `ApplNo`, `SubmissionNo`, and `ProductNo` must remain string identifiers to preserve leading zeros and safe merges
 - placeholder dates such as `1900-01-01` must be treated as missing rather than real event dates
 - one-to-many child tables from Drugs@FDA should be aggregated before merge to avoid inflating the submission-event panel
+- descriptive patterns can change materially when the unit shifts from submission-event rows to application-level aggregates, so unit changes must always be made explicitly and justified
 
 ---
 
@@ -337,6 +340,9 @@ Examples:
 - product descriptors in the processed backbone are application-level aggregates, not exact product matches for each submission
 - `ApplicationDocs.txt` required a custom parse because the extract contains at least one malformed row
 - some lookup coverage is incomplete or low-information, including gaps in submission-class descriptions and limited support for interpreting `SubmissionPropertyTypeID`
+- submission-event descriptives are heavily supplement-driven, so naive counts can overstate growth in distinct drugs or distinct applications
+- `ReviewPriority` is informative descriptively but unstable enough over time that raw and cleaned versions should be distinguished carefully
+- the orphan-property indicator is only partially observed because many rows have no submission-property data
 - Linking FDA drug approvals to DEA scheduling classifications may require external data sources and careful product‑level matching, which introduces potential measurement error if scheduling status cannot be consistently mapped to the submission‑event dataset.
 - Many central FDA-regulation papers are descriptive or reduced-form and do not by themselves identify downstream causal effects on misuse or diversion.
 - Welfare analyses in the PDUFA literature often rely on strong assumptions about consumer surplus, producer surplus, and how safety harms should be monetized, so those papers should be used as conceptual anchors rather than taken as definitive estimates for this thesis.
@@ -357,6 +363,7 @@ Important unresolved questions that guide ongoing work.
 - Which downstream literature is most appropriate for connecting earlier FDA approval to diversion risk: opioid prescribing and supply, controlled-substance scheduling, illicit substitution, or another channel?
 - Should the thesis ultimately frame its contribution as an extension of the classic FDA “speed vs safety” tradeoff into a broader “speed vs downstream externalities” framework?
 - What is the most appropriate observational lens for early descriptive analysis: drug-level summaries, submission-event counts, or application-level approval series derived from the master FDA backbone?
+- Which subset should anchor the core thesis descriptives once DEA linkage is added: the full submission-event panel, `AP`, `ORIG`, or `ORIG + AP`?
 
 ---
 
@@ -371,6 +378,10 @@ Example:
 3. generate descriptive statistics
 
 Keep this section **very short and frequently updated**.
+
+1. use the descriptive notebook to choose the most defensible FDA analytic subset for thesis figures
+2. build DEA schedule / controlled-substance linkage against the FDA backbone
+3. decide whether a lightweight application-level panel is needed alongside the submission-event master
 
 ---
 
