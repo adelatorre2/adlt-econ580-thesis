@@ -348,11 +348,6 @@ Examples:
 
 Important unresolved questions that guide ongoing work.
 
-Examples:
-
-- Which derived subset should anchor the main thesis descriptives: all approved submission events, original submissions only, or an application-level approval series constructed from the master panel?
-- Can exact submission-to-product matching be improved beyond conservative application-level product aggregates using additional FDA metadata or document parsing?
-
 - How should regulatory outcomes be coded?
 - What is the correct unit for empirical analysis?
 - Which regulatory actions should count as "failures"?
@@ -361,6 +356,7 @@ Examples:
 - Which outcome should anchor the empirical contribution: changes in the composition of approvals, changes in legal drug supply exposure, or a direct downstream measure of diversion / misuse if linkable data can be found?
 - Which downstream literature is most appropriate for connecting earlier FDA approval to diversion risk: opioid prescribing and supply, controlled-substance scheduling, illicit substitution, or another channel?
 - Should the thesis ultimately frame its contribution as an extension of the classic FDA “speed vs safety” tradeoff into a broader “speed vs downstream externalities” framework?
+- What is the most appropriate observational lens for early descriptive analysis: drug-level summaries, submission-event counts, or application-level approval series derived from the master FDA backbone?
 
 ---
 
@@ -564,6 +560,7 @@ Structural constraints:
 # KNOWN RISKS
 
 Potential interpretation risks:
+- The cleaned backbone used for descriptive work aggregates some product-level information conservatively to avoid row duplication, which means certain product attributes may be simplified relative to the full raw Drugs@FDA tables.
 - [risk]
 
 ---

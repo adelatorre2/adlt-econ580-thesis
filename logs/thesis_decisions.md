@@ -17,6 +17,18 @@ This file is an append‑only research log documenting meaningful decisions made
 (Newest entries should always appear **at the top** of this section.)
 
 ---
+## 2026-03-15 — Drug-level dataset export and transition to descriptive analysis
+
+Task completed: after validating the submission-event backbone dataset constructed from the Drugs@FDA extract, a cleaned dataset was exported for analysis as `data/processed/fda_backbone.csv`. The cleaned file contains roughly 26,000 distinct drug observations derived from the FDA submission tables after standardizing identifiers, cleaning dates, normalizing categorical fields such as review priority, and ensuring that keys such as `ApplNo`, `SubmissionNo`, and related identifiers remain string values to preserve leading zeros and maintain merge compatibility.
+
+The decision was made to perform only **format standardization and cleaning**, not to infer or amend regulatory information. Missing values (e.g., `NaN`, `Unknown`) were standardized, date fields were converted into consistent year formats for analysis, and application types (e.g., `NDA`, `ANDA`, `BLA`) were inspected to confirm the dataset reflects the structure of the underlying FDA extract.
+
+Implications: the project now moves from dataset construction to a **descriptive analysis phase**. A new notebook will be created to explore the processed dataset, compute descriptive statistics, and generate time-series summaries of FDA activity including approvals, submission counts, application types, and review priority categories. These descriptive results will help verify what patterns are observable in the data before framing the thesis’s empirical contribution.
+
+Limitations remain unchanged in a key respect: Drugs@FDA is primarily an approval-centered regulatory dataset and does not capture the full universe of rejected or abandoned applications. Consequently, the dataset represents **observed regulatory actions**, not all attempted drug development submissions.
+
+Next steps: build a dedicated descriptive analysis notebook, compute baseline statistics, inspect distributions of application types and review priority categories, and validate that the cleaned dataset behaves as expected before producing thesis figures.
+
 
 ## 2026-03-15 — Full Drugs@FDA audit and unfiltered master panel build
 
