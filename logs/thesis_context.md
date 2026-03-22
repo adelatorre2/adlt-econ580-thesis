@@ -192,6 +192,21 @@ Role in thesis:
 
 This is the current intermediate enrichment layer for studying controlled-substance involvement in FDA regulatory activity.
 
+### Dataset: FDA+DEA Annual Event-Study Panel (`data/intermediate/fda_dea_event_study_annual_panel.csv`)
+
+Source: built locally in [code/notebooks/05_event_study_setup.ipynb](/Users/alexdelatorre/Desktop/econ580-thesis/code/notebooks/05_event_study_setup.ipynb) from the FDA backbone plus the first-pass DEA linkage layer.
+
+Content:
+
+- annual numerators, denominators, and shares for candidate controlled-substance outcome series
+- separate series for `ORIG`, `AP`, and `ORIG + NDA-only` sample definitions
+- conservative DEA confidence-tier outcomes including confident scheduled matches, confident plus `List I`, and any DEA signal
+- policy-timing variables for 1984, 1992, and later PDUFA renewal years
+
+Role in thesis:
+
+Provides the current annual panel used for first-pass interrupted-time-series / event-study diagnostics before any paper-facing causal notebook is built.
+
 ---
 
 # 5. Unit of Observation
@@ -241,6 +256,8 @@ Current empirical direction:
 - a first-pass DEA linkage layer now exists and should be used as an intermediate enrichment rather than treated as final truth about product-level schedule status
 - the broader thesis question remains whether PDUFA changed the composition of FDA-approved drugs, especially controlled substances
 - early descriptive work now explicitly compares the full submission-event panel to narrower views such as `AP` and `ORIG + AP` rather than assuming one unit or subset is always appropriate
+- the project has now moved into **first-pass event-study / interrupted-time-series setup**, using annualized outcome series derived from the submission-event panel rather than treating the raw panel itself as the estimation dataset
+- the current leading candidate outcome is the annual share of **confident scheduled DEA matches within the `ORIG` subset**, with broader DEA tiers and `NDA-only` restrictions treated as sensitivity analyses rather than as the default main series
 
 ---
 
@@ -263,17 +280,20 @@ Thesis stage:
 - dataset construction completed for a first-pass FDA master panel
 - descriptive analysis notebook built and executed from the processed backbone
 - first-pass DEA controlled-substance linkage notebook built and executed
+- first-pass FDA–DEA descriptive-comparison notebook built and executed
+- first-pass event-study setup notebook built and executed, including an annual panel export
 
 Primary datasets currently constructed:
 
 - `data/processed/fda_backbone.csv`
 - `data/intermediate/fda_dea_controlled_substance_linkage.csv`
+- `data/intermediate/fda_dea_event_study_annual_panel.csv`
 
 Current analytical tasks:
 
-- interpret the descriptive results from `code/notebooks/02_fda_descriptive_analysis.ipynb`
-- use the DEA-linked intermediate file for controlled-substance descriptives and post-1992 composition analysis
-- audit uncertain DEA candidate matches and ingredient-level edge cases before treating them as substantive results
+- interpret the first-pass event-study diagnostics from `code/notebooks/05_event_study_setup.ipynb`
+- decide whether the paper should anchor on the `ORIG` confident-share series alone or present `ORIG + NDA-only` as a central sensitivity
+- refine the annual controlled-substance series into a cleaner paper-facing event-study workflow
 
 Current bottlenecks:
 
@@ -284,6 +304,8 @@ Current bottlenecks:
 - exact submission-to-product mapping remains limited because product fields are attached conservatively at the application level
 - some supporting fields remain only partially interpretable without additional lookup support
 - review-priority coding quality varies over time and may be too noisy to serve as a central variable without caution
+- the national annual event-study design remains identification-limited and is better treated as a first-pass interrupted-time-series exercise than as strong causal evidence
+- the intended row-level FDA+DEA linkage file may not be materialized in every environment because it can appear as a Git LFS pointer rather than a directly readable CSV
 
 ---
 
@@ -348,6 +370,8 @@ Examples:
 - descriptive patterns can change materially when the unit shifts from submission-event rows to application-level aggregates, so unit changes must always be made explicitly and justified
 - DEA linkage should remain auditable and ingredient-based unless a defensible product-level bridge is built later
 - current DEA schedule matches should not be interpreted automatically as historical schedule-at-approval classifications
+- partial calendar years in the FDA extract, especially the current 2026 snapshot, should not be treated as fully observed years in annual event-study panels
+- annual event-study outcomes should remain share-based where possible, because raw counts are more sensitive to supplement inflation and broad secular growth in observed submission activity
 
 ---
 
@@ -375,6 +399,9 @@ Examples:
 - the current DEA linkage is strongest for ingredient-level controlled-substance involvement, not for exact product-level schedule assignment
 - the parsed DEA reference includes both CSA scheduled substances and `List I` chemicals, so those categories must remain separate in analysis
 - some FDA rows in the backbone have no `ActiveIngredient_list`, so they cannot be classified through the current ingredient-based DEA bridge
+- the current annual event-study setup is based on a single national time series, so segmented pre/post estimates should be interpreted as suggestive policy diagnostics rather than strong causal estimates
+- sharper-looking post-1992 changes in `AP`-based series may be driven partly by supplement composition rather than by the economically cleaner approval-composition margin of interest
+- `ORIG + NDA-only` series are conceptually appealing for a more PDUFA-specific channel but can become noisy because annual denominators are much smaller
 - Many central FDA-regulation papers are descriptive or reduced-form and do not by themselves identify downstream causal effects on misuse or diversion.
 - Welfare analyses in the PDUFA literature often rely on strong assumptions about consumer surplus, producer surplus, and how safety harms should be monetized, so those papers should be used as conceptual anchors rather than taken as definitive estimates for this thesis.
 - Several FDA safety papers use withdrawals, black-box warnings, or related regulatory events as downstream outcomes; these are informative but do not directly measure diversion, misuse, or illicit-market spillovers.
@@ -398,6 +425,9 @@ Important unresolved questions that guide ongoing work.
 - What is the most appropriate observational lens for early descriptive analysis: drug-level summaries, submission-event counts, or application-level approval series derived from the master FDA backbone?
 - Which subset should anchor the core thesis descriptives once DEA linkage is added: the full submission-event panel, `AP`, `ORIG`, or `ORIG + AP`?
 - Should the thesis’s core controlled-substance results rely only on confident DEA matches, or should uncertain parent/isomer candidates appear in sensitivity analysis?
+- Should the paper’s main event-study specification center entirely on the `ORIG` confident-share series, or should `ORIG + NDA-only` remain closer to the main text despite its higher volatility?
+- How should the thesis handle the joint institutional importance of Hatch–Waxman (1984) and PDUFA (1992) when the series may reflect both generic-market expansion and later FDA review-speed changes?
+- Does the thesis need a stronger historical schedule-at-approval bridge before making stronger controlled-substance claims, or is the current non-historical DEA linkage adequate for a first-pass composition analysis?
 - Should the thesis treat *staffing/resources* rather than *user-fee funding source* as the more credible mechanism linking PDUFA-era institutional change to approval speed?
 - Is accelerated approval plus mandated public-payer coverage a more tractable downstream-externalities angle than diversion risk, or should it remain background rather than the main empirical contribution?
 - If the thesis stays focused on controlled substances, what is the cleanest way to connect FDA-side regulatory acceleration to a downstream outcome that is closer to economic behavior than to clinical uncertainty alone?
@@ -416,8 +446,8 @@ Example:
 
 Keep this section **very short and frequently updated**.
 
-1. use the DEA-linked intermediate dataset to produce controlled-substance descriptives with clear confidence tiers
-2. audit uncertain DEA matches and important ingredient edge cases before promoting them into core thesis figures
+1. refine the event-study setup around the `ORIG` confident-share annual series and decide what should appear in the main text versus sensitivity appendix
+2. assess whether a stronger paper-facing specification should explicitly address both the 1984 and 1992 policy environment
 3. decide whether the main thesis descriptives should be anchored on the full panel, `AP`, `ORIG + AP`, or a companion application-level panel
 
 ---
