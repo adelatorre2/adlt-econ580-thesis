@@ -42,3 +42,4 @@ __pycache__/
 
 # Data / notebook runtime clutter (optional to keep generated outputs out of git)
 *.sqlite
+*CLAUDE.md
