@@ -41,8 +41,9 @@ __pycache__/
 .env.*
 
 # Stata log files
-logs/stata/
+# logs/stata/ # I want version contorl of the logs in case I need to checl an old log
 
 # Data / notebook runtime clutter (optional to keep generated outputs out of git)
 *.sqlite
 *CLAUDE.md
+logs/prompts/
