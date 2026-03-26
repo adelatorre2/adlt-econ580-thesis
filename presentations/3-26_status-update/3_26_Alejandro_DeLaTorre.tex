@@ -448,29 +448,110 @@
   1993--2025). The post-PDUFA average is \textbf{lower}, not higher.}
 \end{frame}
 
-\begin{frame}[t]{Parametric Pre/Post Results}
-  Simple interrupted time series regressions on the annual panel (1970--2025):
+\begin{frame}[t]{Parametric Results: Did the CS Share Shift at PDUFA?}
+  Annual panel, 56 observations (1970--2025). Outcome: CS share of total approvals.
+
   \medskip
+  \textbf{Model A --- Simple level shift:}
+  \[
+    \text{CS Share}_t = \beta_0 + \beta_1 \cdot \mathbf{1}[\text{Post-PDUFA}_t] + \varepsilon_t
+  \]
+
   \begin{center}
-  \begin{tabular}{lcc}
-    \toprule
-    Model & Post-PDUFA coef. & $R^2$ \\
-    \midrule
-    A: Level shift only         & $-0.02$ (noisy) & low \\
-    B: Level shift + trend      & $\approx 0$     & moderate \\
-    C: Level shift + trend + slope change & near 0 & moderate \\
-    D: Log count (Model C spec) & positive, small & moderate \\
-    \bottomrule
+  \begin{tabular}{lcccc}
+    \hline
+    & Coef. & Std.\ Err. & $p$-value & $R^2$ \\
+    \hline
+    Post-PDUFA ($\beta_1$) & $-0.020$ & $0.010$ & $0.052$ & \\
+    Constant ($\beta_0$)   & $\phantom{-}0.096$ & $0.008$ & $0.000$ & $0.068$ \\
+    \hline
   \end{tabular}
   \end{center}
+
   \medskip
-  \begin{itemize}
-    \item \alert{None significant at conventional levels}
-    \item With trend control, post-PDUFA coefficient approaches zero
-    \item Log count result: more CS approvals after PDUFA, but proportional
-          to overall growth
-    \item OLS only; serial correlation likely inflates precision
-  \end{itemize}
+  \textit{The average CS share was 9.6\% before PDUFA and about 2 pp lower
+  after. Marginally significant ($p = 0.052$).
+  The CS share \textit{fell} --- it did not rise.}
+\end{frame}
+
+\begin{frame}[t]{Parametric Results: Controlling for Trend and Slope Change}
+  \textbf{Model B --- Level shift + linear time trend:}
+  \[
+    \text{CS Share}_t = \beta_0 + \beta_1 \cdot \mathbf{1}[\text{Post}_t]
+                        + \beta_2 \cdot \text{Year}_t + \varepsilon_t
+  \]
+  \begin{center}
+  \begin{tabular}{lccc}
+    \hline
+    & Coef. & Std.\ Err. & $p$-value \\
+    \hline
+    Post-PDUFA ($\beta_1$) & $-0.015$ & $0.019$ & $0.446$ \\
+    Year ($\beta_2$)       & $-0.0002$ & $0.0006$ & $0.759$ \\
+    \hline
+    \multicolumn{4}{l}{$R^2 = 0.070$. $N = 56$.} \\
+  \end{tabular}
+  \end{center}
+
+  \smallskip
+  \textbf{Model C --- Level shift + trend + slope change:}
+  \[
+    \text{CS Share}_t = \beta_0 + \beta_1 \cdot \mathbf{1}[\text{Post}_t]
+                        + \beta_2 \cdot \text{Year}_t
+                        + \beta_3 \cdot (t - 1992) \times \mathbf{1}[\text{Post}_t]
+                        + \varepsilon_t
+  \]
+  \begin{center}
+  \begin{tabular}{lccc}
+    \hline
+    & Coef. & Std.\ Err. & $p$-value \\
+    \hline
+    Post-PDUFA ($\beta_1$)  & $-0.025$ & $0.019$ & $0.205$ \\
+    Year ($\beta_2$)         & $\phantom{-}0.002$ & $0.001$ & $0.128$ \\
+    Slope change ($\beta_3$) & $-0.003$ & $0.001$ & $0.054$ \\
+    \hline
+    \multicolumn{4}{l}{$R^2 = 0.135$. $N = 56$.} \\
+  \end{tabular}
+  \end{center}
+
+  \smallskip
+  \textit{Once we control for trend, the PDUFA shift is statistically zero.
+  The slope change ($\beta_3 = -0.003$, $p = 0.054$) suggests a marginally
+  significant \textit{downward} acceleration --- the \textbf{opposite} direction
+  of the hypothesis.}
+\end{frame}
+
+\begin{frame}[t]{Parametric Results: Log Counts}
+  \textbf{Model D --- Log CS approvals, trend + slope change:}
+  \[
+    \ln(\text{CS}_t + 1) = \beta_0 + \beta_1 \cdot \mathbf{1}[\text{Post}_t]
+                           + \beta_2 \cdot \text{Year}_t
+                           + \beta_3 \cdot (t - 1992) \times \mathbf{1}[\text{Post}_t]
+                           + \varepsilon_t
+  \]
+  \begin{center}
+  \begin{tabular}{lccc}
+    \hline
+    & Coef. & Std.\ Err. & $p$-value \\
+    \hline
+    Post-PDUFA ($\beta_1$)  & $-0.704$ & $0.311$ & $0.028$ \\
+    Year ($\beta_2$)         & $\phantom{-}0.070$ & $0.018$ & $0.000$ \\
+    Slope change ($\beta_3$) & $-0.040$ & $0.021$ & $0.064$ \\
+    \hline
+    \multicolumn{4}{l}{$R^2 = 0.409$. $N = 56$.} \\
+  \end{tabular}
+  \end{center}
+
+  \medskip
+  \textit{CS approvals grow over time ($\beta_2 > 0$, $p < 0.001$). But the
+  post-PDUFA level shift is \textit{negative} ($\beta_1 = -0.704$, $p = 0.028$)
+  --- CS counts were \textit{below} trend right after PDUFA. The slope change
+  is also negative: CS approval growth \textit{slowed} after 1992.}
+
+  \medskip
+  \begin{block}{Bottom line}
+    \textbf{Across all four models: no evidence that PDUFA increased controlled
+    substance approvals, whether measured as a share or in log counts.}
+  \end{block}
 \end{frame}
 
 %% =============================================================================
