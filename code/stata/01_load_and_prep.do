@@ -26,6 +26,7 @@
 ==============================================================================*/
 
 do "${code}/globals.do"
+log using "${statalogs}/01_load_and_prep.log", replace
 
 /*------------------------------------------------------------------------------
   1. Import CSV with explicit string-column protection
@@ -81,7 +82,9 @@ label variable is_schedule_iii               "=1 if any matched ingredient is Sc
 label variable is_schedule_iv                "=1 if any matched ingredient is Schedule IV"
 label variable is_schedule_v                 "=1 if any matched ingredient is Schedule V"
 label variable is_multi_ingredient           "=1 if application has 2+ active ingredients (combination product)"
-label variable has_controlled_ingredient_in_combo "=1 if controlled substance AND multi-ingredient combo product"
+label variable has_controlled_ingredient_in_com  "=1 if controlled substance AND multi-ingredient combo product"
+* NOTE: Stata truncates names to 32 chars. CSV column "has_controlled_ingredient_in_combo"
+*       (34 chars) is imported as "has_controlled_ingredient_in_com" (32 chars).
 label variable dea_confidence_tier           "DEA linkage confidence tier (string, for audit)"
 label variable dea_substance_name_list       "Matched DEA substance name(s)"
 label variable post_pdufa                    "=1 if approval_year >= 1993 (post-PDUFA)"
@@ -114,7 +117,7 @@ label values is_schedule_iii               lbl_yesno
 label values is_schedule_iv                lbl_yesno
 label values is_schedule_v                 lbl_yesno
 label values is_multi_ingredient           lbl_yesno
-label values has_controlled_ingredient_in_combo lbl_yesno
+label values has_controlled_ingredient_in_com   lbl_yesno
 
 /*------------------------------------------------------------------------------
   4. Encode string categoricals into labeled numeric variables
@@ -220,3 +223,4 @@ di as txt _newline "--- Count by PDUFA era ---"
 tab pdufa_era_str
 
 di as txt _newline "===== 01_load_and_prep.do complete ====="
+log close

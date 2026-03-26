@@ -20,6 +20,7 @@
 ==============================================================================*/
 
 do "${code}/globals.do"
+log using "${statalogs}/04_robustness.log", replace
 use "${dtapath}/event_study_drug_panel.dta", clear
 
 * --- 1. Broader CS definition ---
@@ -47,3 +48,4 @@ use "${dtapath}/event_study_drug_panel.dta", clear
 * [TODO]
 
 di as txt "===== 04_robustness.do complete ====="
+log close

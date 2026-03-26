@@ -16,12 +16,13 @@ set varabbrev off
 global root "/Users/alexdelatorre/Desktop/econ580-thesis"
 
 * --- Directory globals ---
-global code     "${root}/code/stata"
-global data     "${root}/data/event_study"
-global dtapath  "${root}/data/event_study/stata"
-global figures  "${root}/output/figures/stata"
-global tables   "${root}/output/tables/stata"
-global logs     "${root}/logs"
+global code      "${root}/code/stata"
+global data      "${root}/data/event_study"
+global dtapath   "${root}/data/event_study/stata"
+global figures   "${root}/output/figures/stata"
+global tables    "${root}/output/tables/stata"
+global logs      "${root}/logs"
+global statalogs "${root}/logs/stata"
 
 * --- Graph defaults ---
 set scheme s2color

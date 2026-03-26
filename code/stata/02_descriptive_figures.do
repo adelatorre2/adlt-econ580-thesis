@@ -13,10 +13,11 @@
     6. Share of controlled substances with PDUFA era vertical lines / shading
 
   Input:   ${dtapath}/event_study_drug_panel.dta
-  Output:  ${figures}/*.png and ${figures}/*.pdf
+  Output:  ${figures}/*.png
 ==============================================================================*/
 
 do "${code}/globals.do"
+log using "${statalogs}/02_descriptive_figures.log", replace
 use "${dtapath}/event_study_drug_panel.dta", clear
 
 * --- Figure 1: Annual original drug approvals ---
@@ -38,3 +39,4 @@ use "${dtapath}/event_study_drug_panel.dta", clear
 * [TODO]
 
 di as txt "===== 02_descriptive_figures.do complete ====="
+log close

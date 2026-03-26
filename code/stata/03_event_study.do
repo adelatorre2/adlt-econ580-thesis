@@ -30,6 +30,7 @@
 ==============================================================================*/
 
 do "${code}/globals.do"
+log using "${statalogs}/03_event_study.log", replace
 use "${dtapath}/event_study_drug_panel.dta", clear
 
 * --- Collapse to annual panel ---
@@ -45,3 +46,4 @@ use "${dtapath}/event_study_drug_panel.dta", clear
 * [TODO]: coefplot or manual twoway scatter + rcap
 
 di as txt "===== 03_event_study.do complete ====="
+log close

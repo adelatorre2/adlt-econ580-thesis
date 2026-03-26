@@ -40,6 +40,9 @@ __pycache__/
 .env
 .env.*
 
+# Stata log files
+logs/stata/
+
 # Data / notebook runtime clutter (optional to keep generated outputs out of git)
 *.sqlite
 *CLAUDE.md
