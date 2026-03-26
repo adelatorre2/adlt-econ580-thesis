@@ -18,6 +18,12 @@ This file is an append‑only research log documenting meaningful decisions made
 
 ---
 
+## 2026-03-25 — Stata workflow infrastructure set up
+
+Task completed: the complete Stata analysis infrastructure was created at `code/stata/`. Files created: `globals.do` (project-wide paths and graph defaults), `00_master.do` (self-starting pipeline entry point), `01_load_and_prep.do` (full import, labeling, validation, and .dta export), `02_descriptive_figures.do` (skeleton), `03_event_study.do` (skeleton), `04_robustness.do` (skeleton). Output directories created: `output/figures/stata/`, `output/tables/stata/`, `data/event_study/stata/`. The `globals.do` root path is set to `/Users/alexdelatorre/Desktop/econ580-thesis`; the `00_master.do` is self-starting (sets root and code before calling globals). The import script (`01_load_and_prep.do`) uses `stringcols(1 2 4 5 6 7 8 9 10 17 18 26 27 30)` to force `ApplNo` and all other text columns to import as strings, applies variable and value labels for all 31 columns, encodes `ApplType`/`pdufa_era`/`dea_confidence_tier` to labeled numeric variables while keeping string originals as `_str` copies, and validates year range, no-missing-year, and `isid applno` before saving. Next step: open Stata, `cd` to project root, and run `do "code/stata/01_load_and_prep.do"` to produce `data/event_study/stata/event_study_drug_panel.dta`; then build descriptive figures in `02_descriptive_figures.do`.
+
+---
+
 ## 2026-03-25 — Drug-approval-level event-study dataset built (notebook 06)
 
 Task completed: a new notebook was built and executed at [code/notebooks/06_event_study_dataset_build.ipynb](/Users/alexdelatorre/Desktop/econ580-thesis/code/notebooks/06_event_study_dataset_build.ipynb). Three output files were created in a new `data/event_study/` directory: [event_study_drug_panel.csv](/Users/alexdelatorre/Desktop/econ580-thesis/data/event_study/event_study_drug_panel.csv), [event_study_drug_panel_DATA_DICTIONARY.md](/Users/alexdelatorre/Desktop/econ580-thesis/data/event_study/event_study_drug_panel_DATA_DICTIONARY.md), and [event_study_summary_stats.csv](/Users/alexdelatorre/Desktop/econ580-thesis/data/event_study/event_study_summary_stats.csv).
