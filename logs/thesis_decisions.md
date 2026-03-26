@@ -17,6 +17,24 @@ This file is an append‑only research log documenting meaningful decisions made
 (Newest entries should always appear **at the top** of this section.)
 
 ---
+
+## 2026-03-25 — Drug-approval-level event-study dataset built (notebook 06)
+
+Task completed: a new notebook was built and executed at [code/notebooks/06_event_study_dataset_build.ipynb](/Users/alexdelatorre/Desktop/econ580-thesis/code/notebooks/06_event_study_dataset_build.ipynb). Three output files were created in a new `data/event_study/` directory: [event_study_drug_panel.csv](/Users/alexdelatorre/Desktop/econ580-thesis/data/event_study/event_study_drug_panel.csv), [event_study_drug_panel_DATA_DICTIONARY.md](/Users/alexdelatorre/Desktop/econ580-thesis/data/event_study/event_study_drug_panel_DATA_DICTIONARY.md), and [event_study_summary_stats.csv](/Users/alexdelatorre/Desktop/econ580-thesis/data/event_study/event_study_summary_stats.csv).
+
+Data work performed: the full FDA backbone (~191,000 submission events) was filtered to original approved submissions (`SubmissionStatus == 'AP'`, `SubmissionType == 'ORIG'`), deduplicated to one row per `ApplNo` by keeping the earliest `SubmissionStatusDate`, and stripped of 2026 partial-year rows and null-date rows. The row-level FDA+DEA linkage CSV was confirmed as a Git LFS pointer and was not materialized; the ingredient-level audit file (`fda_dea_active_ingredient_linkage_audit.csv`) was used as fallback, joined on `ActiveIngredient_list`. DEA confidence tiers were derived in precedence order: `confident_scheduled` > `list1` > `candidate_only` > `no_ingredient_info` > `no_dea_signal`. All DEA schedule dummies, policy timing variables, and combination-product flags were constructed and validated.
+
+**Filter funnel:** 191,266 (full backbone) → 26,268 (AP+ORIG) → 26,076 (after dedup: 180 duplicate ApplNo rows removed) → 25,908 (after dropping 2 null-date rows and 166 partial 2026 rows).
+
+**Key DEA tier distribution in final panel:** `no_dea_signal` 22,366 · `confident_scheduled` 2,067 · `no_ingredient_info` 1,155 · `candidate_only` 201 · `list1` 119.
+
+Key construction decisions: (1) deduplication retains earliest approval date per `ApplNo`, correctly representing the first market-entry event for each application; (2) the ingredient audit file was an adequate fallback — it covers all unique `ActiveIngredient_list` strings in the backbone and carries identical DEA match results; (3) schedule separator in `dea_confident_current_schedules` is `' | '` (pipe with spaces), not semicolons; (4) the most-restrictive schedule (`dea_schedule_highest`) is determined by minimum Roman-numeral rank among matched ingredients; (5) rows with no DEA match are retained and coded 0 for all controlled-substance dummies — they are not dropped.
+
+Limitations and risks: DEA schedules are current (March 2026), not historical schedule-at-approval; linkage is ingredient-level and cannot resolve preparation-specific scheduling distinctions (e.g., low-dose codeine combinations); Drugs@FDA does not include failed or withdrawn applications; `ApplNo` must be read with `dtype={'ApplNo': str}` to preserve leading zeros (the CSV stores them correctly but pandas will infer int64 without the override).
+
+Next steps: load `data/event_study/event_study_drug_panel.csv` into Stata for event-study regression estimation; primary specification uses `is_controlled_substance` as outcome and `event_time` as running variable centered on 1992; sensitivities include `is_controlled_or_list1`, `is_controlled_substance_broad`, and the NDA-only subsample (`is_nda == 1`); consider a therapeutic-class-by-year panel for heterogeneity analysis.
+
+---
 ## 2026-03-22 — First-pass event-study setup notebook and annual panel built
 
 Task completed: a new event-study setup notebook was built, documented, executed, and validated at [code/notebooks/05_event_study_setup.ipynb](/Users/alexdelatorre/Desktop/econ580-thesis/code/notebooks/05_event_study_setup.ipynb). A new intermediate annual panel was also exported at [data/intermediate/fda_dea_event_study_annual_panel.csv](/Users/alexdelatorre/Desktop/econ580-thesis/data/intermediate/fda_dea_event_study_annual_panel.csv). The notebook reads the existing FDA backbone and DEA linkage inputs, reconstructs the linked working panel in memory when the intended row-level linkage file is only a Git LFS pointer, and then produces auditable annual outcome series for event-study-style diagnostics.

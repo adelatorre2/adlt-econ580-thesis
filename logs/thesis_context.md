@@ -288,12 +288,13 @@ Primary datasets currently constructed:
 - `data/processed/fda_backbone.csv`
 - `data/intermediate/fda_dea_controlled_substance_linkage.csv`
 - `data/intermediate/fda_dea_event_study_annual_panel.csv`
+- `data/event_study/event_study_drug_panel.csv` — drug-approval-level analytical dataset (25,908 rows, 1939–2025), one row per unique approved original application; built in `code/notebooks/06_event_study_dataset_build.ipynb`. Contains all DEA controlled-substance dummies, schedule indicators, policy timing variables, and combination-product flags needed for Stata estimation. Read with `dtype={'ApplNo': str}` to preserve leading zeros.
 
 Current analytical tasks:
 
-- interpret the first-pass event-study diagnostics from `code/notebooks/05_event_study_setup.ipynb`
+- load `data/event_study/event_study_drug_panel.csv` into Stata and run event-study regression with `is_controlled_substance` as outcome and `event_time` (= `approval_year - 1992`) as running variable
 - decide whether the paper should anchor on the `ORIG` confident-share series alone or present `ORIG + NDA-only` as a central sensitivity
-- refine the annual controlled-substance series into a cleaner paper-facing event-study workflow
+- consider building a therapeutic-class-by-year panel from the drug panel for heterogeneity analysis
 
 Current bottlenecks:
 
