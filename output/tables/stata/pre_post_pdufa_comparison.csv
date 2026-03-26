@@ -1,0 +1,3 @@
+post_pdufa,n_total,is_nda,is_anda,is_controlled_substance,cs_and_nda,cs_and_anda,cs_sched_ii,cs_sched_iii,cs_sched_iv,cs_sched_v,cs_share,cs_share_nda,cs_share_anda
+Pre-PDUFA,7301,2164,4138,701,110,590,302,73,326,0,.096014246,.050831795,.14258096
+Post-PDUFA,18607,3113,14884,1366,166,1200,692,116,447,108,.07341323,.053324766,.080623485
