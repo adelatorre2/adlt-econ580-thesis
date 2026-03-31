@@ -29,8 +29,8 @@ do "${code}/globals.do"
 
 * --- Pipeline ---
 do "${code}/01_load_and_prep.do"
-* do "${code}/02_descriptive_figures.do"    // uncomment when ready
-* do "${code}/03_event_study.do"            // uncomment when ready
+do "${code}/02_descriptive_figures.do"    // uncomment when ready
+do "${code}/03_event_study.do"            // uncomment when ready
 * do "${code}/04_robustness.do"             // uncomment when ready
 
 di as txt _newline "===== 00_master.do complete ====="
