@@ -51,6 +51,57 @@
   urlcolor=blue
 }
 
+% ─── TODO MARKUP ─────────────────────────────────────────────────────────────
+% Usage: \TODO{Short label}{Detailed inline note}
+% \printtodos prints the Open TODOs section; subsection entries in the TOC
+% appear on the second compile after TODOs are added or removed.
+\newcounter{todocount}
+\newif\iftodospresent
+\todospresentfalse
+\newwrite\todolistfile
+\AtBeginDocument{\immediate\openout\todolistfile=\jobname.tdo}
+
+% Called when the .tdo file is read inside \printtodos.
+% Adds a subsection TOC entry linking back to the TODO body location,
+% and renders a hyperlinked list item.
+\newcommand{\adltodoentry}[2]{%
+  \addcontentsline{toc}{subsection}{%
+    \protect\hyperlink{todo:#1}{\textcolor{red}{TODO #1: #2}}%
+  }%
+  \item \hyperlink{todo:#1}{\textbf{TODO #1:} #2}%
+}
+
+\newcommand{\TODO}[2]{%
+  \stepcounter{todocount}%
+  \global\todospresenttrue%
+  \hypertarget{todo:\thetodocount}{}%
+  \par\noindent%
+  \fcolorbox{red}{red!8}{%
+    \parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{%
+      \textbf{\textcolor{red}{TODO \thetodocount\ ---\ #1}}\\[0.3em]%
+      \textcolor{red}{#2}%
+    }%
+  }\par\medskip%
+  \immediate\write\todolistfile{%
+    \string\adltodoentry{\thetodocount}{\detokenize{#1}}%
+  }%
+}
+
+\newcommand{\printtodos}{%
+  \immediate\closeout\todolistfile%
+  \phantomsection%
+  \section*{Open TODOs}%
+  \addcontentsline{toc}{section}{\texorpdfstring{\textcolor{red}{Open TODOs}}{Open TODOs}}%
+  \iftodospresent%
+    \begin{itemize}%
+      \input{\jobname.tdo}%
+    \end{itemize}%
+  \else%
+    \textit{No open TODOs.}%
+  \fi%
+}
+% ─────────────────────────────────────────────────────────────────────────────
+
 % TITLE CONFIGURATION
 \title{
   \Huge Regulatory Reform and the Composition of FDA Drug Approvals
@@ -95,5 +146,7 @@
 
 \appendix
 \input{sections/appendices}
+
+\printtodos
 
 \end{document}
