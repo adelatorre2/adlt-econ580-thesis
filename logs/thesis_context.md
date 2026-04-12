@@ -289,12 +289,15 @@ Primary datasets currently constructed:
 - `data/intermediate/fda_dea_controlled_substance_linkage.csv`
 - `data/intermediate/fda_dea_event_study_annual_panel.csv`
 - `data/event_study/event_study_drug_panel.csv` — drug-approval-level analytical dataset (25,908 rows, 1939–2025), one row per unique approved original application; built in `code/notebooks/06_event_study_dataset_build.ipynb`. Contains all DEA controlled-substance dummies, schedule indicators, policy timing variables, and combination-product flags needed for Stata estimation. Read with `dtype={'ApplNo': str}` to preserve leading zeros.
+- `data/event_study/stata/event_study_drug_panel.dta` — Stata-ready version of the above; produced by `code/stata/01_load_and_prep.do`. Variables are lowercase; `appltype_str`, `pdufa_era_str`, and `dea_confidence_tier_str` are string originals; encoded numeric versions available without `_str` suffix.
+- `data/event_study/stata/event_study_annual.dta` — annual panel (1939–2025) collapsed from the drug-level .dta by `code/stata/03_event_study.do`. One row per year with CS counts, shares, log outcomes, and NDA/ANDA sub-series. Used for all PDUFA event study and ITS regressions.
+- `data/event_study/stata/gdufa_anda_annual.dta` — annual panel (1984–2025) of ANDA approvals only, collapsed by `code/stata/05_gdufa_analysis.do`. Contains ANDA CS counts, shares, schedule breakdowns, and GDUFA timing variables (`post_gdufa`, `gdufa_transition`, `gdufa_era`, `trend_post_gdufa`). Three-period design: pre-GDUFA (≤2012), transition/backlog-washout (2013–2014), post-GDUFA performance-goal era (2015+).
 
 Current analytical tasks:
 
-- load `data/event_study/event_study_drug_panel.csv` into Stata and run event-study regression with `is_controlled_substance` as outcome and `event_time` (= `approval_year - 1992`) as running variable
-- decide whether the paper should anchor on the `ORIG` confident-share series alone or present `ORIG + NDA-only` as a central sensitivity
-- consider building a therapeutic-class-by-year panel from the drug panel for heterogeneity analysis
+- review PDUFA event study output from `03_event_study.do` and GDUFA analysis output from `05_gdufa_analysis.do`; assess whether either produces a paper-facing result
+- decide whether to anchor the thesis on the GDUFA/ANDA channel (more tractable: 86.6% of CS approvals are ANDAs; GDUFA is the directly relevant policy) or on a broader ITS framing
+- consider whether historical DEA scheduling data would materially change the retroactive-linkage limitation before committing to a main specification
 
 Current bottlenecks:
 

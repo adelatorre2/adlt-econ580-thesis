@@ -29,8 +29,9 @@ do "${code}/globals.do"
 
 * --- Pipeline ---
 do "${code}/01_load_and_prep.do"
-do "${code}/02_descriptive_figures.do"    // uncomment when ready
-do "${code}/03_event_study.do"            // uncomment when ready
-* do "${code}/04_robustness.do"             // uncomment when ready
+do "${code}/02_descriptive_figures.do"    // descriptive figures and tables
+do "${code}/03_event_study.do"            // PDUFA event study (ITS, full sample)
+do "${code}/05_gdufa_analysis.do"         // GDUFA event study (ANDA-only)
+* do "${code}/04_robustness.do"           // robustness checks (not yet built)
 
 di as txt _newline "===== 00_master.do complete ====="

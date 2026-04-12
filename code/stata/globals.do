@@ -37,3 +37,11 @@ global hatchwaxman_year  = 1984
 global pdufa_first_full_year = 1993
 * Last fully observed year in the March 2026 extract
 global last_full_year = 2025
+
+* --- GDUFA policy dates ---
+* GDUFA signed July 9, 2012; fees began Oct 1, 2012 (FY2013)
+* Performance goals (15-month first-action target) began FY2015
+* 2013-2014 = backlog washout / transition period
+global gdufa_year            = 2012
+global gdufa_first_full_year = 2013
+global gdufa_goals_year      = 2015
