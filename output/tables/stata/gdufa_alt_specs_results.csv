@@ -1,0 +1,8 @@
+model,coef_main,se_main,irr_or_exp,z_stat,p_value_approx
+GP1_Poisson_levelshift_excl_trans,.19766939,.11123919,1.2185595,1.7769761,.07557217
+GP2_Poisson_slopechange_excl_trans,.3664518,.14104161,1.4426069,2.5981822,.0093718749
+GP3_Poisson_allyears_sensitivity,.13666579,.10056701,1.1464449,1.3589525,.17416163
+GD1_DD_levels_excl_trans,-381.65829,29.735216,,-12.835229,0
+GD2_DD_asinh_excl_trans,-.42734393,.1145092,,-3.7319615,.00018999455
+GD3_DD_Poisson_excl_trans,-.4031058,.095391341,.66824138,-4.225811,.000023808176
+GD4_DD_threeperiod_allyears,-381.65829,30.076359,,-12.689644,0

@@ -52,7 +52,11 @@ use "${dtapath}/gdufa_anda_annual.dta", clear
 keep if approval_year >= 1984 & approval_year <= 2025
 di as txt "Sample restricted to 1984-2025. Obs = `c(N)'"
 
-/* Derived variables not in the saved .dta */
+/* Derived variables — use capture drop to make idempotent and tolerate
+   variables that may already exist in the saved .dta (trend_post_gdufa
+   is created by 05_gdufa_analysis.do) */
+capture drop n_noncs_anda
+capture drop trend_post_gdufa
 gen n_noncs_anda     = n_anda_total - n_anda_cs
 gen trend_post_gdufa = event_time_gdufa * post_gdufa
 
@@ -281,47 +285,17 @@ di as txt "ANDA drug-level panel: `c(N)' rows"
 di as txt _newline "--- All ANDA sponsors: HHI and top-10 share by year ---"
 
 preserve
-    /* Total ANDA approvals per sponsor per year */
-    bysort approval_year sponsorname: gen n_sponsor_year = _N
-    bysort approval_year: gen n_year_total = _N
-
-    /* Collapse to one row per sponsor-year */
-    bysort approval_year sponsorname: keep if _n == 1
-
-    /* HHI: sum of squared market shares within year */
-    gen share_sq = (n_sponsor_year / n_year_total)^2
-    bysort approval_year: gen rank = .
-    sort approval_year (-n_sponsor_year)
-    by approval_year: replace rank = _n
-
-    /* Compute HHI and top-10 share per year */
-    collapse                                                                ///
-        (sum)  hhi = share_sq                                              ///
-               top10_n = n_sponsor_year if rank <= 10,                    ///
-        by(approval_year)
-
-    /* Recompute top-10 share */
-    drop top10_n
-    tempfile hhi_all
-    save `hhi_all'
-restore
-
-/* Redo: need total per year for top-10 share */
-preserve
     bysort approval_year sponsorname: gen n_sponsor_year = _N
     bysort approval_year: gen n_year_total = _N
 
     /* One row per sponsor-year */
     bysort approval_year sponsorname: keep if _n == 1
 
-    /* HHI */
+    /* HHI and rank */
     gen share_sq = (n_sponsor_year / n_year_total)^2
-
-    /* Rank sponsors within year */
-    sort approval_year (-n_sponsor_year)
+    gsort approval_year -n_sponsor_year
     bysort approval_year: gen rank = _n
 
-    /* Top-10 approvals */
     gen top10_n = n_sponsor_year if rank <= 10
 
     collapse                                                                ///
@@ -330,10 +304,6 @@ preserve
                total_n_sum = n_year_total,                                 ///
         by(approval_year)
 
-    /* Use first total_n for the year (all rows same value) */
-    bysort approval_year: keep if _n == 1
-
-    /* top-10 share */
     gen top10_share = top10_n_sum / total_n_sum * 100
     label variable hhi         "HHI (ANDA sponsors, all)"
     label variable top10_share "Top-10 sponsor share (%), all ANDA"
@@ -342,12 +312,13 @@ preserve
     gen post_gdufa       = (approval_year >= 2015)
     gen gdufa_transition = (approval_year >= 2013 & approval_year <= 2014)
 
-    /* Gray shading for transition */
+    /* Shading bounds for transition band */
     sum top10_share
-    local ymax_top10 = ceil(r(max)) + 5
+    gen shade_lo = 0
+    gen shade_hi = ceil(r(max)) + 5
 
     twoway                                                                  ///
-        (rarea gdufa_transition gdufa_transition approval_year,            ///
+        (rarea shade_lo shade_hi approval_year if gdufa_transition == 1,   ///
              fcolor(gs14) lwidth(none))                                    ///
         (line top10_share approval_year, lcolor(navy) lwidth(medium)),     ///
         yline(50, lpattern(dot) lcolor(gs7) lwidth(thin))                  ///
@@ -367,11 +338,12 @@ preserve
         replace width(2400)
     di as txt "Exported: gdufa_sponsor_concentration_top10.png"
 
+    replace shade_hi = r(max) * 1.1  /* rescale for HHI axis */
     sum hhi
-    local ymax_hhi = r(max) * 1.1
+    replace shade_hi = r(max) * 1.1
 
     twoway                                                                  ///
-        (rarea gdufa_transition gdufa_transition approval_year,            ///
+        (rarea shade_lo shade_hi approval_year if gdufa_transition == 1,   ///
              fcolor(gs14) lwidth(none))                                    ///
         (line hhi approval_year, lcolor(navy) lwidth(medium)),             ///
         xline(2012, lpattern(dash) lcolor(cranberry) lwidth(medthin))      ///
@@ -390,7 +362,6 @@ preserve
         replace width(2400)
     di as txt "Exported: gdufa_sponsor_concentration_hhi.png"
 
-    /* Save for export */
     keep approval_year hhi top10_share post_gdufa gdufa_transition
     gen is_cs_sample = 0
     tempfile conc_all
@@ -415,7 +386,7 @@ preserve
     gen share_sq = (n_sponsor_year / n_year_total)^2
 
     /* Rank within year */
-    sort approval_year (-n_sponsor_year)
+    gsort approval_year -n_sponsor_year
     bysort approval_year: gen rank = _n
 
     gen top10_n = n_sponsor_year if rank <= 10
@@ -426,16 +397,19 @@ preserve
                total_n_sum = n_year_total,                                 ///
         by(approval_year)
 
-    bysort approval_year: keep if _n == 1
-
     gen top10_share = top10_n_sum / total_n_sum * 100
 
     /* GDUFA timing */
     gen post_gdufa       = (approval_year >= 2015)
     gen gdufa_transition = (approval_year >= 2013 & approval_year <= 2014)
 
+    /* Shading bounds for transition band */
+    sum top10_share
+    gen shade_lo = 0
+    gen shade_hi = ceil(r(max)) + 5
+
     twoway                                                                  ///
-        (rarea gdufa_transition gdufa_transition approval_year,            ///
+        (rarea shade_lo shade_hi approval_year if gdufa_transition == 1,   ///
              fcolor(gs14) lwidth(none))                                    ///
         (line top10_share approval_year, lcolor(cranberry) lwidth(medium)), ///
         yline(50, lpattern(dot) lcolor(gs7) lwidth(thin))                  ///
