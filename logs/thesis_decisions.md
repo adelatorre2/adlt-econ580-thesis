@@ -18,6 +18,18 @@ This file is an append‑only research log documenting meaningful decisions made
 
 ---
 
+## 2026-04-20 — Built `08_subsample_alt_specs.do`: NDA-only PDUFA and ANDA-only GDUFA analyses
+
+The pooled stacked DD in `06_alt_specs_pdufa.do` produces dramatic but misleading results because it contrasts CS approvals (86.6% ANDAs) against non-CS approvals (also heavily ANDA-dominated post-Hatch-Waxman), so the DD identifies the Hatch-Waxman ANDA expansion rather than a PDUFA effect. The NDA-only Poisson with exposure in 06 (Model P3) correctly returns a null; this new file extends NDA-only logic to the stacked DD (D1 linear levels, D2 IHS, D3 Poisson) and event-study DD structures. A parallel ANDA-only share-measure figure for GDUFA is also produced for visual symmetry in the paper. Existing figures and specifications in 05, 06, and 07 are preserved unchanged. New outputs: `pdufa_nda_only_share.png`, `pdufa_nda_only_dd_event_study.png`, `gdufa_anda_only_share.png`, `subsample_alt_specs_results.csv`, `pdufa_nda_stacked_dd.dta`. Added `08` to `00_master.do` after `07`. This is the subsample-appropriate counterpart to 06/07 and is the version that should anchor the paper's DD evidence.
+
+---
+
+## 2026-04-20 — Fixed `r(621)` nested-preserve bug in `05_gdufa_analysis.do` narrow-window block
+
+The narrow-window (2002–2025) GDUFA event-study block at the end of PART 5 crashed on a nested `preserve`: an outer `preserve` restricted the data to 2002+ before the regression, and a second `preserve` inside the coefficient-extraction loop triggered `r(621); already preserved`. Rewrote the block to match the pattern used in the main GDUFA event-study block above it: sample restriction applied as an `if` qualifier on `regress`, and a single `preserve`/`restore` pair around the coefficient-extraction-and-plotting code. Stata retains `_b[]` and `_se[]` in `e()` after the regression returns, so coefficient extraction does not require the regression sample to remain in memory. New figure `gdufa_event_study_narrow_2002.png` exported. Pipeline now runs end-to-end; `00_master.do` can proceed to `06_alt_specs_pdufa.do` and `07_alt_specs_gdufa.do`.
+
+---
+
 ## 2026-04-19 — `06_alt_specs_pdufa.do` and `07_alt_specs_gdufa.do` created: Poisson, stacked DD, and sponsor concentration
 
 Task completed: two alternative-specification files were created to address the denominator problem in the share-based analyses. `06_alt_specs_pdufa.do` targets PDUFA (1992) and uses `event_study_annual.dta`; `07_alt_specs_gdufa.do` targets GDUFA (2012) and uses `gdufa_anda_annual.dta` plus the drug-level panel for sponsor concentration.

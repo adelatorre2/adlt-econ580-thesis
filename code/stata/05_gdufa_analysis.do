@@ -536,73 +536,87 @@ preserve
     di as txt "Exported: gdufa_event_study_anda_cs_share.png"
 restore
 
-/* ---- Narrower window: 2002-2025 ---- */
+/*========================================================================
+  PART 5 (cont.): Narrow-window GDUFA event study, 2002-2025
+  Sensitivity check: restrict pre-period to reduce influence of early
+  noisy ANDA years. Same specification as main event study above.
+========================================================================*/
 
 di as txt _newline "--- GDUFA event study, narrow window 2002-2025 ---"
-di as txt "NOTE: Only `c(N)' annual observations after restriction."
+di as txt "NOTE: Sensitivity. OLS; serial correlation not corrected."
 
+/* Run regression with in-line sample restriction — no outer preserve needed */
+regress anda_cs_share ib10.event_time_gdufa_shifted ///
+    if approval_year >= 2002
+
+/* Count obs for log clarity */
+qui count if approval_year >= 2002 & !missing(anda_cs_share)
+di as txt "Narrow-window sample size: `r(N)' annual observations"
+
+/* Extract coefficients and plot inside a single preserve */
 preserve
-    keep if approval_year >= 2002
+    clear
+    set obs 21
+    gen event_time_gdufa_shifted = _n
+    gen event_time_gdufa         = event_time_gdufa_shifted - 11
+    gen coef = .
+    gen se   = .
 
-    regress anda_cs_share ib10.event_time_gdufa_shifted
+    /* Reference period: event_time_gdufa_shifted == 11 (2011) */
+    replace coef = 0 if event_time_gdufa_shifted == 11
+    replace se   = 0 if event_time_gdufa_shifted == 11
 
-    /* Extract coefficients */
-    tempfile narrow_coefs
-    preserve
-        clear
-        set obs 21
-        gen event_time_gdufa_shifted = _n
-        gen event_time_gdufa         = event_time_gdufa_shifted - 11
-        gen coef = .
-        gen se   = .
-        replace coef = 0 if event_time_gdufa_shifted == 10
-        replace se   = 0 if event_time_gdufa_shifted == 10
-        forvalues k = 1/21 {
-            if `k' != 10 {
-                capture replace coef = _b[`k'.event_time_gdufa_shifted]  ///
-                    if event_time_gdufa_shifted == `k'
-                capture replace se   = _se[`k'.event_time_gdufa_shifted] ///
-                    if event_time_gdufa_shifted == `k'
-            }
+    forvalues k = 1/21 {
+        if `k' != 11 {
+            capture replace coef = _b[`k'.event_time_gdufa_shifted] ///
+                if event_time_gdufa_shifted == `k'
+            capture replace se   = _se[`k'.event_time_gdufa_shifted] ///
+                if event_time_gdufa_shifted == `k'
         }
-        gen ci_lo = coef - 1.96 * se
-        gen ci_hi = coef + 1.96 * se
+    }
 
-        qui sum ci_lo
-        local ylo = r(min) - 0.01
-        qui sum ci_hi
-        local yhi = r(max) + 0.01
-        gen band_lo = `ylo'
-        gen band_hi = `yhi'
+    gen ci_lo = coef - 1.96 * se
+    gen ci_hi = coef + 1.96 * se
 
-        twoway                                                       ///
-            (rarea band_lo band_hi event_time_gdufa                 ///
-                 if event_time_gdufa >= 1 & event_time_gdufa <= 2,  ///
-                 fcolor(gs14) lwidth(none))                         ///
-            (rarea ci_lo ci_hi event_time_gdufa,                    ///
-                 fcolor(navy%20) lwidth(none))                      ///
-            (connected coef event_time_gdufa,                       ///
-                 lcolor(navy) mcolor(navy)                          ///
-                 msymbol(circle_hollow) msize(small) lwidth(thin)), ///
-            yline(0, lpattern(dash) lcolor(gs8) lwidth(thin))       ///
-            xline(0, lpattern(dash) lcolor(cranberry) lwidth(medthin)) ///
-            title("Event Study: ANDA CS Share Around GDUFA (2012)", ///
-                  size(medlarge))                                   ///
-            subtitle("Narrow window: 2002-2025. Reference: 2011.", size(small)) ///
-            ytitle("Coefficient Relative to 2011")                 ///
-            xtitle("Years Since GDUFA Enactment (2012)")           ///
-            xlabel(-10(2)10)                                        ///
-            note("`cs_def'"                                         ///
-                 "N = 24 annual observations. Wide CIs expected."   ///
-                 "Gray band: 2013-2014 backlog transition."         ///
-                 "`data_note'", size(vsmall))                       ///
-            legend(off)                                             ///
-            graphregion(color(white)) bgcolor(white)
+    /* Shading helpers for 2013-2014 transition (event time 1-2) */
+    gen band_lo = .
+    gen band_hi = .
+    qui sum ci_lo
+    local ymin = r(min) - 0.02
+    qui sum ci_hi
+    local ymax = r(max) + 0.02
+    replace band_lo = `ymin'
+    replace band_hi = `ymax'
 
-        graph export "${figures}/gdufa_event_study_anda_cs_share_narrow.png", ///
-            replace width(2400)
-        di as txt "Exported: gdufa_event_study_anda_cs_share_narrow.png"
-    restore
+    twoway                                                                ///
+        (rarea band_lo band_hi event_time_gdufa                           ///
+             if event_time_gdufa >= 1 & event_time_gdufa <= 2,            ///
+             fcolor(gs14) lwidth(none))                                   ///
+        (rarea ci_lo ci_hi event_time_gdufa,                              ///
+             fcolor(navy%20) lwidth(none))                                ///
+        (connected coef event_time_gdufa,                                 ///
+             lcolor(navy) mcolor(navy)                                    ///
+             msymbol(circle_hollow) msize(small) lwidth(thin)),           ///
+        yline(0, lpattern(dash) lcolor(gs8) lwidth(thin))                 ///
+        xline(0, lpattern(dash) lcolor(cranberry) lwidth(medthin))        ///
+        title("Event Study (Narrow Window): ANDA CS Share Around GDUFA",  ///
+              size(medlarge))                                             ///
+        subtitle("Sample: 2002-2025. Reference: 2011 (event time = -1)",  ///
+                 size(small))                                             ///
+        ytitle("Coefficient Relative to 2011")                            ///
+        xtitle("Years Since GDUFA Enactment (2012)")                      ///
+        xlabel(-10(2)10)                                                  ///
+        note("`cs_def'"                                                   ///
+             "Dashed red line: GDUFA enactment (event time = 0)."         ///
+             "Gray band: 2013-2014 backlog transition (event time 1-2)."  ///
+             "Navy band: 95% CI. `gdufa_note'"                            ///
+             "`data_note'", size(vsmall))                                 ///
+        legend(off)                                                       ///
+        graphregion(color(white)) bgcolor(white)
+
+    graph export "${figures}/gdufa_event_study_narrow_2002.png", ///
+        replace width(2400)
+    di as txt "Exported: gdufa_event_study_narrow_2002.png"
 restore
 
 
