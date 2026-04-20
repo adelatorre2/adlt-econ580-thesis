@@ -18,6 +18,20 @@ This file is an append‑only research log documenting meaningful decisions made
 
 ---
 
+## 2026-04-19 — `06_alt_specs_pdufa.do` and `07_alt_specs_gdufa.do` created: Poisson, stacked DD, and sponsor concentration
+
+Task completed: two alternative-specification files were created to address the denominator problem in the share-based analyses. `06_alt_specs_pdufa.do` targets PDUFA (1992) and uses `event_study_annual.dta`; `07_alt_specs_gdufa.do` targets GDUFA (2012) and uses `gdufa_anda_annual.dta` plus the drug-level panel for sponsor concentration.
+
+Both files share the same four-part structure: (1) Poisson count models with log-exposure offset (`n_total` or `n_anda_total`), producing IRRs for `post_pdufa` / `post_gdufa`; (2) stacked DD dataset construction — two rows per year, one for the CS group and one for non-CS — with a `regress n_approvals i.is_cs i.approval_year i.is_cs##i.post` specification where the main effect of `post` is collinear with year FEs and drops out, leaving `1.is_cs#1.post` as the identified differential-growth coefficient; (3) IHS and Poisson DD variants for robustness; (4) event study DD extracting `k.event_shifted#1.is_cs` interactions.
+
+Design choice specific to GDUFA: primary DD specs exclude 2013–2014 transition years (`if gdufa_transition == 0`); a four-group three-period version using `i.gdufa_era##i.is_cs` is included as sensitivity. This is consistent with the rationale in `05_gdufa_analysis.do` — those years clear old backlogged applications and do not represent clean post-treatment.
+
+`07_alt_specs_gdufa.do` adds a Part 5 sponsor concentration analysis built from the drug-level panel. The computation: sort by year and sponsor, compute `n_sponsor_year / n_year_total`, square and sum within year to get HHI; separately compute top-10 share. Three figures exported: overall ANDA top-10 share, HHI, and CS ANDA top-10 share. A pre/post summary table is also exported as `gdufa_concentration_comparison.csv`.
+
+`00_master.do` updated to run both new files in sequence after `05_gdufa_analysis.do`. Outputs: `pdufa_stacked_dd.dta`, `gdufa_stacked_dd.dta`, `pdufa_alt_specs_results.csv`, `gdufa_alt_specs_results.csv`, `gdufa_concentration_comparison.csv`, `pdufa_dd_event_study.png`, `gdufa_dd_event_study.png`, three concentration PNGs. Next step: run the full pipeline and review outputs; consider whether Poisson or DD results should enter the main results section or stay in appendix.
+
+---
+
 ## 2026-04-12 — `05_gdufa_analysis.do` created: GDUFA-centered ANDA CS analysis
 
 Task completed: `code/stata/05_gdufa_analysis.do` was created as a GDUFA-centered interrupted time series analysis of ANDA controlled substance approvals. Key design choice: GDUFA was enacted in 2012 but had no performance goals until FY2015, so 2013–2014 is treated as a backlog washout transition period throughout — not as post-treatment. The "clean" post-GDUFA treatment window starts 2015. The file has six parts: (1) filters the 25,908-drug panel to ANDAs only (~19,022 rows), collapses to annual level (1984–2025), creates GDUFA timing variables (`post_gdufa`, `gdufa_transition`, `gdufa_era` with three labeled levels, `trend_post_gdufa`), saves `gdufa_anda_annual.dta`; (2) three descriptive tables exported to `output/tables/stata/`; (3) five descriptive figures with gray shading for the transition period and dashed GDUFA line, exported to `output/figures/stata/`; (4) five parametric ITS models (GA–GE) including a narrower 2002–2025 pre-period; (5) nonparametric event study with dummies centered on 2012, end-caps at ±10, reference year 2011, with transition shading in the coefficient plot and a narrow-window version; (6) three-period summary figure. `globals.do` updated with three new GDUFA date globals. `00_master.do` updated to run `05_gdufa_analysis.do` after `03_event_study.do` (with `04_robustness.do` still commented out).

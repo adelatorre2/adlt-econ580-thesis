@@ -32,6 +32,8 @@ do "${code}/01_load_and_prep.do"
 do "${code}/02_descriptive_figures.do"    // descriptive figures and tables
 do "${code}/03_event_study.do"            // PDUFA event study (ITS, full sample)
 do "${code}/05_gdufa_analysis.do"         // GDUFA event study (ANDA-only)
+do "${code}/06_alt_specs_pdufa.do"        // alt specs: Poisson + stacked DD (PDUFA)
+do "${code}/07_alt_specs_gdufa.do"        // alt specs: Poisson + stacked DD (GDUFA)
 * do "${code}/04_robustness.do"           // robustness checks (not yet built)
 
 di as txt _newline "===== 00_master.do complete ====="
