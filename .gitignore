@@ -44,5 +44,6 @@ __pycache__/
 *.sqlite
 *CLAUDE.md
 logs/prompts
-logs/prompts/*
+logs/prompts/
 .claude/
+.vscode/
