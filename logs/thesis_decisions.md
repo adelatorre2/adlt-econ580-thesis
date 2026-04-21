@@ -18,6 +18,24 @@ This file is an append‑only research log documenting meaningful decisions made
 
 ---
 
+## 2026-04-21 — Final presentation deck v1
+
+Built 10-slide Beamer presentation in
+`presentations/4-21_final-presentation/slides/adlt_final_presentation.tex` for
+the April 21 ECON 580 class. Metropolis theme with three semantic accent colors
+(`pdufacolor` deep blue, `cscolor` cranberry, `opioidcolor` burnt orange) applied
+consistently as inline macros (`\pdufahl{}`, `\cshl{}`, `\opioidhl{}`).
+Frametitles use the blue header bar (white text); no color macros in frametitles
+to avoid invisible-on-dark-background text. Custom footer on every slide carries
+the paper title and frame number. Overlay accumulation on slides 2 (question
+walk-up), 5 (three-test strategy), and 9 (policy implications). All IRR numbers
+and p-values checked against pipeline CSV outputs: PDUFA year-FE IRR 1.46/p=0.06,
+group-trends IRR 1.19/p=0.62; GDUFA year-FE IRR 0.668/p<0.001, group-trends
+1.38/p=0.18. Drug spike table (slide 7) lists 8 representative CS NDAs from the
+2009–2013 wave. Figures resolve from `../../../output/figures/stata/` relative to
+the slide source. Compiled with `latexmk -pdf` to 18 pages (overlays expand 10
+content slides); all three figure files embedded successfully; no errors.
+
 ## 2026-04-20 — Fixed Figure 6 title and ytitle clipping
 
 The PDUFA NDA-only DD event study figure (Figure 6 in main.pdf) had the title

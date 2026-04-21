@@ -1,0 +1,381 @@
+%% ==============================================================================
+%%  ECON 580 Final Presentation
+%%  Author:  Alejandro De La Torre
+%%  Date:    April 21, 2026
+%%
+%%  Style: Metropolis theme; three semantic accent colors (PDUFA blue,
+%%         CS cranberry, opioid orange) applied consistently to keywords.
+%% ==============================================================================
+
+\documentclass[10pt]{beamer}
+
+%% ── Theme ─────────────────────────────────────────────────────────────────────
+\usetheme{metropolis}
+\metroset{progressbar=none, block=fill}
+
+%% ── Packages ──────────────────────────────────────────────────────────────────
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{array}
+\usepackage{appendixnumberbeamer}
+
+%% ── Figure path ───────────────────────────────────────────────────────────────
+%  Tex file lives at: presentations/4-21_final-presentation/slides/
+%  Figures live at:   output/figures/stata/
+\graphicspath{{../../../output/figures/stata/}}
+
+%% ── Semantic accent colors ────────────────────────────────────────────────────
+%  Rule: color ONLY the relevant keyword; do not decorate.
+%  pdufacolor → "PDUFA", "GDUFA", "user fees", regulatory-acceleration text
+%  cscolor    → "controlled substances", "CS", "DEA" references
+%  opioidcolor→ "2009--2013", "opioid wave", "product cycle" references
+\definecolor{pdufacolor}{RGB}{41,65,121}    % deep blue
+\definecolor{cscolor}{RGB}{163,47,55}       % cranberry
+\definecolor{opioidcolor}{RGB}{201,101,36}  % burnt orange
+
+\newcommand{\pdufahl}[1]{\textcolor{pdufacolor}{#1}}
+\newcommand{\cshl}[1]{\textcolor{cscolor}{#1}}
+\newcommand{\opioidhl}[1]{\textcolor{opioidcolor}{#1}}
+
+%% ── Beamer color overrides ────────────────────────────────────────────────────
+\setbeamercolor{frametitle}{fg=white, bg=pdufacolor}
+\setbeamercolor{title separator}{fg=cscolor}
+\setbeamercolor{progress bar in section page}{fg=cscolor, bg=pdufacolor!30}
+
+%% ── Footer (every slide except plain) ────────────────────────────────────────
+\setbeamercolor{footline}{fg=gray, bg=white}
+\setbeamertemplate{footline}{%
+  \hbox{%
+    \begin{beamercolorbox}[wd=0.78\paperwidth,ht=2.4ex,dp=1ex,leftskip=2ex]{footline}%
+      \tiny\color{gray}%
+      De La Torre~---~\textit{Regulatory Reform and the Composition of FDA Drug Approvals}%
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=0.22\paperwidth,ht=2.4ex,dp=1ex,rightskip=2ex,right]{footline}%
+      \tiny\color{gray}p.\,\insertframenumber%
+    \end{beamercolorbox}%
+  }%
+}
+
+%% ── Title metadata ────────────────────────────────────────────────────────────
+\title{Regulatory Reform and the Composition of FDA Drug Approvals}
+\subtitle{Evidence on Controlled Substances, Regulatory Incentives,\\
+          and Pharmaceutical Market Composition}
+\author{Alejandro De La Torre}
+\institute{University of Wisconsin--Madison~$\cdot$~ECON 580}
+\date{April 21, 2026}
+
+%% ==============================================================================
+\begin{document}
+%% ==============================================================================
+
+%% ─── Slide 1: Title ───────────────────────────────────────────────────────────
+\begin{frame}[plain,noframenumbering]
+  \titlepage
+\end{frame}
+
+
+%% ─── Slide 2: The question and the answer ─────────────────────────────────────
+\begin{frame}{Did User Fees Change What the FDA Approves?}
+
+  \begin{itemize}
+    \item<1->
+      Drug overdose deaths reached 107{,}000 in 2021.
+      \cshl{Controlled substances}---DEA-scheduled drugs with abuse
+      potential---are central to the epidemic.
+      Regulatory decisions shape what enters the market.
+
+    \item<2->
+      \pdufahl{PDUFA (1992)} and \pdufahl{GDUFA (2012)} let the FDA
+      collect industry user fees in exchange for faster review.
+      Standard theory: faster review benefits high-margin drugs.
+      \cshl{Controlled substances} are high-margin.
+
+    \item<3->
+      \textbf{Question:} Did \pdufahl{PDUFA} or \pdufahl{GDUFA} shift
+      FDA approvals toward \cshl{controlled substances}?
+
+    \item<4->
+      \textbf{\cshl{Answer: No.}}\quad
+      The hypothesis is not supported by the data.
+  \end{itemize}
+
+\end{frame}
+
+
+%% ─── Slide 3: Contribution ────────────────────────────────────────────────────
+\begin{frame}{What This Paper Adds}
+
+  \begin{itemize}
+    \item
+      First systematic test of whether \pdufahl{PDUFA} or \pdufahl{GDUFA}
+      changed the \textit{therapeutic composition} of FDA approvals.
+
+    \item
+      Two literatures---FDA user-fee effects
+      (\textit{Berndt et al., 2005; Olson, 2009; Philipson et al., 2008})
+      and the economics of opioid supply
+      (\textit{Alpert, Powell, Pacula, 2018})---have not been joined.
+
+    \item
+      Paper provides the upstream, approval-side counterpart to downstream
+      studies of \cshl{opioid market dynamics}.
+  \end{itemize}
+
+\end{frame}
+
+
+%% ─── Slide 4: Data ────────────────────────────────────────────────────────────
+\begin{frame}{FDA Drugs@FDA $\times$ DEA Scheduling, 1939--2025}
+
+  \begin{columns}[T]
+
+    \begin{column}{0.48\textwidth}
+      \begin{itemize}
+        \item \textbf{25{,}908} original drug approvals
+              (Drugs@FDA, March 2026)
+        \item \textbf{\cshl{2{,}067}} confirmed
+              \cshl{controlled substances} (8.0\%),\\
+              linked by ingredient to DEA schedules
+        \item \textbf{86.6\%} of \cshl{CS} approvals are generics
+              (ANDAs)---NDA-only subsample is the
+              policy-relevant unit for \pdufahl{PDUFA}
+      \end{itemize}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      \centering
+      {\footnotesize
+      \begin{tabular}{@{}lrr@{}}
+        \toprule
+        Era & Total & \cshl{CS}\% \\
+        \midrule
+        Pre-\pdufahl{PDUFA} ($\le$1992) & 7{,}301 & 9.6 \\
+        \pdufahl{PDUFA} I--II (1993--02) & 3{,}187 & 9.2 \\
+        \pdufahl{PDUFA} III--IV (2003--12) & 5{,}042 & 7.5 \\
+        \pdufahl{PDUFA} V--VI (2013--22) & 7{,}844 & 7.4 \\
+        \pdufahl{PDUFA} VII (2023+) & 2{,}534 & 4.5 \\
+        \midrule
+        Total & 25{,}908 & 8.0 \\
+        \bottomrule
+      \end{tabular}
+      \par\vspace{0.4ex}
+      {\tiny\textit{CS = confident DEA scheduled match (conservative)}}
+      }
+    \end{column}
+
+  \end{columns}
+
+\end{frame}
+
+
+%% ─── Slide 5: Empirical strategy ──────────────────────────────────────────────
+\begin{frame}{Three Complementary Tests, One Answer}
+
+  \begin{itemize}
+    \item<1->
+      \textbf{Interrupted time series} on annual \cshl{CS} share
+      around 1992 (\pdufahl{PDUFA}) and 2012 (\pdufahl{GDUFA})
+
+    \item<2->
+      \textbf{Poisson rate model} with exposure offset---tests whether
+      the conditional \cshl{CS} approval rate shifted
+
+    \item<3->
+      \textbf{Stacked diff-in-diff}---\cshl{CS} vs.\ non-\cshl{CS}
+      as treatment/control; group-specific trend controls are the
+      key diagnostic
+  \end{itemize}
+
+  \onslide<4->{
+    \begin{block}{}
+      \centering
+      $\log \mathbb{E}[n_{gt}]
+        = \alpha_g + \lambda_t
+        + \underbrace{\delta}_{\text{coeff.\ of interest}}
+          \cdot \bigl(\textcolor{cscolor}{\mathrm{CS}}_g
+                      \times \mathrm{Post}_t\bigr)
+        + \log\!\bigl(\mathrm{Total}_t\bigr)$
+    \end{block}
+    \vspace{0.3ex}
+    {\footnotesize\textit{%
+      NDA-only sample for \pdufahl{PDUFA}; ANDA-only for
+      \pdufahl{GDUFA}. Transition years 2013--2014 excluded.}}
+  }
+
+\end{frame}
+
+
+%% ─── Slide 6: PDUFA result ────────────────────────────────────────────────────
+\begin{frame}{PDUFA: Marginally Significant, But Not Robust}
+
+  \begin{columns}[T]
+
+    \begin{column}{0.56\textwidth}
+      \includegraphics[width=\textwidth,keepaspectratio]%
+        {pdufa_nda_only_dd_event_study.png}
+    \end{column}
+
+    \begin{column}{0.41\textwidth}
+      \vspace{1ex}
+      {\small
+      \begin{itemize}
+        \item Pre-period broadly stable;\\some downward drift
+        \item Post period: IRR $= 1.46$, $p = 0.06$
+        \item \cshl{IRR collapses to 1.19 ($p = 0.62$)
+              with group-specific trends}
+      \end{itemize}
+      }
+      \vspace{1ex}
+      {\footnotesize
+      \begin{tabular}{@{}lcc@{}}
+        \toprule
+        Specification & IRR & $p$ \\
+        \midrule
+        Year FE        & 1.46 & 0.06 \\
+        Linear trend   & 1.46 & 0.07 \\
+        Group trends   & \cshl{\textbf{1.19}} & \cshl{\textbf{0.62}} \\
+        \bottomrule
+      \end{tabular}
+      }
+    \end{column}
+
+  \end{columns}
+
+\end{frame}
+
+
+%% ─── Slide 7: 2009--2013 opioid wave ──────────────────────────────────────────
+\begin{frame}{The ``Effect'' Is a \opioidhl{2009--2013} Opioid Product Cycle}
+
+  \begin{columns}[T]
+
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth,keepaspectratio]%
+        {pdufa_nda_rate_vs_count.png}
+    \end{column}
+
+    \begin{column}{0.46\textwidth}
+      \vspace{0.5ex}
+      {\scriptsize
+      \begin{tabular}{@{}llc@{}}
+        \toprule
+        Year & Drug & Sched. \\
+        \midrule
+        2009 & EMBEDA            & II  \\
+        2010 & EXALGO            & II  \\
+        2010 & OXYCONTIN         & II  \\
+        2010 & SUBOXONE          & III \\
+        2010 & BUTRANS           & III \\
+        2011 & INTERMEZZO        & IV  \\
+        2012 & QSYMIA            & IV  \\
+        2013 & ZOHYDRO ER        & II  \\
+        \midrule
+        \multicolumn{3}{@{}l@{}}{%
+          \textit{43 CS NDAs; 58\% Schedule II}} \\
+        \bottomrule
+      \end{tabular}
+      }
+    \end{column}
+
+  \end{columns}
+
+  \vspace{0.5ex}
+  {\small\opioidhl{%
+    Timing is 17--19 years after PDUFA.
+    Not a regulatory effect---an industry product cycle.}}
+
+\end{frame}
+
+
+%% ─── Slide 8: GDUFA result ────────────────────────────────────────────────────
+\begin{frame}{GDUFA: CS ANDA Share Declines, Not for User-Fee Reasons}
+
+  \centering
+  \includegraphics[width=0.88\textwidth,height=0.44\textheight,keepaspectratio]%
+    {gdufa_dd_event_study.png}
+
+  \begin{itemize}
+    \item Year FE: IRR $= 0.668$, $p < 0.001$
+          ---\cshl{CS} share falls 33\%
+    \item Group-specific trends: IRR $= 1.38$, $p = 0.18$
+          ---same sensitivity as \pdufahl{PDUFA}
+    \item \opioidhl{Candidate drivers}: pre-\pdufahl{GDUFA} backlog
+          clearance, post-2012 opioid market contraction,
+          patent-cliff ANDA surge
+  \end{itemize}
+
+\end{frame}
+
+
+%% ─── Slide 9: What this means ─────────────────────────────────────────────────
+\begin{frame}{User Fees Did Not Reshape the Composition of Approvals}
+
+  \begin{itemize}
+    \item<1->
+      The standard argument---faster review benefits high-margin drugs,
+      \cshl{CS} drugs are high-margin---is \textbf{not supported}.
+
+    \item<2->
+      When apparent effects appear, they trace to the
+      \opioidhl{industry product cycle},
+      not to \pdufahl{regulatory incentives}.
+
+    \item<3->
+      \textbf{Policy channel matters:} the pathway from regulatory
+      acceleration to \cshl{CS} supply runs through
+      \textbf{firm innovation decisions}, not review-time margins.
+  \end{itemize}
+
+  \onslide<3->{
+    \vspace{0.8ex}
+    {\small Upstream approval-side evidence complements
+    Alpert, Powell \& Pacula (2018) and related downstream work.}
+  }
+
+\end{frame}
+
+
+%% ─── Slide 10: Limitations and conclusion ─────────────────────────────────────
+\begin{frame}{What the Design Can and Cannot Show---And What's Next}
+
+  \begin{columns}[T]
+
+    \begin{column}{0.47\textwidth}
+      \textbf{Limitations}
+      {\small
+      \begin{itemize}
+        \item Single national time series;\\no cross-sectional control
+        \item DEA scheduling is current,\\not historical-at-approval
+        \item Approval data only---\\failed applications unobserved
+      \end{itemize}
+      }
+    \end{column}
+
+    \begin{column}{0.47\textwidth}
+      \textbf{Future work}
+      {\small
+      \begin{itemize}
+        \item Link \cshl{CS} approval counts to\\ARCOS/IQVIA prescribing data
+        \item 2014 hydrocodone reschedule\\as a cleaner natural experiment
+        \item Firm/therapeutic-class variation\\to identify mechanism
+        \item User-fee dose-response analysis
+      \end{itemize}
+      }
+    \end{column}
+
+  \end{columns}
+
+  \vspace{1.2ex}
+  \centering
+  {\small\pdufahl{%
+    Regulatory acceleration, on the margins of the approval pipeline,\\
+    did not tilt the FDA toward \cshl{controlled substances}.}}
+
+\end{frame}
+
+\end{document}
