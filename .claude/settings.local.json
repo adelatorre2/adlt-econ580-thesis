@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(stata)",
+      "Skill(stata:*)"
+    ]
+  }
+}

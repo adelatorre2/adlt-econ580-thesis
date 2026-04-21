@@ -35,6 +35,7 @@ do "${code}/05_gdufa_analysis.do"         // GDUFA event study (ANDA-only)
 do "${code}/06_alt_specs_pdufa.do"        // alt specs: Poisson + stacked DD (PDUFA)
 do "${code}/07_alt_specs_gdufa.do"        // alt specs: Poisson + stacked DD (GDUFA)
 do "${code}/08_subsample_alt_specs.do"    // NDA-only (PDUFA) and ANDA-only (GDUFA) subsample analyses
+do "${code}/09_cs_nda_drug_investigation.do"   // pre-drafting drug-level diagnostics
 * do "${code}/04_robustness.do"           // robustness checks (not yet built)
 
 di as txt _newline "===== 00_master.do complete ====="
