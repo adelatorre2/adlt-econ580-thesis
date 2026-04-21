@@ -1,0 +1,110 @@
+\section{Data}
+\label{sec:data}
+
+\subsection{Sources}
+
+\paragraph{FDA Drugs@FDA.}
+The primary data source is the Drugs@FDA flat-file database, downloaded from the FDA website in March 2026 \parencite{researchDrugsFDADataFiles2026}. The database consists of twelve tab-delimited tables covering all FDA drug application and submission records from 1939 to the present. The core tables are \texttt{Applications} (one row per application, keyed by \texttt{ApplNo}), \texttt{Submissions} (one row per submission event, keyed by \texttt{ApplNo + SubmissionType + SubmissionNo}), and \texttt{Products} (product-level details linked to applications). Supporting tables cover submission classification codes, action types, document types, marketing status, and therapeutic equivalence codes.
+
+I restrict attention to original approvals---applications with at least one submission classified as a new original application (\texttt{SubmissionClass} = ORIG or equivalent)---and collapse to one row per application. This yields the drug-level panel of $N = 25{,}908$ observations used throughout the paper.
+
+\paragraph{DEA controlled-substance reference.}
+Controlled-substance status is determined by linking each FDA application to the DEA's official list of scheduled controlled substances \parencite{DrugScheduling}. The linkage is ingredient-based: I match the active ingredient(s) associated with each FDA application to the DEA scheduling reference using a combination of exact-name matching, partial-string matching, and manual review. The match is conservative---only ``confident scheduled'' matches (ingredients with a clear one-to-one mapping to a DEA schedule) are classified as controlled substances in the primary analysis. Uncertain candidates and \texttt{List~I} chemicals are excluded from the main CS indicator but appear in a broad-definition sensitivity check.
+
+An important limitation of this approach is that the DEA linkage reflects \textit{current} scheduling status, not historical status at the time of approval. Because scheduling can change over time, the current-status linkage may misclassify some drugs approved before they were scheduled and include others that were rescheduled after approval. The direction of the resulting bias is ambiguous but is likely small for the primary CS indicator, which focuses on commonly scheduled substances that have been on DEA schedules for decades.
+
+\subsection{Variable Construction}
+
+\paragraph{Outcome.}
+The primary outcome is the annual share of original approvals that are controlled substances, constructed separately for the full sample, NDA-only, and ANDA-only subsamples. Let $y_t$ denote the CS share in year $t$:
+\[
+y_t = \frac{\text{CS approvals}_t}{\text{Total approvals}_t}
+\]
+where ``CS approvals'' counts applications matched to a confident DEA schedule.
+
+\paragraph{Application type.}
+The variable \texttt{appltype\_str} from the Drugs@FDA Applications table distinguishes NDA (new drug applications for brand-name and certain generic drugs), ANDA (abbreviated new drug applications for generic drugs), and BLA (biologics license applications). In the annual panel, 86.6\% of CS approvals are ANDAs, reflecting the large volume of generic controlled-substance approvals---primarily opioid, benzodiazepine, and stimulant generics---processed through the ANDA pathway.
+
+\paragraph{Policy timing.}
+Three binary indicators capture the major policy transitions:
+\begin{itemize}[noitemsep]
+  \item \texttt{post\_pdufa}: equals 1 for approval years 1993 and later.
+  \item \texttt{post\_gdufa}: equals 1 for approval years 2015 and later (the post-performance-goal era, excluding the 2013--2014 backlog-washout transition).
+  \item \texttt{post\_hatchwaxman}: equals 1 for approval years 1985 and later.
+\end{itemize}
+
+\paragraph{Event time.}
+For event-study specifications, event time is measured relative to the policy year. For PDUFA, $\tau = t - 1992$, with the reference year set to $\tau = -1$ (1991). For GDUFA, $\tau = t - 2012$, with reference year $\tau = -1$ (2011). End-caps are applied at $[-20, +30]$ for PDUFA and $[-10, +10]$ for GDUFA to limit sensitivity to sparse years far from the event.
+
+\subsection{Panel Structure}
+
+The drug-level panel covers 1939--2025. For the main event-study analysis, I aggregate to annual cells. The PDUFA specifications use the full 1939--2025 annual panel; the GDUFA specifications use the ANDA-only subsample covering 1984--2025. Stacked difference-in-differences specifications reshape the annual panel into a two-row-per-year format (CS group vs.\ non-CS group) as described in Section~\ref{sec:strategy}.
+
+\subsection{Summary Statistics}
+
+Table~\ref{tab:era_summary} reports the number of approvals and CS share by PDUFA reauthorization era. Several patterns stand out. First, the aggregate CS share is broadly stable in the 7--10\% range across most eras, with a modest elevation in PDUFA II (2003--2007, 10.8\%) and a sharp decline in PDUFA VII (2022--present, 4.5\%). Second, ANDA volume grew dramatically after Hatch--Waxman (1984), accounting for the large increase in total approvals from the pre-Hatch--Waxman to post-Hatch--Waxman eras. Third, the NDA count has been relatively stable at 300--550 per five-year period across the PDUFA era.
+
+Table~\ref{tab:prepost_summary} provides pre/post comparisons for PDUFA and GDUFA. The aggregate CS share fell from 9.6\% pre-PDUFA to 7.3\% post-PDUFA. Among NDAs, the CS share was nearly identical in the two periods (5.1\% pre vs.\ 5.3\% post). Among ANDAs, the CS share fell from 14.3\% to 8.1\%, driven largely by the post-Hatch-Waxman expansion in non-CS generic approvals. For GDUFA, the ANDA CS share fell from 10.8\% (pre-GDUFA, $\leq 2012$) to 7.1\% (post-GDUFA performance-goal era, $\geq 2015$).
+
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{Original FDA Approvals by PDUFA Era}
+\label{tab:era_summary}
+\small
+\begin{tabular}{lrrrrrr}
+\toprule
+Era & Years & Total & NDA & ANDA & CS & CS Share \\
+\midrule
+Pre-Hatch--Waxman & $\leq$1984 & 4,270 & 1,488 & 2,005 & 392 & 9.2\% \\
+Post-HW, Pre-PDUFA & 1985--1992 & 3,031 & 676 & 2,133 & 309 & 10.2\% \\
+PDUFA I & 1993--1997 & 1,525 & 467 & 964 & 114 & 7.5\% \\
+PDUFA II & 1998--2002 & 1,662 & 422 & 1,187 & 179 & 10.8\% \\
+PDUFA III & 2003--2007 & 2,281 & 429 & 1,775 & 166 & 7.3\% \\
+PDUFA IV & 2008--2012 & 2,761 & 394 & 2,300 & 210 & 7.6\% \\
+PDUFA V & 2013--2017 & 3,464 & 551 & 2,830 & 268 & 7.7\% \\
+PDUFA VI & 2018--2022 & 4,380 & 542 & 3,715 & 316 & 7.2\% \\
+PDUFA VII & 2023+ & 2,534 & 308 & 2,113 & 113 & 4.5\% \\
+\midrule
+Total & 1939--2025 & 25,908 & 4,277 & 19,022 & 2,067 & 8.0\% \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item Source: Drugs@FDA (March 2026 extract) linked to DEA controlled-substance schedules.
+\item CS = Controlled Substance (conservative: confident DEA scheduled matches only).
+\item NDA counts exclude BLA (biologics) and unknown application types.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{Pre/Post Comparisons: PDUFA (1992) and GDUFA (2012)}
+\label{tab:prepost_summary}
+\small
+\begin{tabular}{lrrrrrr}
+\toprule
+ & Total & NDA & ANDA & CS & CS/NDA & CS/ANDA \\
+\midrule
+\multicolumn{7}{l}{\textit{Panel A: PDUFA}} \\
+Pre-PDUFA ($\leq$1992) & 7,301 & 2,164 & 4,138 & 701 & 5.1\% & 14.3\% \\
+Post-PDUFA ($\geq$1993) & 18,607 & 3,113 & 14,884 & 1,366 & 5.3\% & 8.1\% \\
+\midrule
+\multicolumn{7}{l}{\textit{Panel B: GDUFA (ANDA-only)}} \\
+Pre-GDUFA ($\leq$2012) & 8,359 & --- & 8,359 & 858 & --- & 10.8\% \\
+Post-GDUFA ($\geq$2015) & 7,830 & --- & 7,830 & 556 & --- & 7.1\% \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item GDUFA transition years (2013--2014) are excluded from Panel B.
+\item Pre-PDUFA period includes both pre-Hatch--Waxman and post-HW/pre-PDUFA years.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\subsection{Limitations}
+
+Several data limitations bear on the interpretation of results. First, the DEA linkage reflects current scheduling status, not historical status at the time of approval. Second, the Drugs@FDA database is approval-centered: failed and withdrawn applications are not observed, which limits the ability to study the intensive margin of manufacturer drug development decisions. Third, the ingredient-level linkage may misclassify combination products with both controlled and non-controlled ingredients; the variable \texttt{is\_multi\_ingredient} flags these cases (8\% of CS approvals). Fourth, review-priority coding (\texttt{review\_priority}) is available but unstable over time and is not used as a main outcome. Fifth, the annual series is a single national time series without cross-sectional variation in the main specifications, limiting the credibility of causal inference.

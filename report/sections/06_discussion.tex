@@ -1,0 +1,37 @@
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{Interpreting the Null for PDUFA}
+
+The aggregate evidence does not support the hypothesis that PDUFA caused a sustained increase in the controlled-substance share of FDA drug approvals. The raw CS share fell after 1992. The NDA-only Poisson rate model yields a marginally significant IRR of 1.46 under year fixed effects, but this estimate is not robust: it collapses to 1.19 ($p = 0.62$) once group-specific pre- and post-policy trends are allowed. The event-study profile shows no shift at $\tau = 0$; the largest post-policy deviation occurs at $\tau \approx 17$--19 (2009--2011), far from the policy date.
+
+These patterns are consistent with at least two non-PDUFA explanations. First, the post-Hatch-Waxman expansion in generic (ANDA) approvals after 1985 generated a large and growing pool of non-CS approvals that mechanically diluted the CS share of total approvals even if the absolute number of CS approvals continued to grow. The NDA-only restriction corrects for this composition effect at the application-type level, but even within NDAs, secular trends in the relative attractiveness of different therapeutic areas may confound inference. Second, the rise and fall of opioid pharmaceutical innovation over the 2000s and 2010s generated a specific industry product cycle that is visible in the data but is not plausibly attributable to PDUFA incentives operating 17 years later.
+
+\subsection{The 2009--2013 Opioid Product Cycle as a Separable Phenomenon}
+
+The drug-level evidence in Table~\ref{tab:spike_drugs} makes a strong case that the 2009--2013 CS NDA spike reflects the branded opioid extended-release and abuse-deterrent wave, not a PDUFA composition effect. The key features are: (1) the timing---18--21 years after PDUFA enactment---is inconsistent with an immediate regulatory incentive effect; (2) the drugs themselves are recognizable products from the documented opioid product innovation cycle, including reformulated OxyContin, Exalgo, Embeda, Suboxone, and multiple testosterone formulations; and (3) the spike subsides after 2013, suggesting a product-cycle dynamic rather than a permanent shift in approval composition.
+
+The appropriate interpretation of this spike, for this paper's purposes, is that it is a confound: it inflates post-PDUFA IRRs in specifications without group-specific trends because the pre-PDUFA NDA CS rate was low and the spike creates a large mean difference in the post period. The fact that the group-specific-trend specification eliminates significance confirms that the spike is driving the result.
+
+This finding is consistent with the broader opioid supply literature. \textcite{alpertSupplySideDrugPolicy2018a} document that the branded opioid wave was followed by a substitution response in illicit markets; the approval-side documentation here provides complementary upstream evidence. % TODO: verify citation — integrate alpert etc. into this discussion more fully
+The implication for policy is that the regulatory approval channel and the industry innovation channel are distinct: FDA approval decisions may have facilitated the opioid wave by allowing these products to come to market, but the primary driver of the wave appears to be firm-level pharmaceutical investment decisions, not the PDUFA review-time incentive structure.
+
+\subsection{Interpreting the GDUFA Decline}
+
+The GDUFA result---a 33\% decline in the ANDA CS share post-2015---is the paper's most precisely estimated finding. The direction is opposite to the regulatory-acceleration hypothesis: if faster review disproportionately benefits CS generics, we would expect the CS ANDA share to rise after GDUFA. The fact that it falls is consistent with several alternative explanations.
+
+First, the pre-GDUFA ANDA backlog may have disproportionately included CS generics filed during the 1990s--2000s opioid expansion. Clearing the backlog during 2013--2014 would have resulted in elevated CS ANDA approvals in the transition period and a subsequent reversion as the backlog drained. The three-period design (pre, transition, post-goals) partially accounts for this, but the transition-year exclusion may not fully isolate the pre-existing stock effect.
+
+Second, the composition of ANDA applications submitted after GDUFA may have shifted toward non-CS generics, reflecting the 2012 patent cliff for non-opioid branded drugs and the subsequent filing pipeline. % TODO: verify citation — patent cliff timing
+If non-CS generic applications surged after 2012 and began receiving approvals after the performance-goal era began in 2015, the CS share would mechanically fall even without any change in CS-specific review time or approval rates.
+
+Third, the prescription opioid market contracted significantly after 2012 as prescribing guidelines tightened, state prescription drug monitoring programs expanded, and supply-side interventions restricted access. % TODO: verify citation — opioid prescribing decline timing
+Reduced demand for opioid generics may have discouraged new ANDA filings for CS products relative to non-CS products.
+
+The group-specific-trend specification yields an insignificant IRR of 1.38 for GDUFA, suggesting the same sensitivity to trend assumptions as the PDUFA result. This cautions against strong causal claims in either direction.
+
+\subsection{Limitations and Future Work}
+
+Several limitations constrain the conclusions. The most significant is the DEA linkage: because current schedules are used rather than historical schedules, any drugs that were scheduled or rescheduled after their FDA approval date are misclassified. The direction of this error for the main results is unclear. A second limitation is the single national time series, which provides limited statistical power and cannot separate PDUFA effects from contemporaneous secular trends in pharmaceutical innovation. A third limitation is the absence of a downstream outcome: this paper characterizes the approval-side composition of CS drugs but does not measure downstream prescribing volume, misuse, or diversion.
+
+Directions for future work include: (1) constructing a historical DEA scheduling database to determine each drug's schedule as of its approval date; (2) linking approval-side CS counts to prescribing data from IQVIA or ARCOS to estimate the downstream supply implications of any composition change; (3) extending the GDUFA analysis to GDUFA II and III as those program years accumulate; and (4) exploiting therapeutic-class or firm-level variation to identify the mechanism---review-time incentives versus aggregate staffing capacity---driving any composition effect.

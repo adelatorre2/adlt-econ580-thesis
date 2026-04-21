@@ -1,0 +1,58 @@
+\section{Empirical Strategy}
+\label{sec:strategy}
+
+\subsection{Research Design}
+
+The ideal experiment would randomly assign PDUFA or GDUFA implementation across otherwise identical regulatory environments and observe the resulting change in the controlled-substance share of approvals. In practice, both policies were enacted at single national dates and applied to all drug approvals simultaneously, so there is no cross-sectional control group in the standard sense. The analysis therefore relies on time-series comparisons---interrupted time series (ITS) and difference-in-differences (DD) designs---with pre-policy trends serving as the counterfactual for the post-policy period. I treat the estimates as policy-diagnostic first-pass evidence rather than as point-identified causal effects.
+
+\subsection{Interrupted Time Series (ITS)}
+
+The primary specification is a linear ITS estimated on the annual CS-share series:
+\begin{equation}
+\label{eq:its}
+y_t = \alpha + \beta_1 \cdot \text{post}_t + \beta_2 \cdot t + \beta_3 \cdot (\text{post}_t \times t) + \varepsilon_t
+\end{equation}
+where $y_t$ is the annual CS share in year $t$, $\text{post}_t$ is the post-policy indicator, and the interaction $\text{post}_t \times t$ allows the post-policy trend to differ from the pre-policy trend. The coefficient $\beta_1$ estimates the level shift at the policy date; $\beta_3$ estimates the change in slope. The ITS is estimated separately for PDUFA (1993) and GDUFA (2015). For PDUFA, the sample is restricted to 1970--2025 to focus on the relevant policy window; for GDUFA, the ANDA-only series is used and 2013--2014 are excluded to isolate the backlog-washout transition.
+
+\subsection{Poisson Rate Model}
+
+Because the annual CS share is a proportion bounded between 0 and 1 and the numerator (count of CS approvals) is non-negative, the linear probability model in equation~\eqref{eq:its} may fit poorly in eras with very low or very high shares. I therefore also estimate a Poisson regression treating the annual CS count as the dependent variable and the total annual approval count as an exposure offset:
+\begin{equation}
+\label{eq:poisson}
+\log E[\text{CS}_t] = \alpha + \gamma \cdot \text{post}_t + \log(\text{Total}_t)
+\end{equation}
+where $\exp(\hat{\gamma})$ is the incidence-rate ratio (IRR) for the post-policy period relative to pre-policy, holding the total approval volume constant. Equation~\eqref{eq:poisson} and its variants add year fixed effects or linear time trends to absorb secular changes in the composition of approvals. All Poisson models use heteroskedasticity-robust standard errors.
+
+\subsection{Stacked Difference-in-Differences}
+
+To increase transparency about the shape of the post-policy change, I also estimate a stacked difference-in-differences specification. For each policy, I reshape the annual panel into a two-row-per-year dataset in which one observation represents CS approvals and the other represents non-CS approvals in each year:
+\begin{equation}
+\label{eq:dd}
+\log E[n_{gt}] = \alpha_g + \lambda_t + \delta \cdot (\text{CS}_g \times \text{post}_t) + \log(\text{Total}_t)
+\end{equation}
+where $g \in \{\text{CS}, \text{non-CS}\}$ indexes the group, $\alpha_g$ is a group fixed effect, $\lambda_t$ is a year fixed effect, and $\delta$ is the DD coefficient of interest. The post indicator $\text{post}_t$ drops out of the year-FE specification by collinearity. The Poisson DD is estimated with exposure $\text{Total}_t$; $\exp(\hat{\delta})$ is the IRR comparing the relative change in CS approvals to non-CS approvals after the policy. Linear (levels) and inverse hyperbolic sine (IHS) specifications are also estimated for robustness.
+
+\subsection{Event-Study DD}
+
+To examine the dynamics of any post-policy change and test for pre-policy parallel trends, I estimate an event-study version of the DD:
+\begin{equation}
+\label{eq:eventstudy}
+\log E[n_{g\tau}] = \alpha_g + \sum_{\tau \neq -1} \theta_\tau \cdot (\text{CS}_g \times \mathbf{1}[\tau]) + \log(\text{Total}_{g\tau})
+\end{equation}
+where $\tau$ is event time (calendar year relative to the policy date), and $\theta_\tau$ is the group-specific coefficient at each event-time bin. End-caps are applied at $\tau \in [-20, +30]$ for PDUFA and $\tau \in [-10, +10]$ for GDUFA. The reference period is $\tau = -1$ (the year before each policy). Under the parallel-trends assumption, $\theta_\tau = 0$ for all $\tau < 0$; a pattern of pre-policy zeros followed by post-policy deviations from zero would constitute evidence of a treatment effect \parencite{millerIntroductoryGuideEvent2023}. % TODO: verify citation
+
+\subsection{Threats to Identification}
+
+Three threats to identification are particularly relevant in this context.
+
+\textbf{Confounders contemporaneous with policy.} Both PDUFA (1992) and GDUFA (2012) were enacted at times when other forces were simultaneously reshaping the pharmaceutical market. PDUFA coincided with a period of rapid expansion in ANDA volume following Hatch--Waxman, which could confound any composition effect by diluting non-CS approvals. GDUFA coincided with a surge in generic applications filed to capture expiring patents from the 2005--2012 ``patent cliff.'' I address this by using application-type-specific subsamples (NDA-only for PDUFA, ANDA-only for GDUFA) and by including year fixed effects where applicable.
+
+\textbf{Opioid product cycle (2009--2013).} A spike in Schedule~II NDA approvals around 2009--2013 is visible in the data and drives the apparent post-PDUFA effect in some specifications. Section~\ref{sec:results_nda} and Section~\ref{sec:discussion} document that this spike reflects a specific industry product cycle---the wave of extended-release and abuse-deterrent branded opioid formulations (OxyContin reformulation, Exalgo, Embeda, Suboxone)---rather than a sustained PDUFA-induced composition shift. The event-study design is helpful for diagnosing this: a genuine PDUFA effect should appear near $\tau = 0$ (1992--1993), not 17--19 years later.
+
+\textbf{Single time series.} The national-level panel has only one observation per year, so the effective sample size for time-series inference is small (roughly 50--85 years depending on the specification). Standard errors based on heteroskedasticity alone may understate uncertainty; inference should be treated with appropriate caution.
+
+\subsection{What the Design Can and Cannot Show}
+
+This design can characterize the \textit{reduced-form association} between PDUFA/GDUFA and the controlled-substance share of approvals. A finding of no effect would be informative: it would indicate that user-fee-funded regulatory acceleration did not systematically tilt the composition of approvals toward controlled substances. A finding of a positive effect would be consistent with the regulatory-incentive hypothesis but would not rule out confounding by contemporaneous trends.
+
+What the design \textit{cannot} show is whether any composition change affected downstream misuse, diversion, or overdose mortality. That would require linking the approval-side estimates to prescribing data and ultimately to health outcomes---a step outside the scope of this paper. The contribution is upstream: characterizing the approval-side composition effect (or lack thereof) is a necessary first step before studying downstream consequences.

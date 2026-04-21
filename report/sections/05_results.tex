@@ -1,0 +1,241 @@
+\section{Results}
+\label{sec:results}
+
+\subsection{Descriptive Trends}
+
+Figure~\ref{fig:cs_share_full} shows the annual share of original FDA approvals classified as controlled substances from 1939 to 2025. Three features stand out. First, the share is broadly stable in the 5--15\% range over the full sample, without a clear structural break at PDUFA (1992). Second, the share exhibits substantial year-to-year noise in the early part of the sample when annual approval counts were small. Third, a moderate spike is visible in the 2009--2012 period, which is investigated in Section~\ref{sec:results_spike}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{../output/figures/stata/fig_cs_share.png}
+\caption{Annual controlled-substance share of FDA original approvals, 1939--2025. Conservative definition: confident DEA scheduled matches only. Dashed vertical lines mark 1984 (Hatch--Waxman), 1992 (PDUFA), and 2012 (GDUFA).}
+\label{fig:cs_share_full}
+\end{figure}
+
+Figure~\ref{fig:cs_share_by_type} disaggregates the CS share by application type (NDA vs.\ ANDA). The NDA CS share fluctuates narrowly around 5--8\% throughout the sample with no visible trend break at PDUFA. The ANDA CS share is higher---peaking near 20\% in the 1980s---and declines after Hatch--Waxman as the expansion in non-CS generic approvals dilutes the CS share. Years with fewer than five NDA or ANDA approvals are excluded to suppress noise.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{../output/figures/stata/fig_cs_share_by_appltype.png}
+\caption{Annual CS share by application type (NDA vs.\ ANDA), 1939--2025. Years with fewer than 5 NDA or ANDA approvals are excluded. Dashed lines as in Figure~\ref{fig:cs_share_full}.}
+\label{fig:cs_share_by_type}
+\end{figure}
+
+\subsection{PDUFA Event Study: Full Sample}
+\label{sec:results_pdufa_full}
+
+Figure~\ref{fig:event_study_full} presents the event-study point estimates and 95\% confidence intervals from the ITS specification (equation~\ref{eq:its}), with event time measured in years relative to PDUFA (1992). The pre-policy estimates ($\tau < 0$) are clustered near zero, consistent with the parallel-trends assumption. Post-policy estimates ($\tau > 0$) show modest, statistically insignificant deviation from the pre-trend. There is no visible level shift or trend break at $\tau = 0$. The wide confidence intervals in both the pre- and post-periods reflect the limited power of a single national time series.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{../output/figures/stata/event_study_cs_share.png}
+\caption{PDUFA event study: ITS coefficients on CS share. Event time 0 = 1992 (PDUFA enactment). Reference period: $\tau = -1$ (1991). End-caps at $[-20, +30]$. 95\% confidence intervals.}
+\label{fig:event_study_full}
+\end{figure}
+
+\subsection{PDUFA Event Study: NDA-Only Sample}
+\label{sec:results_nda}
+
+Figure~\ref{fig:event_study_nda} restricts the event-study to new drug applications (NDAs). This is the theoretically relevant subsample: PDUFA directly governed NDA review times and does not apply to ANDA submissions. The NDA CS share series is noisier because annual NDA counts are smaller, but the event-study pattern shows an important feature: the largest positive deviations from the pre-trend occur around event times 17--19 (calendar years 2009--2011), not at or near $\tau = 0$. A genuine PDUFA effect on NDA composition should be visible near the policy date.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{../output/figures/stata/event_study_cs_share_nda.png}
+\caption{PDUFA event study: NDA-only sample. CS share among new drug applications. Event time 0 = 1992. Reference: $\tau = -1$.}
+\label{fig:event_study_nda}
+\end{figure}
+
+Figure~\ref{fig:nda_share_level} shows the NDA CS share level series with pre-PDUFA and post-PDUFA mean reference lines. The post-PDUFA mean is marginally higher than the pre-PDUFA mean, but the time-series visual makes clear that the elevation is driven by the 2009--2013 period.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{../output/figures/stata/pdufa_nda_only_share.png}
+\caption{NDA controlled-substance share, 1970--2025, with pre/post-PDUFA mean reference lines.}
+\label{fig:nda_share_level}
+\end{figure}
+
+Table~\ref{tab:pdufa_poisson} reports Poisson rate models for the NDA CS count. Model~(1) uses year fixed effects; Model~(2) replaces year FEs with a linear time trend; Model~(3) adds group-specific trends. The IRR in Model~(1) is 1.46 ($p = 0.060$), suggesting a 46\% higher CS approval rate post-PDUFA relative to pre-PDUFA after absorbing year-level variation. However, Model~(3)---which allows pre- and post-PDUFA trends to differ by group---yields an IRR of 1.19 ($p = 0.62$), indicating that the apparent effect in Model~(1) is substantially explained by differential pre- versus post-policy trends rather than a level shift at PDUFA.
+
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{PDUFA NDA-Only Poisson Rate Models: Sensitivity to Trend Controls}
+\label{tab:pdufa_poisson}
+\small
+\begin{tabular}{lcccc}
+\toprule
+ & \multicolumn{3}{c}{Post-PDUFA IRR (CS vs.\ non-CS)} \\
+\cmidrule(lr){2-4}
+ & (1) Year FE & (2) Linear trend & (3) Group trends \\
+\midrule
+IRR & 1.456 & 1.456 & 1.190 \\
+$z$-statistic & 1.879 & 1.832 & 0.490 \\
+$p$-value & 0.060 & 0.067 & 0.624 \\
+\midrule
+Observations & \multicolumn{3}{c}{Annual, 1970--2025, NDA only} \\
+Exposure & \multicolumn{3}{c}{Total NDA approvals} \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item IRR = incidence-rate ratio for $\text{post\_pdufa} \times \text{is\_cs}$ interaction. Robust standard errors.
+\item Model (3) adds separate pre-policy and post-policy linear time trends by group.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+Figure~\ref{fig:nda_dd_event} shows the event-study DD coefficients for the NDA-only stacked Poisson specification. The IRR profile is flat and near zero for all pre-policy event times, consistent with parallel pre-trends. Post-policy IRRs drift upward gradually, reaching their largest values around event times 17--19 (2009--2011), before subsiding. This pattern---a late-rising post-policy departure that does not appear near the policy date---is inconsistent with a PDUFA effect and is instead consistent with a delayed industry product cycle, as investigated in Section~\ref{sec:results_spike}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{../output/figures/stata/pdufa_nda_only_dd_event_study.png}
+\caption{PDUFA NDA-only stacked Poisson DD event study. IRRs for $\text{CS} \times \mathbf{1}[\tau]$ interactions. Reference: $\tau = -1$ (1991). End-caps at $[-20, +30]$. 95\% CI.}
+\label{fig:nda_dd_event}
+\end{figure}
+
+\subsection{Rate Versus Count Decomposition}
+
+Figure~\ref{fig:nda_rate_count} presents a two-panel decomposition of the NDA CS result. Panel~A shows the CS share of NDA approvals (the rate); Panel~B shows the absolute counts of CS NDA approvals and non-CS NDA approvals over the same period. The panels illustrate that the NDA CS rate rises modestly after 1992 even as the absolute volume of non-CS NDA approvals grows faster in levels. Both patterns are simultaneously consistent: the denominator (non-CS NDA volume) growing faster than the numerator (CS NDA volume) in absolute terms does not preclude the CS rate from rising if CS NDAs grow faster in proportional terms relative to the pre-period baseline.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{../output/figures/stata/pdufa_nda_rate_vs_count.png}
+\caption{NDA CS approvals: rate (Panel A) and absolute count (Panel B). Panel A shows CS share among NDA approvals with pre-PDUFA mean reference line. Panel B shows annual CS NDA count vs.\ non-CS NDA count.}
+\label{fig:nda_rate_count}
+\end{figure}
+
+\subsection{The 2009--2013 CS NDA Spike}
+\label{sec:results_spike}
+
+The event-study and time-series evidence point to a spike in Schedule~II NDA approvals concentrated in 2009--2013. Table~\ref{tab:spike_drugs} lists the CS NDA approvals from 2009 through 2013, identifying the brand name, active ingredient, sponsor, and DEA schedule for each drug. Four features stand out. First, 43 CS NDAs were approved in this five-year window, compared with an average of roughly 6--8 per year in the preceding decade. Second, 2011 alone accounts for 16 CS NDA approvals---by far the largest single-year count in the sample. Third, 25 of the 43 approvals (58\%) are Schedule~II, the most restrictive category for drugs with accepted medical use. Fourth, the drug list maps closely to the well-documented wave of branded extended-release and abuse-deterrent opioid formulations that characterized the late-2000s pharmaceutical market: OxyContin reformulation (Purdue Pharma, 2010), Exalgo hydromorphone (Specgx, 2010), Embeda morphine-naltrexone combination (Alpharma, 2009), Suboxone buprenorphine-naloxone (Indivior, 2010), and related products.
+
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{CS NDA Approvals, 2009--2013 (Selected)}
+\label{tab:spike_drugs}
+\small
+\begin{tabular}{llllr}
+\toprule
+Year & Brand Name & Active Ingredient & Sponsor & Sched. \\
+\midrule
+2009 & ONSOLIS & Fentanyl citrate & ADALVO & II \\
+2009 & EMBEDA & Morphine sulfate; naltrexone & ALPHARMA & II \\
+2009 & CODEINE SULFATE & Codeine sulfate & HIKMA & II \\
+2009 & EDLUAR & Zolpidem tartrate & VIATRIS & IV \\
+2010 & EXALGO & Hydromorphone HCl & SPECGX LLC & II \\
+2010 & OXYCONTIN & Oxycodone HCl & PURDUE PHARMA & II \\
+2010 & SUBOXONE & Buprenorphine; naloxone & INDIVIOR & III \\
+2010 & BUTRANS & Buprenorphine & PURDUE PHARMA & III \\
+2010 & AXIRON & Testosterone & ELI LILLY & III \\
+2010 & LYRICA & Pregabalin & UPJOHN & V \\
+2011 & ANDROGEL & Testosterone & BESINS HLTHCARE & III \\
+2011 & INTERMEZZO & Zolpidem tartrate & PURDUE PHARMA & IV \\
+2012 & ZOHYDRO ER & Hydrocodone bitartrate & ZOGENIX & II \\
+\midrule
+\multicolumn{5}{l}{\textit{Full 2009--2013 window: 43 CS NDAs; 25 Schedule II (58\%); 2011 peak: 16 approvals.}} \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item Selected rows for illustration; full list in \texttt{output/tables/stata/cs\_nda\_2009\_2013\_drugs.csv}.
+\item OxyContin 2010 entry is a reformulated abuse-deterrent NDA (NDA 022272), not the original approval.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\subsection{GDUFA Event Study: ANDA-Only}
+\label{sec:results_gdufa}
+
+Figure~\ref{fig:gdufa_event} presents the GDUFA event-study DD for the ANDA-only sample. In contrast to the PDUFA result, the GDUFA event study shows a pronounced and statistically significant decline in the CS share of ANDA approvals after the post-performance-goal era begins (event times 3--13, corresponding to calendar years 2015--2025). Pre-policy event-time coefficients are clustered near zero, supporting the parallel-trends assumption over the 2002--2012 pre-GDUFA window. The stacked Poisson DD specification (Table~\ref{tab:gdufa_results}) yields an IRR of 0.668 ($p < 0.001$) under year fixed effects, indicating that the CS share of ANDA approvals fell by approximately 33\% relative to the non-CS share after GDUFA. This result is also robust to a linear time-trend control (IRR $= 0.668$, $p = 0.008$), though the group-specific trend specification yields an insignificant IRR of 1.38 ($p = 0.18$).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{../output/figures/stata/gdufa_dd_event_study.png}
+\caption{GDUFA ANDA-only stacked Poisson DD event study. IRRs for $\text{CS} \times \mathbf{1}[\tau]$ interactions. Reference: $\tau = -1$ (2011). End-caps at $[-10, +10]$. Transition years 2013--2014 excluded. 95\% CI.}
+\label{fig:gdufa_event}
+\end{figure}
+
+Figure~\ref{fig:gdufa_rate_count} decomposes the GDUFA ANDA result into rate (Panel A) and count (Panel B). Panel~A shows the ANDA CS share declining from a pre-GDUFA mean of 10.8\% to a post-GDUFA mean of approximately 7.1\%. Panel~B shows that both the CS ANDA count and non-CS ANDA count declined in absolute terms after GDUFA, with the CS count falling proportionally more steeply.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{../output/figures/stata/gdufa_anda_rate_vs_count.png}
+\caption{GDUFA ANDA CS approvals: rate (Panel A) and absolute count (Panel B). Shaded region: 2013--2014 transition period.}
+\label{fig:gdufa_rate_count}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{GDUFA and PDUFA Stacked Poisson DD: Main Results}
+\label{tab:gdufa_results}
+\small
+\begin{tabular}{lcccc}
+\toprule
+ & Coef. & SE & IRR & $p$ \\
+\midrule
+\multicolumn{5}{l}{\textit{Panel A: GDUFA, ANDA-only (Year FE)}} \\
+$\text{post\_gdufa} \times \text{is\_cs}$ & $-0.403$ & $0.095$ & $0.668$ & $<$0.001 \\
+\multicolumn{5}{l}{\textit{Panel B: PDUFA, NDA-only (Year FE)}} \\
+$\text{post\_pdufa} \times \text{is\_cs}$ & $0.376$ & $0.200$ & $1.456$ & $0.060$ \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item Stacked Poisson DD with year FE and log-total-approval exposure. Robust SE.
+\item GDUFA excludes 2013--2014 transition. PDUFA uses NDA-only sample.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\subsection{Sponsor Concentration}
+
+Figure~\ref{fig:nda_hhi} and Figure~\ref{fig:gdufa_hhi} show the Herfindahl--Hirschman Index (HHI) of sponsor concentration among CS NDA approvals (Figure~\ref{fig:nda_hhi}) and all ANDA approvals (Figure~\ref{fig:gdufa_hhi}), respectively. The NDA CS HHI is notably higher and more variable than the ANDA HHI, reflecting the smaller number of annual CS NDA approvals and the dominance of a small number of branded opioid sponsors in certain years. The GDUFA era is associated with a visible decline in ANDA CS HHI, consistent with both the entry of additional generic sponsors and the decline in CS ANDA volume.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{../output/figures/stata/pdufa_nda_sponsor_concentration_hhi.png}
+\caption{Sponsor HHI for CS NDA approvals, 1970--2025. Higher HHI = greater sponsor concentration. PDUFA reference lines marked.}
+\label{fig:nda_hhi}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{../output/figures/stata/gdufa_sponsor_concentration_hhi.png}
+\caption{Sponsor HHI for ANDA approvals (all), 1984--2025. GDUFA reference line marked.}
+\label{fig:gdufa_hhi}
+\end{figure}
+
+Table~\ref{tab:top_sponsors} reports the top 10 sponsors of CS NDA approvals over the full 1970--2025 period. The market is fragmented: the leading sponsor (HIKMA and UCB INC, tied at 9 CS NDAs each) accounts for only 4.1\% of the 222 CS NDAs in the 1970--2025 window. Purdue Pharma LP ranks fourth with 7 approvals (3.2\%), reflecting its historical dominance in branded opioid formulations but also the relatively small absolute scale of any single sponsor's CS NDA portfolio.
+
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{Top 10 Sponsors of CS NDA Approvals, 1970--2025}
+\label{tab:top_sponsors}
+\small
+\begin{tabular}{llrr}
+\toprule
+Rank & Sponsor & CS NDAs & Share (\%) \\
+\midrule
+1 & HIKMA & 9 & 4.05 \\
+1 & UCB INC & 9 & 4.05 \\
+3 & SPECGX LLC & 7 & 3.15 \\
+3 & PURDUE PHARMA LP & 7 & 3.15 \\
+5 & INDIVIOR & 5 & 2.25 \\
+5 & SANOFI AVENTIS US & 5 & 2.25 \\
+5 & UPJOHN & 5 & 2.25 \\
+8 & ABBOTT & 4 & 1.80 \\
+8 & COLLEGIUM PHARM INC & 4 & 1.80 \\
+8 & JANSSEN PHARMS & 4 & 1.80 \\
+8 & TAKEDA PHARMS USA & 4 & 1.80 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item Universe: CS NDAs with confident DEA schedule match, 1970--2025, sponsor name non-missing.
+\item Total CS NDAs in window: 222. Source: \texttt{cs\_nda\_top\_sponsors\_1970\_2025.csv}.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
