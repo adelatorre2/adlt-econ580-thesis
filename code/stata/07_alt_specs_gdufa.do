@@ -529,5 +529,418 @@ preserve
 restore
 
 
+/*==============================================================================
+  PART 7: NDA sponsor concentration (parallel to Part 5 for ANDAs)
+
+  Part 7 adds NDA sponsor concentration to mirror Part 5's ANDA analysis.
+  Substantively this is PDUFA-relevant (NDAs are subject to PDUFA fees),
+  but it lives here because Part 5 already contains the HHI/top-10
+  computation machinery. Analogous figures in 07 keep ANDA and NDA
+  concentration work co-located for reader comparison.
+==============================================================================*/
+
+di as txt _newline "===== PART 7: NDA sponsor concentration (PDUFA window) ====="
+
+use "${dtapath}/event_study_drug_panel.dta", clear
+
+/* Restrict to NDA, valid approval years, non-missing sponsor */
+keep if is_nda == 1
+keep if approval_year >= 1970 & approval_year <= 2025
+keep if !missing(sponsorname)
+di as txt "NDA drug-level panel: `c(N)' rows"
+
+/* ---- ALL NDA sponsors ---- */
+di as txt _newline "--- All NDA sponsors: HHI and top-10 share by year ---"
+
+preserve
+    bysort approval_year sponsorname: gen n_sponsor_year = _N
+    bysort approval_year: gen n_year_total = _N
+
+    /* One row per sponsor-year */
+    bysort approval_year sponsorname: keep if _n == 1
+
+    /* HHI and rank */
+    gen share_sq = (n_sponsor_year / n_year_total)^2
+    gsort approval_year -n_sponsor_year
+    bysort approval_year: gen rank = _n
+
+    gen top10_n = n_sponsor_year if rank <= 10
+
+    collapse                                                                ///
+        (sum)  hhi = share_sq                                              ///
+               top10_n_sum = top10_n                                       ///
+               total_n_sum = n_year_total,                                 ///
+        by(approval_year)
+
+    gen top10_share = top10_n_sum / total_n_sum * 100
+    label variable hhi         "HHI (NDA sponsors, all)"
+    label variable top10_share "Top-10 sponsor share (%), all NDA"
+
+    /* PDUFA timing */
+    gen post_pdufa       = (approval_year >= 1993)
+    gen hatchwaxman_era  = (approval_year >= 1984)
+
+    /* Shading bounds — no transition band for PDUFA analysis */
+    sum top10_share
+    gen shade_lo = 0
+    gen shade_hi = ceil(r(max)) + 5
+
+    twoway                                                                  ///
+        (line top10_share approval_year, lcolor(navy) lwidth(medium)),      ///
+        yline(50, lpattern(dot) lcolor(gs7) lwidth(thin))                   ///
+        xline(1984, lpattern(dot)  lcolor(gs7)      lwidth(medthin))        ///
+        xline(1992, lpattern(dash) lcolor(cranberry) lwidth(medthin))       ///
+        title("Top-10 Sponsor Share of NDA Approvals by Year",              ///
+              size(medlarge))                                               ///
+        ytitle("Share of Annual NDA Approvals (%)")                        ///
+        xtitle("Approval Year")                                             ///
+        xlabel(1970(5)2025, angle(45))                                     ///
+        note("Top-10 sponsors ranked by annual NDA approval count."        ///
+             "Dotted: Hatch-Waxman (1984). Dashed red: PDUFA (1992)."      ///
+             "Source: FDA Drugs@FDA. NDA submissions only.", size(vsmall)) ///
+        legend(off)                                                         ///
+        graphregion(color(white)) bgcolor(white)
+
+    graph export "${figures}/pdufa_nda_sponsor_concentration_top10.png",    ///
+        replace width(2400)
+    di as txt "Exported: pdufa_nda_sponsor_concentration_top10.png"
+
+    sum hhi
+    replace shade_hi = r(max) * 1.1
+
+    twoway                                                                  ///
+        (line hhi approval_year, lcolor(navy) lwidth(medium)),              ///
+        xline(1984, lpattern(dot)  lcolor(gs7)      lwidth(medthin))        ///
+        xline(1992, lpattern(dash) lcolor(cranberry) lwidth(medthin))       ///
+        title("Herfindahl-Hirschman Index: NDA Sponsor Concentration",      ///
+              size(medlarge))                                               ///
+        ytitle("HHI (sum of squared sponsor market shares)")               ///
+        xtitle("Approval Year")                                             ///
+        xlabel(1970(5)2025, angle(45))                                     ///
+        note("HHI = sum of squared annual market share across sponsors."    ///
+             "Dotted: Hatch-Waxman (1984). Dashed red: PDUFA (1992)."      ///
+             "Source: FDA Drugs@FDA. NDA submissions only.", size(vsmall)) ///
+        legend(off)                                                         ///
+        graphregion(color(white)) bgcolor(white)
+
+    graph export "${figures}/pdufa_nda_sponsor_concentration_hhi.png",      ///
+        replace width(2400)
+    di as txt "Exported: pdufa_nda_sponsor_concentration_hhi.png"
+
+    keep approval_year hhi top10_share post_pdufa
+    gen is_cs_sample = 0
+    tempfile nda_conc_all
+    save `nda_conc_all'
+restore
+
+/* ---- CS-only NDA sponsors ---- */
+di as txt _newline "--- CS-only NDA sponsors: top-10 share by year ---"
+
+preserve
+    keep if is_controlled_substance == 1
+    keep if approval_year >= 1970 & approval_year <= 2025
+    di as txt "CS NDA drug-level panel: `c(N)' rows"
+
+    bysort approval_year sponsorname: gen n_sponsor_year = _N
+    bysort approval_year: gen n_year_total = _N
+
+    /* One row per sponsor-year */
+    bysort approval_year sponsorname: keep if _n == 1
+
+    /* HHI and rank */
+    gen share_sq = (n_sponsor_year / n_year_total)^2
+    gsort approval_year -n_sponsor_year
+    bysort approval_year: gen rank = _n
+
+    gen top10_n = n_sponsor_year if rank <= 10
+
+    collapse                                                                ///
+        (sum)  hhi = share_sq                                              ///
+               top10_n_sum = top10_n                                       ///
+               total_n_sum = n_year_total,                                 ///
+        by(approval_year)
+
+    gen top10_share = top10_n_sum / total_n_sum * 100
+
+    gen post_pdufa = (approval_year >= 1993)
+
+    /* Shading bounds */
+    sum top10_share
+    gen shade_lo = 0
+    gen shade_hi = ceil(r(max)) + 5
+
+    twoway                                                                  ///
+        (rarea shade_lo shade_hi approval_year if post_pdufa == 0,         ///
+             fcolor(none) lwidth(none))                                    ///
+        (line top10_share approval_year, lcolor(cranberry) lwidth(medium)), ///
+        yline(50, lpattern(dot) lcolor(gs7) lwidth(thin))                   ///
+        xline(1984, lpattern(dot)  lcolor(gs7)      lwidth(medthin))        ///
+        xline(1992, lpattern(dash) lcolor(cranberry) lwidth(medthin))       ///
+        title("Top-10 Sponsor Share of CS NDA Approvals by Year",           ///
+              size(medlarge))                                               ///
+        subtitle("CS = Controlled Substance (conservative: confident DEA scheduled matches only)", ///
+                 size(small))                                               ///
+        ytitle("Share of Annual CS NDA Approvals (%)")                     ///
+        xtitle("Approval Year")                                             ///
+        xlabel(1970(5)2025, angle(45))                                     ///
+        note("Top-10 sponsors ranked by annual CS NDA approval count."     ///
+             "Dotted: Hatch-Waxman (1984). Dashed red: PDUFA (1992)."      ///
+             "Source: FDA Drugs@FDA. NDA submissions only.", size(vsmall)) ///
+        legend(off)                                                         ///
+        graphregion(color(white)) bgcolor(white)
+
+    graph export "${figures}/pdufa_cs_nda_sponsor_concentration_top10.png", ///
+        replace width(2400)
+    di as txt "Exported: pdufa_cs_nda_sponsor_concentration_top10.png"
+
+    keep approval_year hhi top10_share post_pdufa
+    gen is_cs_sample = 1
+    tempfile nda_conc_cs
+    save `nda_conc_cs'
+restore
+
+/* ---- Export NDA concentration comparison table ---- */
+di as txt _newline "--- Exporting NDA concentration comparison table ---"
+
+use `nda_conc_all', clear
+append using `nda_conc_cs'
+sort is_cs_sample approval_year
+
+label variable hhi          "HHI"
+label variable top10_share  "Top-10 Sponsor Share (%)"
+label variable post_pdufa   "Post-PDUFA (1993+)"
+label variable is_cs_sample "=1 if CS NDA sample"
+
+export delimited "${tables}/pdufa_nda_concentration_comparison.csv", replace
+di as txt "Exported: pdufa_nda_concentration_comparison.csv"
+
+/* Pre/post summary */
+di as txt _newline "--- Pre/post-PDUFA NDA concentration summary ---"
+tabstat hhi top10_share if is_cs_sample == 0, by(post_pdufa) stats(mean sd) nototal format(%8.3f)
+
+
+/*==============================================================================
+  PART 8: Rate-vs-count diagnostics (GDUFA ANDA-only)
+==============================================================================*/
+
+di as txt _newline "===== PART 8: Rate-vs-count diagnostics (GDUFA ANDA-only) ====="
+di as txt "Motivation: G-P1 Poisson IRR ~1.22-1.44 vs G-D3 stacked DD IRR ~0.67."
+di as txt "CS ANDA rate and absolute count can tell different stories simultaneously."
+
+/*----------------------------------------------------------------------
+  8a: Rate vs count two-panel visual
+----------------------------------------------------------------------*/
+
+use "${dtapath}/gdufa_anda_annual.dta", clear
+keep if approval_year >= 1984 & approval_year <= 2025
+
+capture drop anda_cs_share
+capture drop n_noncs_anda
+capture drop shade_lo
+capture drop shade_hi
+gen anda_cs_share = n_anda_cs / n_anda_total if n_anda_total > 0
+gen n_noncs_anda  = n_anda_total - n_anda_cs
+
+/* Pre-GDUFA mean for rate panel (excl. transition) */
+qui sum anda_cs_share if approval_year >= 1984 & approval_year <= 2012
+local anda_rate_premean     = r(mean)
+local anda_rate_premean_fmt = string(`anda_rate_premean', "%5.3f")
+gen pre_anda_rate = `anda_rate_premean' if approval_year >= 1984 & approval_year <= 2012
+
+/* Shading for transition */
+qui sum anda_cs_share
+gen shade_lo = 0
+gen shade_hi = r(max) + 0.02
+
+/* Panel A: CS ANDA share (rate) */
+twoway                                                                    ///
+    (rarea shade_lo shade_hi approval_year if gdufa_transition == 1,      ///
+         fcolor(gs14) lwidth(none))                                       ///
+    (line anda_cs_share approval_year, lcolor(navy) lwidth(medium))       ///
+    (line pre_anda_rate  approval_year,                                   ///
+         lcolor(navy) lwidth(medium) lpattern(dash)),                     ///
+    xline(2012, lpattern(dash) lcolor(cranberry) lwidth(medthin))         ///
+    title("Panel A: CS Share of ANDA Approvals (Rate)", size(medium))    ///
+    ytitle("CS ANDA / Total ANDA") xtitle("")                             ///
+    xlabel(1984(4)2024, angle(45)) ylabel(, format(%4.2f))                ///
+    legend(order(2 "Annual CS ANDA rate"                                   ///
+                 3 "Pre-GDUFA mean (`anda_rate_premean_fmt')")             ///
+           position(11) ring(0) cols(1) size(small))                      ///
+    graphregion(color(white)) bgcolor(white)                              ///
+    name(panel_anda_rate, replace)
+
+/* Panel B: CS vs non-CS ANDA absolute counts */
+qui sum n_anda_cs n_noncs_anda
+gen count_shade_hi = max(n_anda_cs, n_noncs_anda) * 1.05 if gdufa_transition == 1
+gen count_shade_lo = 0 if gdufa_transition == 1
+
+twoway                                                                    ///
+    (rarea count_shade_lo count_shade_hi approval_year                    ///
+         if gdufa_transition == 1, fcolor(gs14) lwidth(none))            ///
+    (line n_anda_cs   approval_year, lcolor(navy)     lwidth(medium))    ///
+    (line n_noncs_anda approval_year,                                     ///
+         lcolor(cranberry) lwidth(medium) lpattern(dash)),                ///
+    xline(2012, lpattern(dash) lcolor(cranberry) lwidth(medthin))         ///
+    title("Panel B: CS and Non-CS ANDA Annual Counts", size(medium))     ///
+    ytitle("Annual ANDA Approvals") xtitle("Year")                        ///
+    xlabel(1984(4)2024, angle(45)) ylabel(, format(%9.0f))                ///
+    legend(order(2 "CS ANDA" 3 "Non-CS ANDA")                             ///
+           position(1) ring(0) cols(1) size(small))                       ///
+    note("`cs_def'"                                                       ///
+         "Dashed red: GDUFA (2012). Gray band: 2013-2014 backlog transition." ///
+         "Source: FDA Drugs@FDA. ANDA submissions only.", size(vsmall))   ///
+    graphregion(color(white)) bgcolor(white)                              ///
+    name(panel_anda_count, replace)
+
+graph combine panel_anda_rate panel_anda_count, cols(1)                  ///
+    title("ANDA-only CS Rate vs Absolute Count Around GDUFA (2012)",      ///
+          size(medlarge))                                                 ///
+    note("Both panels can simultaneously be true: rate rises if CS ANDA grows" ///
+         "proportionally faster; count diverges if totals grow differently.", ///
+         size(vsmall))                                                    ///
+    graphregion(color(white))
+
+graph export "${figures}/gdufa_anda_rate_vs_count.png", replace width(2400)
+di as txt "Exported: gdufa_anda_rate_vs_count.png"
+graph drop panel_anda_rate panel_anda_count
+
+
+/*----------------------------------------------------------------------
+  8b: Trend-control sensitivity for GDUFA stacked DD Poisson (G-D3)
+----------------------------------------------------------------------*/
+
+di as txt _newline "--- Part 8b: Trend-control sensitivity (GDUFA ANDA-only Poisson DD) ---"
+di as txt "Replace year FE with linear trend / group-specific trends."
+
+use "${dtapath}/gdufa_stacked_dd.dta", clear
+
+/* G-D3-trend: linear year trend, excluding transition */
+di as txt _newline "--- G-D3-trend: Poisson, linear year trend, excl. 2013-2014 ---"
+poisson n_approvals i.is_cs c.approval_year i.is_cs##i.post_gdufa         ///
+    if gdufa_transition == 0, vce(robust)
+estimates store m_gd3_trend
+poisson, irr
+
+/* G-D3-grouptrend: group-specific linear year trends, excluding transition */
+di as txt _newline "--- G-D3-grouptrend: Poisson, group-specific year trends, excl. 2013-2014 ---"
+poisson n_approvals i.is_cs c.approval_year c.approval_year#i.is_cs       ///
+    i.is_cs##i.post_gdufa if gdufa_transition == 0, vce(robust)
+estimates store m_gd3_grouptrend
+poisson, irr
+
+/* Save IRRs */
+estimates restore m_gd3
+local coef_gd3_fe       = _b[1.is_cs#1.post_gdufa]
+local se_gd3_fe         = _se[1.is_cs#1.post_gdufa]
+local irr_gd3_fe        = exp(`coef_gd3_fe')
+
+estimates restore m_gd3_trend
+local coef_gd3_trend    = _b[1.is_cs#1.post_gdufa]
+local se_gd3_trend      = _se[1.is_cs#1.post_gdufa]
+local irr_gd3_trend     = exp(`coef_gd3_trend')
+
+estimates restore m_gd3_grouptrend
+local coef_gd3_grptrend = _b[1.is_cs#1.post_gdufa]
+local se_gd3_grptrend   = _se[1.is_cs#1.post_gdufa]
+local irr_gd3_grptrend  = exp(`coef_gd3_grptrend')
+
+di as txt _newline "=== IRR summary: G-D3 trend-control sensitivity ==="
+di as txt "  G-D3 (year FE, full flex): IRR = " %6.3f `irr_gd3_fe'
+di as txt "  G-D3-trend (linear)      : IRR = " %6.3f `irr_gd3_trend'
+di as txt "  G-D3-grouptrend (by grp) : IRR = " %6.3f `irr_gd3_grptrend'
+
+estimates table m_gd3 m_gd3_trend m_gd3_grouptrend,                      ///
+    b(%8.4f) se(%8.4f) stats(N)                                           ///
+    keep(1.is_cs#1.post_gdufa c.approval_year)                            ///
+    title("ANDA-only Poisson DD: trend-control sensitivity (G-D3)")
+
+
+/*----------------------------------------------------------------------
+  8c: Timing diagnostic — event-study Poisson DD IRRs (GDUFA)
+----------------------------------------------------------------------*/
+
+di as txt _newline "--- Part 8c: Timing diagnostic — Poisson event-study DD (GDUFA ANDA-only) ---"
+di as txt "A genuine GDUFA effect should show IRR shift at event_time 3+ (post-goals year 2015)."
+di as txt "event_gdufa_shifted range [1,21]; ref = 10 (year 2011, event_time = -1)"
+
+use "${dtapath}/gdufa_stacked_dd.dta", clear
+capture drop event_gdufa_bin
+capture drop event_gdufa_shifted
+gen event_gdufa_bin    = event_time_gdufa
+replace event_gdufa_bin = -10 if event_time_gdufa < -10
+replace event_gdufa_bin =  10 if event_time_gdufa > 10 & !missing(event_time_gdufa)
+gen event_gdufa_shifted = event_gdufa_bin + 11
+
+poisson n_approvals i.is_cs i.event_gdufa_shifted                         ///
+    i.is_cs#i.event_gdufa_shifted, vce(robust)
+
+di as txt _newline "Poisson event-study DD IRRs: exp(1.is_cs#k.event_gdufa_shifted)"
+di as txt "Reference: event_gdufa_shifted = 10 (event_time = -1, year 2011)"
+foreach k in 11 12 14 16 19 21 {
+    local et = `k' - 11
+    local yr = 2012 + `et'
+    capture {
+        local b   = _b[`k'.event_gdufa_shifted#1.is_cs]
+        local irr = exp(`b')
+        di as txt "  event_time = `et' (year `yr'): IRR = " %6.3f `irr'
+    }
+}
+
+
+/*----------------------------------------------------------------------
+  8 (export): GDUFA diagnostics table
+----------------------------------------------------------------------*/
+
+di as txt _newline "--- Exporting gdufa_diagnostics.csv ---"
+/* Note: exported separately from gdufa_alt_specs_results.csv because
+   trend-sensitivity models are run after that file is already closed. */
+
+preserve
+    clear
+    set obs 3
+    gen model      = ""
+    gen irr_main   = .
+    gen coef_main  = .
+    gen se_main    = .
+    gen spec_note  = ""
+
+    replace model     = "GD3_yearFE"              if _n == 1
+    replace model     = "GD3_trend_linear"         if _n == 2
+    replace model     = "GD3_grouptrend"           if _n == 3
+
+    replace coef_main = `coef_gd3_fe'             if _n == 1
+    replace coef_main = `coef_gd3_trend'          if _n == 2
+    replace coef_main = `coef_gd3_grptrend'       if _n == 3
+
+    replace se_main   = `se_gd3_fe'               if _n == 1
+    replace se_main   = `se_gd3_trend'            if _n == 2
+    replace se_main   = `se_gd3_grptrend'         if _n == 3
+
+    replace irr_main  = `irr_gd3_fe'              if _n == 1
+    replace irr_main  = `irr_gd3_trend'           if _n == 2
+    replace irr_main  = `irr_gd3_grptrend'        if _n == 3
+
+    replace spec_note = "Year FE (full flexibility)"        if _n == 1
+    replace spec_note = "Linear year trend (restrictive)"   if _n == 2
+    replace spec_note = "Group-specific year trends (mid)"  if _n == 3
+
+    gen z_stat         = coef_main / se_main
+    gen p_value_approx = 2 * (1 - normal(abs(z_stat)))
+
+    label variable model          "Model"
+    label variable irr_main       "IRR on 1.is_cs#1.post_gdufa"
+    label variable coef_main      "ln(IRR) = coefficient"
+    label variable se_main        "Standard Error"
+    label variable z_stat         "z-statistic"
+    label variable p_value_approx "Approx. p-value"
+    label variable spec_note      "Specification"
+
+    format irr_main coef_main se_main z_stat p_value_approx %8.4f
+    list, sep(0) noobs
+    export delimited "${tables}/gdufa_diagnostics.csv", replace
+    di as txt "Exported: gdufa_diagnostics.csv"
+restore
+
+
 di as txt _newline "===== 07_alt_specs_gdufa.do complete ====="
 log close

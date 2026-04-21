@@ -412,13 +412,14 @@ preserve
     twoway (line n approval_year, lcolor(navy) lwidth(medthin)),    ///
         xline(${hatchwaxman_year}, lpattern(dash) lcolor(gs9))      ///
         xline(${pdufa_year},       lpattern(dash) lcolor(cranberry)) ///
+        xline(2012,                lpattern(dash) lcolor(olive) lwidth(medthin)) ///
         title("Annual Original Drug Approvals, 1939-2025",           ///
               size(medlarge))                                        ///
         ytitle("Number of Approvals")                               ///
         xtitle("Year")                                              ///
         xlabel(1940(10)2020, angle(45))                             ///
         ylabel(, format(%9.0f))                                     ///
-        note("Dashed lines: 1984 (Hatch-Waxman) and 1992 (PDUFA)." ///
+        note("Dashed lines: 1984 (Hatch-Waxman), 1992 (PDUFA), 2012 (GDUFA)." ///
              "`data_note'", size(vsmall))                           ///
         graphregion(color(white)) bgcolor(white)
 
@@ -442,13 +443,14 @@ preserve
     twoway (line n approval_year, lcolor(navy) lwidth(medthin)),    ///
         xline(${hatchwaxman_year}, lpattern(dash) lcolor(gs9))      ///
         xline(${pdufa_year},       lpattern(dash) lcolor(cranberry)) ///
+        xline(2012,                lpattern(dash) lcolor(olive) lwidth(medthin)) ///
         title("Annual Controlled Substance Approvals, 1939-2025",        ///
               size(medlarge))                                        ///
         ytitle("Number of Approvals")                               ///
         xtitle("Year")                                              ///
         xlabel(1940(10)2020, angle(45))                             ///
         ylabel(, format(%9.0f))                                     ///
-        note("Dashed lines: 1984 (Hatch-Waxman) and 1992 (PDUFA)." ///
+        note("Dashed lines: 1984 (Hatch-Waxman), 1992 (PDUFA), 2012 (GDUFA)." ///
              "`data_note'", size(vsmall))                           ///
         graphregion(color(white)) bgcolor(white)
 
@@ -473,6 +475,7 @@ preserve
     twoway (line cs_share approval_year, lcolor(navy) lwidth(medium)), ///
         xline(${hatchwaxman_year}, lpattern(dash) lcolor(gs9))         ///
         xline(${pdufa_year},       lpattern(dash) lcolor(cranberry))   ///
+        xline(2012,                lpattern(dash) lcolor(olive) lwidth(medthin)) ///
         title("Share of Approvals That Are Controlled Substances",     ///
               size(medlarge))                                           ///
         subtitle("Conservative definition: confident DEA scheduled matches only", ///
@@ -481,7 +484,7 @@ preserve
         xtitle("Year")                                                 ///
         xlabel(1940(10)2020, angle(45))                                ///
         ylabel(0(0.05)0.35, format(%4.2f))                             ///
-        note("Dashed lines: 1984 (Hatch-Waxman) and 1992 (PDUFA)."    ///
+        note("Dashed lines: 1984 (Hatch-Waxman), 1992 (PDUFA), 2012 (GDUFA)." ///
              "`data_note'", size(vsmall))                              ///
         graphregion(color(white)) bgcolor(white)
 
@@ -515,6 +518,7 @@ preserve
              lcolor(cranberry) lwidth(medium) lpattern(dash)),          ///
         xline(${hatchwaxman_year}, lpattern(shortdash) lcolor(gs11))   ///
         xline(${pdufa_year},       lpattern(shortdash) lcolor(gs7))    ///
+        xline(2012,                lpattern(dash) lcolor(olive) lwidth(medthin)) ///
         title("CS Share by Application Type", size(medlarge))           ///
         ytitle("CS Share")                                              ///
         xtitle("Year")                                                  ///
@@ -523,7 +527,7 @@ preserve
         legend(order(1 "NDA" 2 "ANDA") position(1) ring(0))            ///
         note("CS = Controlled Substance (conservative: confident DEA scheduled matches only)." ///
              "Years with < 5 NDA or ANDA approvals excluded for that type."                 ///
-             "Dashed lines: 1984 (Hatch-Waxman) and 1992 (PDUFA)."                         ///
+             "Dashed lines: 1984 (Hatch-Waxman), 1992 (PDUFA), 2012 (GDUFA)."              ///
              "`data_note'", size(vsmall))                                                   ///
         graphregion(color(white)) bgcolor(white)
 
@@ -552,6 +556,7 @@ preserve
         (line is_schedule_i   approval_year, lcolor(purple)   lwidth(medthin) lpattern(shortdash)), ///
         xline(${hatchwaxman_year}, lpattern(dash) lcolor(gs11)) ///
         xline(${pdufa_year},       lpattern(dash) lcolor(gs7))  ///
+        xline(2012,                lpattern(dash) lcolor(olive) lwidth(medthin)) ///
         title("Controlled Substance Approvals by DEA Schedule", size(medlarge)) ///
         ytitle("Number of Approvals")                           ///
         xtitle("Year")                                          ///
@@ -561,7 +566,7 @@ preserve
                      3 "Schedule IV" 4 "Schedule V"             ///
                      5 "Schedule I")                            ///
                position(1) ring(0) cols(1) size(small))         ///
-        note("Dashed lines: 1984 (Hatch-Waxman) and 1992 (PDUFA)." ///
+        note("Dashed lines: 1984 (Hatch-Waxman), 1992 (PDUFA), 2012 (GDUFA)." ///
              "`data_note'", size(vsmall))                       ///
         graphregion(color(white)) bgcolor(white)
 
@@ -626,6 +631,7 @@ preserve
              lpattern(longdash)),                                           ///
         xline(${hatchwaxman_year}, lpattern(dash) lcolor(gs11))            ///
         xline(${pdufa_year},       lpattern(dash) lcolor(gs7))             ///
+        xline(2012,                lpattern(dash) lcolor(olive) lwidth(medthin)) ///
         title("Annual Drug Approvals by Application Type",                  ///
               size(medlarge))                                               ///
         ytitle("Number of Approvals")                                      ///
@@ -634,7 +640,7 @@ preserve
         ylabel(, format(%9.0f))                                            ///
         legend(order(1 "NDA" 2 "ANDA (generic)" 3 "BLA (biologic)")       ///
                position(1) ring(0))                                        ///
-        note("Dashed lines: 1984 (Hatch-Waxman) and 1992 (PDUFA)."        ///
+        note("Dashed lines: 1984 (Hatch-Waxman), 1992 (PDUFA), 2012 (GDUFA)." ///
              "`data_note'", size(vsmall))                                  ///
         graphregion(color(white)) bgcolor(white)
 
@@ -664,6 +670,7 @@ preserve
              lcolor(cranberry) lwidth(medium) lpattern(dash)),             ///
         xline(${hatchwaxman_year}, lpattern(shortdash) lcolor(gs11))      ///
         xline(${pdufa_year},       lpattern(shortdash) lcolor(gs7))       ///
+        xline(2012,                lpattern(dash) lcolor(olive) lwidth(medthin)) ///
         title("CS Share: Conservative vs Broad Definition",                ///
               size(medlarge))                                              ///
         ytitle("Proportion")                                               ///
@@ -674,7 +681,7 @@ preserve
                      2 "Broad (any DEA signal: confident + List I + candidate)") ///
                position(1) ring(0) cols(1) size(small))                   ///
         note("CS = Controlled Substance."                                   ///
-             "Dashed lines: 1984 (Hatch-Waxman) and 1992 (PDUFA)."        ///
+             "Dashed lines: 1984 (Hatch-Waxman), 1992 (PDUFA), 2012 (GDUFA)." ///
              "`data_note'", size(vsmall))                                  ///
         graphregion(color(white)) bgcolor(white)
 

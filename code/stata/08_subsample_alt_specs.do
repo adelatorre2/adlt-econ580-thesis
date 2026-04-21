@@ -133,7 +133,8 @@ use "${dtapath}/pdufa_nda_stacked_dd.dta", clear
 
 /* Binned event-time: end-caps at -20 and +30, shift +21 → [1,51].
    Reference: event_time = -1 (1991) → shifted = 20 (omitted). */
-capture drop event_time_bin event_shifted
+capture drop event_time_bin
+capture drop event_shifted
 gen event_time_bin = event_time
 replace event_time_bin = -20 if event_time < -20
 replace event_time_bin =  30 if event_time > 30 & !missing(event_time)
@@ -229,7 +230,8 @@ di as txt "Pre-PDUFA NDA CS share mean  (1970-1992): `pre_mean_nda_fmt'"
 di as txt "Post-PDUFA NDA CS share mean (1993-2025): `post_mean_nda_fmt'"
 
 /* Horizontal reference lines scoped to each period */
-capture drop pre_nda_line post_nda_line
+capture drop pre_nda_line
+capture drop post_nda_line
 gen pre_nda_line  = `pre_mean_nda'  if approval_year >= 1970 & approval_year <= 1992
 gen post_nda_line = `post_mean_nda' if approval_year >= 1993 & approval_year <= 2025
 
@@ -290,12 +292,14 @@ di as txt "Pre-GDUFA ANDA CS share mean  (1984-2012): `pre_mean_anda_fmt'"
 di as txt "Post-GDUFA ANDA CS share mean (2015-2025): `post_mean_anda_fmt'"
 
 /* Horizontal reference lines scoped to each period */
-capture drop pre_anda_line post_anda_line
+capture drop pre_anda_line
+capture drop post_anda_line
 gen pre_anda_line  = `pre_mean_anda'  if approval_year >= 1984 & approval_year <= 2012
 gen post_anda_line = `post_mean_anda' if approval_year >= 2015 & approval_year <= 2025
 
 /* Transition shading (2013-2014) */
-capture drop shade_lo shade_hi
+capture drop shade_lo
+capture drop shade_hi
 qui sum anda_cs_share
 local ymax_shade = r(max) + 0.02
 gen shade_lo = 0
@@ -399,7 +403,9 @@ di as txt "These diagnostics clarify which story is correct."
 use "${dtapath}/event_study_annual.dta", clear
 keep if approval_year >= 1970 & approval_year <= 2025
 
-capture drop cs_share_nda n_noncs_nda pre_rate_line
+capture drop cs_share_nda
+capture drop n_noncs_nda
+capture drop pre_rate_line
 gen cs_share_nda = n_cs_nda / n_nda if n_nda > 0
 gen n_noncs_nda  = n_nda - n_cs_nda
 
@@ -515,7 +521,8 @@ di as txt "A genuine PDUFA effect should show IRR > 1 beginning at event_time 0 
 di as txt "IRRs near 1.0 until ~2007 and rising later suggest a different driver."
 
 use "${dtapath}/pdufa_nda_stacked_dd.dta", clear
-capture drop event_time_bin event_shifted
+capture drop event_time_bin
+capture drop event_shifted
 gen event_time_bin = event_time
 replace event_time_bin = -20 if event_time < -20
 replace event_time_bin =  30 if event_time > 30 & !missing(event_time)

@@ -1,0 +1,4 @@
+model,irr_main,coef_main,se_main,spec_note,z_stat,p_value_approx
+NDA_D3_yearFE,1.4564933,.3760317,.20010722,Year FE (full flexibility),1.8791511,.060223863
+NDA_D3_trend_linear,1.4564933,.3760317,.20524976,Linear year trend (restrictive),1.8320689,.06694115
+NDA_D3_grouptrend,1.1904196,.1743058,.35553226,Group-specific year trends (mid),.49026719,.62394482
