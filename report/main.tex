@@ -43,6 +43,9 @@
 % Bibliography
 \usepackage[backend=biber,style=authoryear,doi=false,isbn=false,url=true]{biblatex}
 \addbibresource{references/adlt-econ580-thesis.bib} % EDIT WITH REFERENCES
+% Suppress the `note` field in printed bibliography entries (Zotero research
+% memos leaked into the note field of several items; keep the .bib untouched).
+\AtEveryBibitem{\clearfield{note}}
 
 \hypersetup{
   colorlinks=true,

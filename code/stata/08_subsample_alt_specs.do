@@ -183,12 +183,14 @@ preserve
         yline(0, lpattern(dash) lcolor(gs8) lwidth(thin))                ///
         xline(0, lpattern(dash) lcolor(cranberry) lwidth(medthin))       ///
         xline(-8, lpattern(dot) lcolor(gs7) lwidth(medthin))             ///
-        title("DD Event Study (NDA-only): Differential CS vs Non-CS NDA Growth (PDUFA)", ///
-              size(medlarge))                                            ///
+        title("PDUFA NDA-Only DD Event Study"                            ///
+              "Differential CS vs Non-CS NDA Growth",                    ///
+              size(medium))                                              ///
         subtitle("Reference period: 1991 (event time = -1)", size(small)) ///
-        ytitle("Differential Approvals (CS NDA minus non-CS NDA trend)") ///
+        ytitle("Differential Approvals" "(CS NDA minus non-CS NDA trend)", size(small)) ///
         xtitle("Years Since PDUFA Enactment (1992)")                    ///
         xlabel(-20(5)30)                                                 ///
+        plotregion(margin(l=2))                                          ///
         note("`cs_def'"                                                  ///
              "Coefficients on is_cs#event_time interaction (NDA-only)."  ///
              "Reference: 1991. Flat pre-period supports parallel trends." ///

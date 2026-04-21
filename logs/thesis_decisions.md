@@ -18,6 +18,32 @@ This file is an append‑only research log documenting meaningful decisions made
 
 ---
 
+## 2026-04-20 — Fixed Figure 6 title and ytitle clipping
+
+The PDUFA NDA-only DD event study figure (Figure 6 in main.pdf) had the title
+clipped on the right ("(PDUF" instead of "(PDUFA)") and the ytitle overlapping
+the plot region. Fixed in `code/stata/08_subsample_alt_specs.do` by (a) splitting
+the title onto two lines and dropping from `medlarge` to `medium`, (b) splitting
+the ytitle onto two lines at `size(small)`, and (c) adding
+`plotregion(margin(l=2))` to give the wrapped ytitle horizontal room. Filename
+and export width unchanged so LaTeX `\includegraphics` resolves without edits.
+Cosmetic-only change; underlying regression and data unchanged.
+
+---
+
+## 2026-04-20 — Suppressed `note` field in printed bibliography
+
+Added `\AtEveryBibitem{\clearfield{note}}` to `report/main.tex` preamble to
+stop biblatex from printing the `note` field. Six bibliography entries had
+long Zotero research memos in their `note` fields that were rendering inside
+the References section. The `.bib` file is unchanged; this is a pure
+display-side fix. If the `.bib` is ever regenerated from Zotero, the fix
+persists automatically. A cleaner long-term fix is to move those memos into
+child notes in Zotero so they don't export to the `note` field at all —
+deferred for now. PDF page count dropped from 36 to 26 pages after this fix.
+
+---
+
 ## 2026-04-20 — Pass 1 manuscript scaffold drafted
 
 Generated `report/sections/00_abstract.tex` through `07_conclusion.tex` plus updated `report/main.tex` to input the new numbered section files. Results section (§5) is populated with real figures and tables from `output/figures/stata/` and `output/tables/stata/`. Other sections contain structural scaffolding with paragraph-level placeholder prose and `% TODO: verify citation` markers throughout. The abstract reflects the actual empirical findings (PDUFA null, opioid spike confound, GDUFA decline). Compiles cleanly to 36-page PDF (`report/main.pdf`) with zero LaTeX errors and four cosmetic overfull-hbox warnings. Citation backend is biblatex/biber; citation commands are `\parencite{}` and `\textcite{}` throughout. Next: pass 2 — expand prose, verify every citation against the PDF in `/Users/alexdelatorre/Zotero/storage/` using the file-path resolution convention in `CLAUDE.md`, and fill the introduction (written last per Dudenhefer).
