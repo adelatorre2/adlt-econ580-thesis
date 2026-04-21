@@ -383,5 +383,211 @@ preserve
 restore
 
 
+/*==============================================================================
+  PART 6: Rate-vs-count diagnostics (PDUFA NDA-only)
+==============================================================================*/
+
+di as txt _newline "===== PART 6: Rate-vs-count diagnostics (PDUFA NDA-only) ====="
+di as txt "Motivation: NDA-D3 Poisson IRR and D1 levels coef can disagree simultaneously."
+di as txt "CS rate can rise while non-CS counts grow faster in absolute terms."
+di as txt "These diagnostics clarify which story is correct."
+
+/*----------------------------------------------------------------------
+  6a: Rate vs count two-panel visual
+----------------------------------------------------------------------*/
+
+use "${dtapath}/event_study_annual.dta", clear
+keep if approval_year >= 1970 & approval_year <= 2025
+
+capture drop cs_share_nda n_noncs_nda pre_rate_line
+gen cs_share_nda = n_cs_nda / n_nda if n_nda > 0
+gen n_noncs_nda  = n_nda - n_cs_nda
+
+qui sum cs_share_nda if approval_year >= 1970 & approval_year <= 1992
+local rate_premean     = r(mean)
+local rate_premean_fmt = string(`rate_premean', "%5.3f")
+gen pre_rate_line = `rate_premean' if approval_year >= 1970 & approval_year <= 1992
+
+/* Panel A: CS NDA share (rate) */
+twoway                                                                    ///
+    (line cs_share_nda  approval_year,                                    ///
+         lcolor(navy) lwidth(medium))                                     ///
+    (line pre_rate_line approval_year,                                    ///
+         lcolor(navy) lwidth(medium) lpattern(dash)),                     ///
+    xline(1992, lpattern(dash) lcolor(cranberry) lwidth(medthin))         ///
+    xline(1984, lpattern(dot)  lcolor(gs7)       lwidth(medthin))         ///
+    title("Panel A: CS Share of NDA Approvals (Rate)", size(medium))     ///
+    ytitle("CS NDA / Total NDA") xtitle("")                               ///
+    xlabel(1970(5)2025, angle(45)) ylabel(, format(%4.2f))                ///
+    legend(order(1 "Annual CS NDA rate"                                   ///
+                 2 "Pre-PDUFA mean (`rate_premean_fmt')")                  ///
+           position(11) ring(0) cols(1) size(small))                      ///
+    graphregion(color(white)) bgcolor(white)                              ///
+    name(panel_nda_rate, replace)
+
+/* Panel B: CS vs non-CS NDA absolute counts */
+twoway                                                                    ///
+    (line n_cs_nda    approval_year, lcolor(navy)     lwidth(medium))    ///
+    (line n_noncs_nda approval_year,                                      ///
+         lcolor(cranberry) lwidth(medium) lpattern(dash)),                ///
+    xline(1992, lpattern(dash) lcolor(cranberry) lwidth(medthin))         ///
+    xline(1984, lpattern(dot)  lcolor(gs7)       lwidth(medthin))         ///
+    title("Panel B: CS and Non-CS NDA Annual Counts", size(medium))      ///
+    ytitle("Annual NDA Approvals") xtitle("Year")                         ///
+    xlabel(1970(5)2025, angle(45)) ylabel(, format(%9.0f))                ///
+    legend(order(1 "CS NDA" 2 "Non-CS NDA")                               ///
+           position(1) ring(0) cols(1) size(small))                       ///
+    note("`cs_def'"                                                       ///
+         "Dashed red: PDUFA (1992). Dotted: Hatch-Waxman (1984)."         ///
+         "`data_note_pdufa'", size(vsmall))                              ///
+    graphregion(color(white)) bgcolor(white)                              ///
+    name(panel_nda_count, replace)
+
+graph combine panel_nda_rate panel_nda_count, cols(1)                    ///
+    title("NDA-only CS Rate vs Absolute Count Around PDUFA (1992)",       ///
+          size(medlarge))                                                 ///
+    note("Both panels can simultaneously be true: rate rises if CS NDA grows" ///
+         "proportionally faster; count falls if non-CS grows faster absolutely.", ///
+         size(vsmall))                                                    ///
+    graphregion(color(white))
+
+graph export "${figures}/pdufa_nda_rate_vs_count.png", replace width(2400)
+di as txt "Exported: pdufa_nda_rate_vs_count.png"
+graph drop panel_nda_rate panel_nda_count
+
+
+/*----------------------------------------------------------------------
+  6b: Trend-control sensitivity for NDA-D3 Poisson
+----------------------------------------------------------------------*/
+
+di as txt _newline "--- Part 6b: Trend-control sensitivity (NDA-only Poisson DD) ---"
+di as txt "If IRR shrinks to ~1.0 when year FE replaced by linear trend, result is trend artifact."
+
+use "${dtapath}/pdufa_nda_stacked_dd.dta", clear
+
+/* NDA-D3-trend: linear year trend instead of year FE */
+di as txt _newline "--- NDA-D3-trend: Poisson, linear year trend only ---"
+poisson n_approvals i.is_cs c.approval_year i.is_cs##i.post_pdufa, vce(robust)
+estimates store m_nda_d3_trend
+poisson, irr
+
+/* NDA-D3-grouptrend: group-specific linear year trends */
+di as txt _newline "--- NDA-D3-grouptrend: Poisson, group-specific year trends ---"
+poisson n_approvals i.is_cs c.approval_year c.approval_year#i.is_cs     ///
+    i.is_cs##i.post_pdufa, vce(robust)
+estimates store m_nda_d3_grouptrend
+poisson, irr
+
+/* Save IRRs and SEs as locals for export */
+estimates restore m_nda_d3
+local coef_d3_fe       = _b[1.is_cs#1.post_pdufa]
+local se_d3_fe         = _se[1.is_cs#1.post_pdufa]
+local irr_d3_fe        = exp(`coef_d3_fe')
+
+estimates restore m_nda_d3_trend
+local coef_d3_trend    = _b[1.is_cs#1.post_pdufa]
+local se_d3_trend      = _se[1.is_cs#1.post_pdufa]
+local irr_d3_trend     = exp(`coef_d3_trend')
+
+estimates restore m_nda_d3_grouptrend
+local coef_d3_grptrend = _b[1.is_cs#1.post_pdufa]
+local se_d3_grptrend   = _se[1.is_cs#1.post_pdufa]
+local irr_d3_grptrend  = exp(`coef_d3_grptrend')
+
+di as txt _newline "=== IRR summary: trend-control sensitivity (NDA-only Poisson DD) ==="
+di as txt "  NDA-D3 (year FE, full flex): IRR = " %6.3f `irr_d3_fe'
+di as txt "  NDA-D3-trend (linear)      : IRR = " %6.3f `irr_d3_trend'
+di as txt "  NDA-D3-grouptrend (by grp) : IRR = " %6.3f `irr_d3_grptrend'
+di as txt "  If (2) and (3) << (1), year-FE spec is capturing a trend, not a 1992 break."
+
+estimates table m_nda_d3 m_nda_d3_trend m_nda_d3_grouptrend,            ///
+    b(%8.4f) se(%8.4f) stats(N)                                          ///
+    keep(1.is_cs#1.post_pdufa c.approval_year)                           ///
+    title("NDA-only Poisson DD: trend-control sensitivity (key coefs)")
+
+
+/*----------------------------------------------------------------------
+  6c: Timing diagnostic — event-study Poisson DD IRRs
+----------------------------------------------------------------------*/
+
+di as txt _newline "--- Part 6c: Timing diagnostic — Poisson event-study DD (NDA-only) ---"
+di as txt "A genuine PDUFA effect should show IRR > 1 beginning at event_time 0 or 1 (1992-93)."
+di as txt "IRRs near 1.0 until ~2007 and rising later suggest a different driver."
+
+use "${dtapath}/pdufa_nda_stacked_dd.dta", clear
+capture drop event_time_bin event_shifted
+gen event_time_bin = event_time
+replace event_time_bin = -20 if event_time < -20
+replace event_time_bin =  30 if event_time > 30 & !missing(event_time)
+gen event_shifted = event_time_bin + 21
+
+poisson n_approvals i.is_cs i.event_shifted i.is_cs#i.event_shifted, vce(robust)
+
+di as txt _newline "Poisson event-study DD IRRs: exp(1.is_cs#k.event_shifted)"
+di as txt "Reference: event_shifted = 20 (event_time = -1, year 1991)"
+foreach k in 21 22 25 30 35 40 45 50 {
+    local et = `k' - 21
+    local yr = 1992 + `et'
+    capture {
+        local b   = _b[`k'.event_shifted#1.is_cs]
+        local irr = exp(`b')
+        di as txt "  event_time = `et' (year `yr'): IRR = " %6.3f `irr'
+    }
+}
+
+
+/*----------------------------------------------------------------------
+  6 (export): Trend-sensitivity diagnostics table
+----------------------------------------------------------------------*/
+
+di as txt _newline "--- Exporting pdufa_nda_diagnostics.csv ---"
+
+preserve
+    clear
+    set obs 3
+    gen model      = ""
+    gen irr_main   = .
+    gen coef_main  = .
+    gen se_main    = .
+    gen spec_note  = ""
+
+    replace model     = "NDA_D3_yearFE"         if _n == 1
+    replace model     = "NDA_D3_trend_linear"    if _n == 2
+    replace model     = "NDA_D3_grouptrend"      if _n == 3
+
+    replace coef_main = `coef_d3_fe'             if _n == 1
+    replace coef_main = `coef_d3_trend'          if _n == 2
+    replace coef_main = `coef_d3_grptrend'       if _n == 3
+
+    replace se_main   = `se_d3_fe'               if _n == 1
+    replace se_main   = `se_d3_trend'            if _n == 2
+    replace se_main   = `se_d3_grptrend'         if _n == 3
+
+    replace irr_main  = `irr_d3_fe'              if _n == 1
+    replace irr_main  = `irr_d3_trend'           if _n == 2
+    replace irr_main  = `irr_d3_grptrend'        if _n == 3
+
+    replace spec_note = "Year FE (full flexibility)"        if _n == 1
+    replace spec_note = "Linear year trend (restrictive)"   if _n == 2
+    replace spec_note = "Group-specific year trends (mid)"  if _n == 3
+
+    gen z_stat         = coef_main / se_main
+    gen p_value_approx = 2 * (1 - normal(abs(z_stat)))
+
+    label variable model          "Model"
+    label variable irr_main       "IRR on 1.is_cs#1.post_pdufa"
+    label variable coef_main      "ln(IRR) = coefficient"
+    label variable se_main        "Standard Error"
+    label variable z_stat         "z-statistic"
+    label variable p_value_approx "Approx. p-value"
+    label variable spec_note      "Specification"
+
+    format irr_main coef_main se_main z_stat p_value_approx %8.4f
+    list, sep(0) noobs
+    export delimited "${tables}/pdufa_nda_diagnostics.csv", replace
+    di as txt "Exported: pdufa_nda_diagnostics.csv"
+restore
+
+
 di as txt _newline "===== 08_subsample_alt_specs.do complete ====="
 log close
