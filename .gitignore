@@ -45,3 +45,4 @@ __pycache__/
 *CLAUDE.md
 logs/prompts
 logs/prompts/*
+.claude/
