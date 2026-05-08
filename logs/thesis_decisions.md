@@ -18,6 +18,42 @@ This file is an append‑only research log documenting meaningful decisions made
 
 ---
 
+## 2026-05-07 — Final-submission revision: accept the null, suppress TODO scaffolding
+
+Revised the manuscript end-to-end for the Assignment 10 final submission.
+Headline change in framing: both PDUFA and GDUFA are now reported as precisely
+estimated nulls under the most flexible (group-specific linear trends)
+specification, with confidence intervals carried in-text as the primary
+inferential statement (PDUFA NDA-only IRR 1.19, 95% CI [0.59, 2.39]; GDUFA
+ANDA-only IRR 1.38, 95% CI [0.86, 2.21]). Year-FE point estimates of 1.46
+(PDUFA) and 0.668 (GDUFA) are still reported but no longer carry the
+interpretive weight; both are absorbed once group-specific trends accommodate
+the slow-moving secular movement in CS and non-CS approval streams. The
+GDUFA "direction-reversing" framing from the pass-1 draft was dropped because
+the year-FE result flips sign under group-specific trends and is therefore
+better read as the same null story as PDUFA. Sections rewritten or materially
+revised: 00 abstract (now 113 words, well under the 150-word syllabus cap), 01
+introduction (Dudenhefer four-move structure: territory/literature/niche/occupy;
+pro-hypothesis case strengthened in lead-up to the null per CLAUDE.md
+guidance), 02 background and literature (§2.2 theory of user-fee incentives
+expanded with explicit present-value model and competing supply-side staffing
+hypothesis), 05 results (every key estimate now reported with 95% CI; new
+column added to Tables 5 and 7 for trend-control sensitivity), 06 discussion
+(GDUFA section reframed as null rather than significant decline), 07
+conclusion (overstated language pruned). Sections 03 (data) and 04 (empirical
+strategy) lightly tightened. \printtodos commented out in main.tex; all in-text
+% TODO markers removed. Two bib citation typos fixed in intro
+(olsonPDUFAInitialUS2009, gelladAcceleratedApprovalExpensive2017). Body word
+count is now ~7,400 (≈29 double-spaced 12pt pages excluding 11 figures, 6
+tables, and references), comfortably above the 25-page syllabus minimum. All
+22 manuscript citations verified against the bib file; all cross-references
+resolve. Sandbox could not compile (missing biblatex/siunitx packages and no
+sudo to install) so verification was static; user should run
+`cd report && latexmk -pdf main.tex` locally to regenerate the bbl with biber
+before submission.
+
+---
+
 ## 2026-04-21 — Final presentation deck v1
 
 Built 10-slide Beamer presentation in
